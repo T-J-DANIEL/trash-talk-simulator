@@ -11,3 +11,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.vid-container{
+height: 90vh;
+position: relative;
+}
+
+.user-input{
+  position: absolute;
+  left:0;
+  outline:2px solid red;
+  bottom: 0;
+  width: 20vw;
+  height: 10vh;
+  background: white;
+  z-index: 99;
+}
+.vid-cover{
+  position: absolute;
+  width:100vw;
+  height: 100vh;
+  z-index: 98;
+  top: 0;
+  left:0;
+  outline:2px solid red;
+}
