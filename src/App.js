@@ -1,10 +1,12 @@
-
-import './App.css';
+import { AppContextProvider } from "./context"
+import "./App.css"
 import MainPage from "./components/MainPage"
 function App() {
   return (
-    <MainPage/>
-  );
+    <AppContextProvider>
+      <MainPage />
+    </AppContextProvider>
+  )
 }
 
-export default App;
+export default App
