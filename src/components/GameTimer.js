@@ -28,14 +28,12 @@ const GameTimer = () => {
 
 const TimerFunctions = () => {
   const {
-    timerExists,
     setTimerExists,
-    timerRunning,
     setTimerRunning,
-    resetTimer,
     setResetTimer,
     mountPaused,
     mountRunning,
+    newPhrases,
   } = useGlobalContext()
   return (
     <div className="timer-functions">
@@ -45,6 +43,7 @@ const TimerFunctions = () => {
       <button onClick={() => setTimerRunning(true)}>Play</button>
       <button onClick={() => setTimerRunning(false)}>Pause</button>
       <button onClick={() => setResetTimer(true)}>Reset</button>
+      <button onClick={newPhrases}>newPhrases</button>
     </div>
   )
 }

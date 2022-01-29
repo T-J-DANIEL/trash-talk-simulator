@@ -47,6 +47,50 @@ const shakesPhrases = [
     insult:
       "Methink'st thou art a general offence and every man should beat thee.",
   },
+  {
+    insult:
+      "filler phrase a",
+  },
+  {
+    insult:
+      "filler phrase b",
+  },
+  {
+    insult:
+      "filler phrase c",
+  },
+  {
+    insult:
+      "filler phrase d",
+  },
+  {
+    insult:
+      "filler phrase e",
+  },
+  {
+    insult:
+      "filler phrase f",
+  },
+  {
+    insult:
+      "filler phrase g",
+  },
+  {
+    insult:
+      "filler phrase h",
+  },
+  {
+    insult:
+      "filler phrase i",
+  },
+  {
+    insult:
+      "filler phrase j",
+  },
+  {
+    insult:
+      "filler phrase k",
+  },
 ]
 
 export { trashPhrases, shakesPhrases }

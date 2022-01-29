@@ -3,7 +3,7 @@ import { useGlobalContext } from "../context"
 const Opponent = () =>{
     const { opponentPhrase, successfulAttack } = useGlobalContext()
     return (
-      <div className={`opponent ${successfulAttack?"animate":""}`}>
+      <div className={`opponent ${successfulAttack?"animate":""} `}>
         {successfulAttack&&<div className="hitMarker">
           <div className="clock-hand clock">
               <div></div>

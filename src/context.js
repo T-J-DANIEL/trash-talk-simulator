@@ -19,37 +19,57 @@ const useGlobalContext = () => {
 }
 
 const AppContextProvider = ({ children }) => {
-  const [isYeOlde,setIsYeOlde] = useState(false)
+  const [isYeOlde, setIsYeOlde] = useState(true)
   const [userText, setUserText] = useState("")
-  const [currentLevel, setCurrentLevel] = useState(1)
-  const [currentPhraseList, setCurrentPhraseList] = useState([])
+  const [score, setScore] = useState(0)
   const [gameRunning, setGameRunning] = useState(false)
-  const [successfulAttack,setSuccessfulAttack] = useState(false)
+  const [successfulAttack, setSuccessfulAttack] = useState(false)
+  // useEffect(() => {
+  //   getPhrases()
+  // }, [])
+  //start game or on page load?
   const getPhrases = () => {
-    setCurrentPhraseList(trashPhrases[currentLevel])
-  } 
-  const [currentPhrase, setCurrentPhrase] = useState(shakesPhrases[0].insult)
-  const [opponentPhrase, setOpponentPhrase] = useState(shakesPhrases[1].insult)
-  useEffect(() => {
-    getPhrases()
-  }, [currentLevel])
-
-  const [percentageMatch, setPercentageMatch] = useState()
+    return isYeOlde ? shakesPhrases : trashPhrases
+  }
+  const [currentPhraseList, setCurrentPhraseList] = useState(getPhrases)
+  const [currentPhrase, setCurrentPhrase] = useState("placeholder for user")
+  const [opponentPhrase, setOpponentPhrase] = useState(
+    "placeholder for Opponent"
+  )
+ 
+  const [percentageMatch, setPercentageMatch] = useState(0)
 
   const compareValues = (userTyping) => {
-    const testArray = currentPhrase.trim().split("")
+    const testArray = currentPhrase.split("")
     const userArray = userTyping.trim().split("")
     const matches = testArray.filter(
       (item, index) => item === userArray[index]
     ).length
-    console.log("testArray",testArray)
-    console.log("userArray",userArray)
-    console.log("matches",matches)
+    console.log("testArray", testArray)
+    console.log("userArray", userArray)
+    console.log("matches", matches)
     setPercentageMatch(Math.ceil((matches / testArray.length) * 100))
-    console.log("percentage Match",percentageMatch)
+    console.log("percentage Match", percentageMatch)
   }
-
-  const startGame = () =>{
+  useEffect(
+    ()=>{
+      if (percentageMatch === 100) {
+         
+           setSuccessfulAttack(true)
+           setTimeout(() => {
+             setSuccessfulAttack(false)
+           }, 500)
+         
+        setScore((prev) => prev + 100)
+        //same as above really
+        setPercentageMatch(0)
+        setUserText("")
+        newPhrases()
+        //should call this it own function
+      }
+    },[percentageMatch]
+  )
+  const startGame = () => {
     /*
       start a game timer 30s?
       set up first suggestion and opponent text
@@ -60,9 +80,8 @@ const AppContextProvider = ({ children }) => {
     //level reset
     //
     setUserText("")
-
   }
-//timer functions
+  //timer functions
   const [timerExists, setTimerExists] = useState(false)
   const [timerRunning, setTimerRunning] = useState(true)
   const [resetTimer, setResetTimer] = useState(false)
@@ -79,7 +98,32 @@ const AppContextProvider = ({ children }) => {
   }
 
   //SETTINGS
-  const [showSettings,setShowSettings] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
+
+  //send random phrase
+  const newPhrases = () => {
+    //take the phrase block and remove the previous
+  
+    //make this the new working phrase block
+    //pick a random phrase for the user and for the opponent
+    let workingArray = [...currentPhraseList]
+      console.log("copied",workingArray.length,currentPhraseList.length)
+    const randomUserIndex = Math.floor(Math.random() * workingArray.length)
+      console.log("user index set",randomUserIndex)
+    setCurrentPhrase(workingArray[randomUserIndex].insult)
+    workingArray = workingArray.filter((item, index) => index !== randomUserIndex)
+        console.log("removed user index", workingArray.length, currentPhraseList.length)
+    const randomOppIndex = Math.floor(Math.random() * workingArray.length)
+    console.log("Opp index set", randomOppIndex)
+    setOpponentPhrase(workingArray[randomOppIndex].insult)
+    workingArray = workingArray.filter(
+      (item, index) => index !== randomOppIndex
+    )
+      console.log("removed opp index", workingArray.length, currentPhraseList.length)
+    console.log("our two",randomUserIndex, randomOppIndex)
+    setCurrentPhraseList(workingArray)
+    console.log("working array set as new", workingArray.length,currentPhraseList.length,"===> END  ")
+  }
   return (
     <AppContext.Provider
       value={{
@@ -87,14 +131,13 @@ const AppContextProvider = ({ children }) => {
         setIsYeOlde,
         userText,
         setUserText,
-        currentLevel,
-        setCurrentLevel,
         currentPhraseList,
         setCurrentPhraseList,
         currentPhrase,
         opponentPhrase,
         compareValues,
         percentageMatch,
+        setPercentageMatch,
         successfulAttack,
         setSuccessfulAttack,
         timerExists,
@@ -107,6 +150,9 @@ const AppContextProvider = ({ children }) => {
         mountRunning,
         showSettings,
         setShowSettings,
+        newPhrases,
+        score,
+        setScore,
       }}
     >
       {children}
