@@ -12,7 +12,9 @@ const UserInput = () => {
     setIsYeOlde,
     score,
     setScore,
-    newPhrases
+    newPhrases,
+    isInputDisabled,
+    setIsinputDisabled,
   } = useGlobalContext()
 
   return (
@@ -52,6 +54,7 @@ const UserInput = () => {
             // if score is higher than 80% then hitmarker and bonus points
             //if we get 5 over 80 in a ro we get ratdog special nuke
           }}
+          disabled={isInputDisabled}
         />
       </div>
       <span>{percentageMatch}</span>

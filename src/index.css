@@ -1,5 +1,11 @@
-html{box-sizing:border-box;}
-*,*::before,*::after{box-sizing:inherit;}
+html {
+  box-sizing: border-box;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
 body {
   margin: 0;
   padding: 0;
@@ -8,110 +14,130 @@ body {
   background: black;
   color: white;
 }
-img{
+img {
   width: 100%;
   object-fit: cover;
 }
 
-.vid-container{
-height: 70vh;
-width: 100vw;
-margin: 0 auto;
-position: relative;
+.vid-container {
+  height: 70vh;
+  width: 100vw;
+  margin: 0 auto;
+  position: relative;
 }
-.vid-cover{
+.vid-cover {
   position: absolute;
-  width:100%;
+  width: 100%;
   height: 100%;
   z-index: 2;
   top: 0;
-  left:0;
-  outline:2px solid red;
+  left: 0;
+  outline: 2px solid red;
   background: aqua;
   opacity: 0.4;
 }
-.pause-button{
+.pause-button {
   z-index: 99;
 }
-input{
-  caret-color: rgb(3, 255, 3);
-  background: rgba(102, 233, 102,0.5);
+input {
   width: 100%;
-  color: white;
+  color: rgba(129, 47, 15, 0.671);
   font-size: 150%;
+  background: transparent;
+}
+.input-og{
   font-family: monospace;
+  caret-color: rgb(3, 255, 3);
+  background: rgba(102, 233, 102, 0.5);
+
 }
 
-.user-input{
+.user-input {
   position: absolute;
-  left:0;
-  outline:2px solid  rgb(3, 255, 3);
+  left: 0;
+  
   bottom: 0;
-display: flex;
-align-items: center;
-flex-direction: column;
-  background: rgba(102, 233, 102,0.5);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+ background-image: url(../public/assets/parchmentBackground.svg);
+   background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   z-index: 99;
   color: white;
-  font-size:1rem;
+  font-size: 1rem;
   padding: 1em;
 }
 
-.user-avatar-container{
+.user-avatar-container {
   width: 3em;
   /* outline:2px solid red; */
   border-radius: 50%;
   overflow: hidden;
 }
-.suggestion{
-  outline:2px solid red;
+.suggestion {
+  outline: 2px solid red;
   user-select: none;
 }
-.user-profile-container{
+.user-profile-container {
   display: flex;
 }
 
-.opponent{
+.opponent {
   position: absolute;
-  right:0;
-  outline:2px solid  rgb(3, 255, 3);
+  right: 0;
+
   top: 0;
 
-  background: rgba(102, 233, 102,0.5);
+  /* background: rgba(102, 233, 102,0.5); */
+  background-image: url(../public/assets/parchmentBackground.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   z-index: 99;
+  color: white;
+  font-size: 150%;
+  display: flex;
+  justify-content: center;
+  /* padding: 1em; */
+  margin-right: 1rem;
+  /* trash talkin type trainer */
+  padding: 2em;
+  transition: all 1s ease;
+}
+.og {
+  outline: 2px solid rgb(3, 255, 3);
+  background: rgba(102, 233, 102, 0.5);
    color: white;
-   font-size: 150%;
-   display: flex;
-   justify-content: center;
-/* padding: 1em; */
-margin-right: 1rem;
- /* trash talkin type trainer */
 }
-.animate{
+.animate {
   animation: shake 0.2s linear infinite;
-  background: red;
+  /* background: red; */
 }
-.opAvatar{
+.opAvatar {
   width: 2em;
 }
-
-@keyframes shake{
-  0%{
+.enlarge {
+  transform: scale(200%);
+}
+@keyframes shake {
+  0% {
     transform: translateY(-20px);
     transform: translateX(10px);
   }
-  25%{
+  25% {
     transform: translateY(-10px);
     transform: translateX(-10px);
   }
-  100%{
+  100% {
     transform: translateY(20px);
   }
-  100%{
+  100% {
     transform: translateX(-10px);
   }
 }
-.hitMarker{
+.hitMarker {
   position: absolute;
   top: 10px;
   left: -10px;
@@ -120,43 +146,42 @@ margin-right: 1rem;
   /* outline:2px solid red; */
   /* transform: rotate(45deg); */
 }
-.clock-hand{
+.clock-hand {
   width: 100%;
   height: 10%;
   position: absolute;
- 
+
   /* outline:2px solid red; */
   display: flex;
   justify-content: space-between;
 }
 
-.clock-hand div{
-   border-radius: 10px;
+.clock-hand div {
+  border-radius: 10px;
   width: 40%;
   background: white;
   height: 100%;
 }
-.clock{
+.clock {
   transform: rotate(45deg);
 }
-.anti{
+.anti {
   transform: rotate(-45deg);
 }
 
-
-.timer{
+.timer {
   display: flex;
   flex-direction: column;
   margin-top: 2em;
   margin-right: 4em;
 }
 
-.timer-functions{
-  display:flex;
+.timer-functions {
+  display: flex;
   width: 50%;
 }
 
-.header{
+.header {
   display: flex;
   justify-content: space-between;
 }

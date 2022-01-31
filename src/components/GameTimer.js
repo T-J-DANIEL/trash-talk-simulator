@@ -8,6 +8,7 @@ const GameTimer = () => {
     setTimerRunning,
     resetTimer,
     setResetTimer,
+    
   } = useGlobalContext()
   return (
     <div className="timer">
@@ -34,6 +35,10 @@ const TimerFunctions = () => {
     mountPaused,
     mountRunning,
     newPhrases,
+    pauseGame,
+    resumeGame,
+    startGame,
+    endGame,
   } = useGlobalContext()
   return (
     <div className="timer-functions">
@@ -44,6 +49,10 @@ const TimerFunctions = () => {
       <button onClick={() => setTimerRunning(false)}>Pause</button>
       <button onClick={() => setResetTimer(true)}>Reset</button>
       <button onClick={newPhrases}>newPhrases</button>
+      <button onClick={pauseGame}>Pause Game</button>
+      <button onClick={resumeGame}>Resume Game</button>
+      <button onClick={startGame}>Start Game</button>
+      <button onClick={endGame}>End Game</button>
     </div>
   )
 }

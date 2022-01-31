@@ -38,7 +38,7 @@ const AppContextProvider = ({ children }) => {
   )
  
   const [percentageMatch, setPercentageMatch] = useState(0)
-
+const [isInputDisabled,setIsInputDisabled] = useState(false)
   const compareValues = (userTyping) => {
     const testArray = currentPhrase.split("")
     const userArray = userTyping.trim().split("")
@@ -70,17 +70,28 @@ const AppContextProvider = ({ children }) => {
     },[percentageMatch]
   )
   const startGame = () => {
-    /*
-      start a game timer 30s?
-      set up first suggestion and opponent text
-      
-
-    */
-    //timer reset and start
-    //level reset
-    //
+    
+      //clear any timers
+    setTimerExists(false)
+      //reset user text
+    setIsInputDisabled(false)
     setUserText("")
+      //clear score
+      // start a game timer 30s?
+    mountRunning()
+      //set up 1st suggestion/opponent
+    newPhrases()
+    //level reset?
+    //clear multiplier chain
   }
+  const endGame = () => {
+    setTimerExists(false)
+    setUserText("")
+    setIsInputDisabled(true)
+    //run end game score modal
+
+  }
+  
   //timer functions
   const [timerExists, setTimerExists] = useState(false)
   const [timerRunning, setTimerRunning] = useState(true)
@@ -90,12 +101,31 @@ const AppContextProvider = ({ children }) => {
     setTimerExists(true)
     setTimerRunning(false)
   }
-
+  
   //new timer is loaded already in a running state
   const mountRunning = () => {
     setTimerExists(true)
     setTimerRunning(true)
   }
+  const pauseGame = () => {
+    //pause main game timer
+    setTimerRunning(false)
+    //pause any other timer
+    setIsInputDisabled(true)
+    //stop input (change z index of screen barrier? or just make input disabled)
+  }
+  const resumeGame = () =>{
+    //resume timer
+    setTimerRunning(true)
+    //resume any other timer
+    //re enable input
+    setIsInputDisabled(false)
+  }
+  // const showMenu = () =>{
+  //   //pause game
+  //   //show modal
+  //   //include hidemodal + resume game button
+  // }
 
   //SETTINGS
   const [showSettings, setShowSettings] = useState(false)
@@ -153,6 +183,11 @@ const AppContextProvider = ({ children }) => {
         newPhrases,
         score,
         setScore,
+        isInputDisabled,
+        setIsInputDisabled,
+        pauseGame,
+        resumeGame,startGame,
+endGame
       }}
     >
       {children}

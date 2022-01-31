@@ -1,7 +1,7 @@
 import {TimerFunctions} from "./GameTimer"
 const Settings = () =>{
     return (
-        <TimerFunctions/>
+        <><TimerFunctions/></>
     )
 }
 
