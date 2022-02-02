@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState,useEffect,useRef } from "react"
 import UserInput from "./UserInput"
 import Opponent from "./Opponent"
 import Header from "./Header"
@@ -6,20 +6,34 @@ import ReactPlayer from "react-player/youtube"
 import Settings from "./Settings"
 import { useGlobalContext } from "../context"
 const MainPage = () => {
-  const [playing, setPlaying] = useState(false)
+  const [playing, setPlaying] = useState(true)
   //change this nephew
-    const { isYeOlde, setIsYeOlde,showSettings,setShowSettings } = useGlobalContext()
+    const {
+      isYeOlde,
+      setIsYeOlde,
+      showSettings,
+      setShowSettings,
+      yeOldeVid,
+      ogGamerVid,
+    } = useGlobalContext()
+    const vidRef = useRef(null)
+    useEffect(
+      ()=>{
+        vidRef.current.seekTo(300, 'seconds')
+      },[]
+    )
   return (
     <>
     <Header/>
       <div className="vid-container">
       <Opponent/>
         <ReactPlayer
+          ref={vidRef}
           muted={true}
           loop={true}
           playing={playing}
           controls={false}
-          url="https://www.youtube.com/watch?v=sVYyjr84ZXI"
+          url={isYeOlde?yeOldeVid:ogGamerVid}
           width="100%"
           height="100%"
           // onPause={setPlaying(true)}

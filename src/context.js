@@ -13,17 +13,21 @@ const AppContext = React.createContext()
 // }
 //auto recalculate values
 //can have an injured state value and then conditionally render or conditinoally add to class list
+//bonus for over 80% and 100%
 
 const useGlobalContext = () => {
   return useContext(AppContext)
 }
 
 const AppContextProvider = ({ children }) => {
+  const yeOldeVid = "https://www.youtube.com/watch?v=5L-4xVyUKqo"
+  const ogGamerVid = "https://www.youtube.com/watch?v=sVYyjr84ZXI"
   const [isYeOlde, setIsYeOlde] = useState(true)
   const [userText, setUserText] = useState("")
   const [score, setScore] = useState(0)
   const [gameRunning, setGameRunning] = useState(false)
   const [successfulAttack, setSuccessfulAttack] = useState(false)
+  const [visualMatches, setVisualMatches] = useState([])
   // useEffect(() => {
   //   getPhrases()
   // }, [])
@@ -39,18 +43,31 @@ const AppContextProvider = ({ children }) => {
  
   const [percentageMatch, setPercentageMatch] = useState(0)
 const [isInputDisabled,setIsInputDisabled] = useState(false)
+
+
   const compareValues = (userTyping) => {
     const testArray = currentPhrase.split("")
     const userArray = userTyping.trim().split("")
     const matches = testArray.filter(
       (item, index) => item === userArray[index]
     ).length
-    console.log("testArray", testArray)
-    console.log("userArray", userArray)
-    console.log("matches", matches)
+    const calcVisualMatches = testArray.map((item, index) =>
+      item === userTyping.split("")[index]
+        ? { char: currentPhrase.split("")[index], isCorrect: true }
+        : { char: currentPhrase.split("")[index], isCorrect: false }
+    )
+    setVisualMatches(calcVisualMatches)
+    console.log("test array length and visual matches length",testArray.length,visualMatches.length)
+    //need to use actual letters that wrap in container
+    
+    // get test array and compare each value to user
+    // console.log("testArray", testArray)
+    // console.log("userArray", userArray)
+    // console.log("matches", matches)
     setPercentageMatch(Math.ceil((matches / testArray.length) * 100))
     console.log("percentage Match", percentageMatch)
   }
+
   useEffect(
     ()=>{
       if (percentageMatch === 100) {
@@ -153,6 +170,7 @@ const [isInputDisabled,setIsInputDisabled] = useState(false)
     console.log("our two",randomUserIndex, randomOppIndex)
     setCurrentPhraseList(workingArray)
     console.log("working array set as new", workingArray.length,currentPhraseList.length,"===> END  ")
+    setVisualMatches([])
   }
   return (
     <AppContext.Provider
@@ -186,8 +204,12 @@ const [isInputDisabled,setIsInputDisabled] = useState(false)
         isInputDisabled,
         setIsInputDisabled,
         pauseGame,
-        resumeGame,startGame,
-endGame
+        resumeGame,
+        startGame,
+        endGame,
+        yeOldeVid,
+        ogGamerVid,
+        visualMatches,
       }}
     >
       {children}

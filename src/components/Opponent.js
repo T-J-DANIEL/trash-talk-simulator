@@ -20,16 +20,16 @@ const Opponent = () =>{
             </div>
           </div>
         )}
-        <div className="opAvatar">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGO3j7Oj2XxYmd06-QxZVDiUDLIXz40m1bwg&usqp=CAU"
-            alt=""
-          />
+        <div className="opp-user-container">
+          <div className="op-avatar">
+            <img
+              src="https://i.pinimg.com/236x/a0/21/9d/a0219dd7fe12d9142e576ed3cfad1b10--dutch-republic-famous-men.jpg"
+              alt=""
+            />
+          </div>
+          <div>userName: </div>
         </div>
-        <div>userName</div>
-        <div className="opponentText">
-          <p>{opponentPhrase}</p>
-        </div>
+        <div className="opponent-text">{opponentPhrase}</div>
       </div>
     )
 }
