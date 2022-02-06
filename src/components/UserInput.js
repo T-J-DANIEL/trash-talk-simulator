@@ -16,6 +16,8 @@ const UserInput = () => {
     isInputDisabled,
     setIsinputDisabled,
     visualMatches,
+    comboChain,
+    setComboChain,
   } = useGlobalContext()
 
   return (
@@ -32,9 +34,9 @@ const UserInput = () => {
           <div className="visual-progress">
             {visualMatches.map((item, index) =>
               item.isCorrect ? (
-                <div className="green">{item.char}</div>
+                <span className="green">{item.char}</span>
               ) : (
-                <div className="red">{item.char}</div>
+                <span className="red">{item.char}</span>
               )
             )}
           </div>
@@ -52,10 +54,13 @@ const UserInput = () => {
               setTimeout(() => {
                 setSuccessfulAttack(false)
               }, 500)
+              setComboChain((prev) => [...prev, <div className="gold-coin" />])
             }
             setScore((prev) => prev + percentageMatch)
             setPercentageMatch(0)
             setUserText("")
+            setComboChain([])
+            
             newPhrases()
             //should call this it own function
           }

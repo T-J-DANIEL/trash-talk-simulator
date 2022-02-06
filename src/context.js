@@ -28,6 +28,7 @@ const AppContextProvider = ({ children }) => {
   const [gameRunning, setGameRunning] = useState(false)
   const [successfulAttack, setSuccessfulAttack] = useState(false)
   const [visualMatches, setVisualMatches] = useState([])
+  const [comboChain,setComboChain] = useState([])
   // useEffect(() => {
   //   getPhrases()
   // }, [])
@@ -43,7 +44,7 @@ const AppContextProvider = ({ children }) => {
  
   const [percentageMatch, setPercentageMatch] = useState(0)
 const [isInputDisabled,setIsInputDisabled] = useState(false)
-
+const [streakArray,setStreakArray] = useState([])
 
   const compareValues = (userTyping) => {
     const testArray = currentPhrase.split("")
@@ -81,6 +82,8 @@ const [isInputDisabled,setIsInputDisabled] = useState(false)
         //same as above really
         setPercentageMatch(0)
         setUserText("")
+        setComboChain((prev) => [...prev, <div className="gold-coin">{comboChain.length+1}X</div>])
+        // see this
         newPhrases()
         //should call this it own function
       }
@@ -95,6 +98,7 @@ const [isInputDisabled,setIsInputDisabled] = useState(false)
     setUserText("")
       //clear score
       // start a game timer 30s?
+      setComboChain([])
     mountRunning()
       //set up 1st suggestion/opponent
     newPhrases()
@@ -172,6 +176,15 @@ const [isInputDisabled,setIsInputDisabled] = useState(false)
     console.log("working array set as new", workingArray.length,currentPhraseList.length,"===> END  ")
     setVisualMatches([])
   }
+  const streak = () =>{
+
+       if (comboChain>0){
+        for(let i = 1;i<=comboChain;i++){
+        setStreakArray((prev) =>[...prev,<div className="gold-coin" />])
+      }
+    }
+  }
+ 
   return (
     <AppContext.Provider
       value={{
@@ -210,6 +223,9 @@ const [isInputDisabled,setIsInputDisabled] = useState(false)
         yeOldeVid,
         ogGamerVid,
         visualMatches,
+        comboChain,
+        setComboChain,
+        streakArray,
       }}
     >
       {children}
