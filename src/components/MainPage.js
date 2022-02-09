@@ -5,9 +5,10 @@ import Header from "./Header"
 import ReactPlayer from "react-player/youtube"
 import Settings from "./Settings"
 import ScoreStreak from "./ScoreStreak"
+import StartGame from "./StartGame"
 import { useGlobalContext } from "../context"
 const MainPage = () => {
-  const [playing, setPlaying] = useState(true)
+  const [playing, setPlaying] = useState(false)
   //change this nephew
     const {
       isYeOlde,
@@ -16,8 +17,7 @@ const MainPage = () => {
       setShowSettings,
       yeOldeVid,
       ogGamerVid,
-      comboChain,
-      setComboChain,
+      isNewGame,
     } = useGlobalContext()
     const vidRef = useRef(null)
     useEffect(
@@ -27,13 +27,7 @@ const MainPage = () => {
     )
   return (
     <>
-      <div className="grid-container">
-        <div className="one"></div>
-        <div className="two"></div>
-        <div className="three"></div>
-        <div className="four"></div>
-        <div className="five"></div>
-      </div>
+     {isNewGame&&<StartGame/>}
       <Header />
       <div className="vid-container">
         <Opponent />
@@ -75,7 +69,7 @@ const MainPage = () => {
             setShowSettings((prev) => !prev)
           }}
         >
-          {showSettings ? "X" : "Settings"}
+          |||
         </button>
         {showSettings && <Settings />}
       </div>

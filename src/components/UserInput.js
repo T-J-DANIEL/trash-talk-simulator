@@ -19,7 +19,21 @@ const UserInput = () => {
     comboChain,
     setComboChain,
   } = useGlobalContext()
+  const interleave = (arr, thing) =>
+    [].concat(...arr.map((n) => [n, thing])).slice(0, -1)
 
+  const idea = visualMatches.map((item, currentIndex) =>
+    item.map((item, index) =>
+      item.isCorrect ? (
+        <span className="green">{item.char}</span>
+      ) : (
+        <span className="red">{item.char}</span>
+      )
+    )
+  )
+
+  //wrap all in span
+  const wrappedIdea = idea.map(item=><span>{item}</span>)
   return (
     <div className="user-input">
       <div className="user-profile-container">
@@ -32,13 +46,7 @@ const UserInput = () => {
         <div className="suggestion">
           <p>: {currentPhrase}</p>
           <div className="visual-progress">
-            {visualMatches.map((item, index) =>
-              item.isCorrect ? (
-                <span className="green">{item.char}</span>
-              ) : (
-                <span className="red">{item.char}</span>
-              )
-            )}
+            {interleave(wrappedIdea, <span>&nbsp;</span>)}
           </div>
         </div>
       </div>
@@ -54,13 +62,14 @@ const UserInput = () => {
               setTimeout(() => {
                 setSuccessfulAttack(false)
               }, 500)
-              setComboChain((prev) => [...prev, <div className="gold-coin" />])
+              
+              setComboChain((prev) => [...prev, <div className={`gold-coin gold-streak`} />])
             }
             setScore((prev) => prev + percentageMatch)
             setPercentageMatch(0)
             setUserText("")
             setComboChain([])
-            
+
             newPhrases()
             //should call this it own function
           }

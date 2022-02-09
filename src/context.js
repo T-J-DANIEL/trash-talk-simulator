@@ -22,13 +22,15 @@ const useGlobalContext = () => {
 const AppContextProvider = ({ children }) => {
   const yeOldeVid = "https://www.youtube.com/watch?v=5L-4xVyUKqo"
   const ogGamerVid = "https://www.youtube.com/watch?v=sVYyjr84ZXI"
+
   const [isYeOlde, setIsYeOlde] = useState(true)
+  const [isNewGame, setIsNewGame] = useState(true)
   const [userText, setUserText] = useState("")
   const [score, setScore] = useState(0)
   const [gameRunning, setGameRunning] = useState(false)
   const [successfulAttack, setSuccessfulAttack] = useState(false)
   const [visualMatches, setVisualMatches] = useState([])
-  const [comboChain,setComboChain] = useState([])
+  const [comboChain, setComboChain] = useState([])
   // useEffect(() => {
   //   getPhrases()
   // }, [])
@@ -41,66 +43,114 @@ const AppContextProvider = ({ children }) => {
   const [opponentPhrase, setOpponentPhrase] = useState(
     "placeholder for Opponent"
   )
- 
-  const [percentageMatch, setPercentageMatch] = useState(0)
-const [isInputDisabled,setIsInputDisabled] = useState(false)
-const [streakArray,setStreakArray] = useState([])
 
+  const [percentageMatch, setPercentageMatch] = useState(0)
+  const [isInputDisabled, setIsInputDisabled] = useState(false)
+  const [streakArray, setStreakArray] = useState([])
+
+  // comparing values function
   const compareValues = (userTyping) => {
+    //current testing phrase split
     const testArray = currentPhrase.split("")
-    const userArray = userTyping.trim().split("")
+    //user typing split
+    const userArray = userTyping.trim().split("") //#endregion
+
+    // words in test array
+    const testArrayWords = currentPhrase.split(" ")
+    // words in user array
+    const userArrayWords = userTyping.trim().split(" ")
+    //letter in each word
+    const testArrayWordsLetters = currentPhrase
+      .split(" ")
+      .map((item) => item.split(""))
+    const userArrayWordsLetters = userTyping
+      .split(" ")
+      .map((item) => item.split(""))
+    //take word and compare all values in each word, each space signifies moving on to next word
+    //so display words with letters?, get input select first word of current phrase compare values to the first word when a space is detected we are ontto next one
+    const newMatches = testArrayWordsLetters.map((item, currentIndex) => {
+      
+return userTyping.split(" ").map((item) => item.split(""))[currentIndex]
+  ? item.map((item, index) => {
+      return userTyping.split(" ").map((item) => item.split(""))[currentIndex][
+        index
+      ] === item
+        ? {
+            char: testArrayWordsLetters[currentIndex][index],
+            isCorrect: true,
+          }
+        : {
+            char: testArrayWordsLetters[currentIndex][index],
+            isCorrect: false,
+          }
+    })
+  : testArrayWordsLetters[currentIndex].map(
+    item=>{
+            return {char: item,
+            isCorrect: false,}
+          }
+  )
+
+    
+    })
+    console.log("new matches",newMatches)
+
+    //no of matches when comparing the two
     const matches = testArray.filter(
       (item, index) => item === userArray[index]
     ).length
+    //checking for each value of test array if usertyping char macthes or not and we return true or false
     const calcVisualMatches = testArray.map((item, index) =>
       item === userTyping.split("")[index]
         ? { char: currentPhrase.split("")[index], isCorrect: true }
         : { char: currentPhrase.split("")[index], isCorrect: false }
     )
-    setVisualMatches(calcVisualMatches)
-    console.log("test array length and visual matches length",testArray.length,visualMatches.length)
-    //need to use actual letters that wrap in container
-    
-    // get test array and compare each value to user
-    // console.log("testArray", testArray)
-    // console.log("userArray", userArray)
-    // console.log("matches", matches)
+    //updating visual matches
+    // setVisualMatches(calcVisualMatches)
+    setVisualMatches(newMatches)
+
+    console.log(
+      "test array length and visual matches length",
+      testArray.length,
+      visualMatches.length
+    )
     setPercentageMatch(Math.ceil((matches / testArray.length) * 100))
     console.log("percentage Match", percentageMatch)
   }
 
-  useEffect(
-    ()=>{
-      if (percentageMatch === 100) {
-         
-           setSuccessfulAttack(true)
-           setTimeout(() => {
-             setSuccessfulAttack(false)
-           }, 500)
-         
-        setScore((prev) => prev + 100)
-        //same as above really
-        setPercentageMatch(0)
-        setUserText("")
-        setComboChain((prev) => [...prev, <div className="gold-coin">{comboChain.length+1}X</div>])
-        // see this
-        newPhrases()
-        //should call this it own function
-      }
-    },[percentageMatch]
-  )
+  useEffect(() => {
+    if (percentageMatch === 100) {
+      setSuccessfulAttack(true)
+      setTimeout(() => {
+        setSuccessfulAttack(false)
+      }, 500)
+
+      setScore((prev) => prev + 100)
+      //same as above really
+      setPercentageMatch(0)
+      setUserText("")
+      setComboChain((prev) => [
+        ...prev,
+        <div className={`gold-coin gold-streak`}>{comboChain.length + 1}X</div>,
+      ])
+      // see this
+      newPhrases()
+      
+      //should call this it own function
+    }
+    //perhaps should be called when typing
+  }, [percentageMatch])
   const startGame = () => {
-    
-      //clear any timers
+    //clear any timers
     setTimerExists(false)
-      //reset user text
+    //reset user text
     setIsInputDisabled(false)
     setUserText("")
-      //clear score
-      // start a game timer 30s?
-      setComboChain([])
+    //clear score
+    // start a game timer 30s?
+    setComboChain([])
     mountRunning()
-      //set up 1st suggestion/opponent
+    //set up 1st suggestion/opponent
     newPhrases()
     //level reset?
     //clear multiplier chain
@@ -110,9 +160,8 @@ const [streakArray,setStreakArray] = useState([])
     setUserText("")
     setIsInputDisabled(true)
     //run end game score modal
-
   }
-  
+
   //timer functions
   const [timerExists, setTimerExists] = useState(false)
   const [timerRunning, setTimerRunning] = useState(true)
@@ -122,7 +171,7 @@ const [streakArray,setStreakArray] = useState([])
     setTimerExists(true)
     setTimerRunning(false)
   }
-  
+
   //new timer is loaded already in a running state
   const mountRunning = () => {
     setTimerExists(true)
@@ -135,7 +184,7 @@ const [streakArray,setStreakArray] = useState([])
     setIsInputDisabled(true)
     //stop input (change z index of screen barrier? or just make input disabled)
   }
-  const resumeGame = () =>{
+  const resumeGame = () => {
     //resume timer
     setTimerRunning(true)
     //resume any other timer
@@ -154,37 +203,52 @@ const [streakArray,setStreakArray] = useState([])
   //send random phrase
   const newPhrases = () => {
     //take the phrase block and remove the previous
-  
+
     //make this the new working phrase block
     //pick a random phrase for the user and for the opponent
     let workingArray = [...currentPhraseList]
-      console.log("copied",workingArray.length,currentPhraseList.length)
+    console.log("copied", workingArray.length, currentPhraseList.length)
     const randomUserIndex = Math.floor(Math.random() * workingArray.length)
-      console.log("user index set",randomUserIndex)
+    console.log("user index set", randomUserIndex)
     setCurrentPhrase(workingArray[randomUserIndex].insult)
-    workingArray = workingArray.filter((item, index) => index !== randomUserIndex)
-        console.log("removed user index", workingArray.length, currentPhraseList.length)
+    workingArray = workingArray.filter(
+      (item, index) => index !== randomUserIndex
+    )
+    console.log(
+      "removed user index",
+      workingArray.length,
+      currentPhraseList.length
+    )
     const randomOppIndex = Math.floor(Math.random() * workingArray.length)
     console.log("Opp index set", randomOppIndex)
     setOpponentPhrase(workingArray[randomOppIndex].insult)
     workingArray = workingArray.filter(
       (item, index) => index !== randomOppIndex
     )
-      console.log("removed opp index", workingArray.length, currentPhraseList.length)
-    console.log("our two",randomUserIndex, randomOppIndex)
+    console.log(
+      "removed opp index",
+      workingArray.length,
+      currentPhraseList.length
+    )
+    console.log("our two", randomUserIndex, randomOppIndex)
     setCurrentPhraseList(workingArray)
-    console.log("working array set as new", workingArray.length,currentPhraseList.length,"===> END  ")
+    console.log(
+      "working array set as new",
+      workingArray.length,
+      currentPhraseList.length,
+      "===> END  "
+    )
     setVisualMatches([])
+    
   }
-  const streak = () =>{
-
-       if (comboChain>0){
-        for(let i = 1;i<=comboChain;i++){
-        setStreakArray((prev) =>[...prev,<div className="gold-coin" />])
+  const streak = () => {
+    if (comboChain > 0) {
+      for (let i = 1; i <= comboChain; i++) {
+        setStreakArray((prev) => [...prev, <div className="gold-coin" />])
       }
     }
   }
- 
+
   return (
     <AppContext.Provider
       value={{
@@ -226,6 +290,8 @@ const [streakArray,setStreakArray] = useState([])
         comboChain,
         setComboChain,
         streakArray,
+        isNewGame,
+        setIsNewGame,
       }}
     >
       {children}
