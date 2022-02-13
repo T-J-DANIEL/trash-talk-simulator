@@ -1,19 +1,8 @@
 import React, { useContext, useState, useEffect, useReducer } from "react"
 import UserInput from "./components/UserInput"
-import { shakesPhrases } from "./data"
-// import data from "./data"
+import { shakesPhrases,randoShake } from "./data"
 // import reducer from "./reducer"
 const AppContext = React.createContext()
-
-// const initialState = {
-//   loading: true,
-//   cart: data,
-//   total: 0,
-//   amount: 0,
-// }
-//auto recalculate values
-//can have an injured state value and then conditionally render or conditinoally add to class list
-//bonus for over 80% and 100%
 
 const useGlobalContext = () => {
   return useContext(AppContext)
@@ -23,10 +12,8 @@ const AppContextProvider = ({ children }) => {
   const yeOldeVid = "https://www.youtube.com/watch?v=5L-4xVyUKqo"
   const ogGamerVid = "https://www.youtube.com/watch?v=sVYyjr84ZXI"
 
-  let enemyTimer
   const [level, setLevel] = useState("normal")
   const [scroll, setScroll] = useState(false)
-
   const [isYeOlde, setIsYeOlde] = useState(true)
   const [isNewGame, setIsNewGame] = useState(true)
   const [userText, setUserText] = useState("")
@@ -57,8 +44,7 @@ const AppContextProvider = ({ children }) => {
     //current testing phrase split
     const testArray = currentPhrase.split("")
     //user typing split
-    const userArray = userTyping.trim().split("") //#endregion
-
+    const userArray = userTyping.trim().split("") 
     // words in test array
     const testArrayWords = currentPhrase.split(" ")
     // words in user array
@@ -92,7 +78,6 @@ const AppContextProvider = ({ children }) => {
           })
     })
     
-
     //no of matches when comparing the two
     const matches = testArray.filter(
       (item, index) => item === userArray[index]
@@ -218,6 +203,11 @@ const AppContextProvider = ({ children }) => {
     //remove this phrase from the working array so it cannot be chosen for opp
     workingArray = workingArray.filter((_, index) => index !== randomUserIndex)
 
+
+    //TODO:CONVERT TO RANDOM 
+    //three random indexes, one for each word in randoShake array
+    //set opp phrase to a template literals starting with "thou" then the three variables
+
     //pick random phrase from this filtered working array and filter it out frm working array
     const randomOppIndex = Math.floor(Math.random() * workingArray.length)
     setOpponentPhrase(workingArray[randomOppIndex].insult)
@@ -225,9 +215,9 @@ const AppContextProvider = ({ children }) => {
       (item, index) => index !== randomOppIndex
     )
 
+
     //set our current array to our working array
     setCurrentPhraseList(workingArray)
-      
   }
 
   //add to streak (is this used?)
@@ -238,37 +228,10 @@ const AppContextProvider = ({ children }) => {
       }
     }
   }
-  // const responseTime =
-  //   level === "easy"
-  //     ? 15000
-  //     : level === "normal"
-  //     ? 10000
-  //     : level === "hard"
-  //     ? 7000
-  //     : ""
-    
-  // function startOppTime () {
-  //   console.log("scroll", scroll, enemyTimer)
-  //   setScroll(false)
-  // }
-  // const startTimer = () => {
-  //   enemyTimer = setTimeout(startOppTime, responseTime)
-  // }
-  // const endTimer = () => {
-  //   clearTimeout(enemyTimer)
-  //   console.log("enemy timer cleared", enemyTimer)
-  // }
 
   useEffect(() => {
-   
     //make visual progress phrase load in straight away
     compareValues("")
-    //start scroll animation for opp
-        // endTimer()
-        // setScroll(true)
-        // startTimer()
-    //clearTimeout(enemyTimer)
-    
   }, [currentPhrase])
 
   return (
@@ -319,7 +282,6 @@ const AppContextProvider = ({ children }) => {
         setScroll,
         level,
         setLevel,
-        enemyTimer,
         userAttacked,
         setUserAttacked,
       }}

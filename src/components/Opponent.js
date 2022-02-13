@@ -24,20 +24,6 @@ const Opponent = () => {
   const [timer, setTimer] = useState(false)
   const timerRef = useRef(null)
 
-  // const startTimer = () => {
-  //   setScroll(true)
-  //   setTimer(true)
-  //   let enemyTimer = setTimeout(() => {
-  //     setScroll(false)
-  //   }, responseTime)
-  //   timerRef.current = enemyTimer
-  // }
-  // const endTimer = () => {
-  //   setScroll(false)
-  //   clearTimeout(timerRef.current)
-  //   setTimer(false)
-  // }
-
   useEffect(() => {
     setTimeout(() => {
       setScroll(false)
@@ -91,13 +77,6 @@ const Opponent = () => {
         <div>user{level}: </div>
       </div>
       <p className={textClasses}>{opponentPhrase}</p>
-      <button
-        onClick={() => {
-          setScroll(!scroll)
-        }}
-      >
-        scroll/noscroll
-      </button>
       <span>{userAttacked && successfulAttack? "NOT" : userAttacked? "ATTACKED" : "*"}</span>
     </div>
   )

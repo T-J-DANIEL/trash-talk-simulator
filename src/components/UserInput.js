@@ -18,8 +18,6 @@ const UserInput = () => {
     visualMatches,
     comboChain,
     setComboChain,
-    enemyTimer,
-    setScroll
   } = useGlobalContext()
   const interleave = (arr, thing) =>
     [].concat(...arr.map((n) => [n, thing])).slice(0, -1)
@@ -46,7 +44,7 @@ const UserInput = () => {
           />
         </div>
         <div className="suggestion">
-          <p>: {currentPhrase}</p>
+          {/* <p>: {currentPhrase}</p> */}
           <div className="visual-progress">
             {interleave(wrappedIdea, <span>&nbsp;</span>)}
           </div>
@@ -74,7 +72,7 @@ const UserInput = () => {
             
            
             newPhrases()
-            //clearTimeout(enemyTimer)
+            
             //should call this it own function
           }
         }}
