@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom"
 import { useGlobalContext } from "../context"
 const StartGame = () => {
-    const { setIsNewGame } = useGlobalContext()
+    const { setIsNewGame, startGame, level, setLevel } = useGlobalContext()
     return (
       <div className="overlay-container">
         <div className="start-game-inner-container">
@@ -10,8 +10,37 @@ const StartGame = () => {
             curse thy opponent as quickly as thine be capable, build up thine
             combo to geteth extra points.
           </p>
-          <button onClick={()=>{setIsNewGame(false)}}>start game</button>
+          <button
+            onClick={() => {
+              setIsNewGame(false)
+              startGame()
+            }}
+          >
+            start game
+          </button>
         </div>
+      
+        <button
+          onClick={(e) => {
+            setLevel("easy")
+          }}
+        >
+          easy
+        </button>
+        <button
+          onClick={(e) => {
+            setLevel("normal")
+          }}
+        >
+          normal
+        </button>
+        <button
+          onClick={(e) => {
+            setLevel("hard")
+          }}
+        >
+          hard
+        </button>
       </div>
     )
 }

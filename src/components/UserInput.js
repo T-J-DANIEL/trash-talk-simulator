@@ -18,6 +18,8 @@ const UserInput = () => {
     visualMatches,
     comboChain,
     setComboChain,
+    enemyTimer,
+    setScroll
   } = useGlobalContext()
   const interleave = (arr, thing) =>
     [].concat(...arr.map((n) => [n, thing])).slice(0, -1)
@@ -25,9 +27,9 @@ const UserInput = () => {
   const idea = visualMatches.map((item, currentIndex) =>
     item.map((item, index) =>
       item.isCorrect ? (
-        <span className="green">{item.char}</span>
+        <span key={index} className="green">{item.char}</span>
       ) : (
-        <span className="red">{item.char}</span>
+        <span key={index} className="red">{item.char}</span>
       )
     )
   )
@@ -69,13 +71,17 @@ const UserInput = () => {
             setPercentageMatch(0)
             setUserText("")
             setComboChain([])
-
+            
+           
             newPhrases()
+            //clearTimeout(enemyTimer)
             //should call this it own function
           }
         }}
         onChange={(e) => {
           setUserText(e.target.value)
+          // why wont this update on time?
+          //maybe if we used a handle change function? it might force update every time
           compareValues(e.target.value)
           //if 100% or timer reaches 0 then next question
           // if score is higher than 80% then hitmarker and bonus points
@@ -93,6 +99,7 @@ const UserInput = () => {
         >
           attack
         </button>
+        
       </div>
     </div>
   )

@@ -8,7 +8,7 @@ const GameTimer = () => {
     setTimerRunning,
     resetTimer,
     setResetTimer,
-    
+    endGame,
   } = useGlobalContext()
   return (
     <div className="timer">
@@ -21,6 +21,8 @@ const GameTimer = () => {
           minutes="0.5"
           size="0"
           fontSize="2rem"
+          onComplete={endGame}
+          completeMsg="Vanquished!"
         />
       ) : null}
     </div>

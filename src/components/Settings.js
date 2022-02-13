@@ -9,23 +9,14 @@ const Settings = () => {
     mountPaused,
     mountRunning,
     newPhrases,
-    pauseGame,
     resumeGame,
     startGame,
     endGame,
-    showSettings,
-    setShowSettings,
   } = useGlobalContext()
   return ReactDOM.createPortal(
     <div className="overlay-container">
       <div className="settings-inner-container">
-        <button
-          onClick={() => {
-            setShowSettings((prev) => !prev)
-          }}
-        >
-          X
-        </button>
+        <button onClick={resumeGame}>X</button>
         <h1>Settings</h1>
         <div className="settings-button-container">
           <button onClick={() => mountRunning()}>
@@ -37,7 +28,6 @@ const Settings = () => {
           <button onClick={() => setTimerRunning(false)}>Pause</button>
           <button onClick={() => setResetTimer(true)}>Reset</button>
           <button onClick={newPhrases}>newPhrases</button>
-          <button onClick={pauseGame}>Pause Game</button>
           <button onClick={resumeGame}>Resume Game</button>
           <button onClick={startGame}>Start Game</button>
           <button onClick={endGame}>End Game</button>

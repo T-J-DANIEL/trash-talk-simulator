@@ -1,7 +1,8 @@
 
-//TODO:finish streak score box
+//TODO:
 //get timer in place
-//
-//split test prhase in to words
-//split user input into words
-compare words instead pf characters
+
+//start game > 3,2,1 start
+//phrase given opp starts scroll to reveal
+  // faster than opponent > cancel scroll, pause enlarge and attack unpause and new phrases
+  // slower than opponent >(scroll finished) opp enlarge, attack , unpause and new phrases

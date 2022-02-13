@@ -6,6 +6,7 @@ import ReactPlayer from "react-player/youtube"
 import Settings from "./Settings"
 import ScoreStreak from "./ScoreStreak"
 import StartGame from "./StartGame"
+import EndGame from "./EndGame"
 import { useGlobalContext } from "../context"
 const MainPage = () => {
   const [playing, setPlaying] = useState(false)
@@ -14,10 +15,12 @@ const MainPage = () => {
       isYeOlde,
       setIsYeOlde,
       showSettings,
-      setShowSettings,
+      pauseGame,
       yeOldeVid,
       ogGamerVid,
       isNewGame,
+      gameRunning,
+      gameEnded,
     } = useGlobalContext()
     const vidRef = useRef(null)
     useEffect(
@@ -27,7 +30,8 @@ const MainPage = () => {
     )
   return (
     <>
-     {isNewGame&&<StartGame/>}
+      {isNewGame && <StartGame />}
+      {gameEnded && <EndGame />}
       <Header />
       <div className="vid-container">
         <Opponent />
@@ -44,7 +48,6 @@ const MainPage = () => {
         />
         <div className="vid-cover"></div>
         <UserInput />
-        
       </div>
       <div className="settings">
         <button
@@ -64,16 +67,10 @@ const MainPage = () => {
         </button>
       </div>
       <div>
-        <button
-          onClick={() => {
-            setShowSettings((prev) => !prev)
-          }}
-        >
-          |||
-        </button>
+        <button onClick={pauseGame}>|||</button>
         {showSettings && <Settings />}
       </div>
-       <ScoreStreak />
+      <ScoreStreak />
     </>
   )
 }
