@@ -168,7 +168,7 @@ input::first-letter {
   color: white;
   font-size: 150%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   margin-right: 1rem;
   padding: 2em;
@@ -183,7 +183,9 @@ input::first-letter {
   color: red;
   text-transform: capitalize;
 }
-
+/* .opponent-text{
+  justify-self: flex-start;
+} */
 .opp-text-animation {
   border-right: 0.15em solid white;
   white-space: nowrap;
@@ -257,6 +259,7 @@ border-right: 0.15em solid white;
 }
 .opp-user-container {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   margin-right: 0.5em;
 }
