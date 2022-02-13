@@ -18,7 +18,7 @@ const GameTimer = () => {
           setRunning={setTimerRunning}
           reset={resetTimer}
           setReset={setResetTimer}
-          minutes="0.5"
+          minutes="5"
           size="0"
           fontSize="2rem"
           onComplete={endGame}

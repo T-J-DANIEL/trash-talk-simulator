@@ -38,11 +38,10 @@ const Opponent = () => {
   //   setTimer(false)
   // }
 
-
   useEffect(() => {
     setTimeout(() => {
-         setScroll(false)
-        console.log("ended")
+      setScroll(false)
+      console.log("ended")
     }, 0)
     setTimeout(() => {
       setScroll(true)
@@ -55,14 +54,14 @@ const Opponent = () => {
     }, 30)
 
     setTimeout(() => {
-      let attackTimer = setTimeout(()=>{
-        setUserAttacked(true)
+      let attackTimer = setTimeout(() => {
+        successfulAttack === true ? setUserAttacked(false) : setUserAttacked(true)
+        console.log("attack")
       }, responseTime)
       timerRef.current = attackTimer
-    },40)
+    }, 40,successfulAttack)
   }, [opponentPhrase])
 
- 
   //scyncro issue, ending timer is causeing ended,ended scrol, started
   //correct order is end start start scroll end scroll
   const attackClasses = `opponent ${successfulAttack ? "animate" : ""}`
@@ -99,7 +98,7 @@ const Opponent = () => {
       >
         scroll/noscroll
       </button>
-      <span>{userAttacked?"ATTACK":""}</span>
+      <span>{userAttacked && successfulAttack? "NOT" : userAttacked? "ATTACKED" : "*"}</span>
     </div>
   )
 }
