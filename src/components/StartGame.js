@@ -1,5 +1,8 @@
 import ReactDOM from "react-dom"
 import { useGlobalContext } from "../context"
+//component displayed at start of game only if 'isNewGame' is true, contains difficulty settings/user settings
+//TODO not clear what difficulty is set, also opponent starts immediately after difficulty is set not when game starts
+//also can add other user settings sound?, change layout its pretty badly spaced at the moment
 const StartGame = () => {
     const { setIsNewGame, startGame, level, setLevel } = useGlobalContext()
     return (

@@ -1,6 +1,8 @@
 import ReactDOM from "react-dom"
 import { useGlobalContext } from "../context"
+//settings component accessed by clicking hamburger button
 const Settings = () => {
+  //all these timer methods and timer state values  are imported from context 
   const {
     setPlaying,
     setTimerExists,

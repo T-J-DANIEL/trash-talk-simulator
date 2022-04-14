@@ -1,5 +1,5 @@
 import { useGlobalContext } from "../context"
-
+//component that shows user score and gold coin streak
 const ScoreStreak = () => {
   const { score, streakArray ,comboChain} = useGlobalContext()
   return (

@@ -1,6 +1,9 @@
-import { useState } from "react"
+
 import Timer from "simple-circle-timer"
+// npm timer package
 import { useGlobalContext } from "../context"
+
+//this is the game timer component, it uses state values to set various properties
 const GameTimer = () => {
   const {
     timerExists,
@@ -29,6 +32,7 @@ const GameTimer = () => {
   )
 }
 
+//this is the timer functions component that holds all functions to control the timer 
 const TimerFunctions = () => {
   const {
     setTimerExists,

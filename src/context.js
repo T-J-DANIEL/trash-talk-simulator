@@ -1,58 +1,79 @@
 import React, { useContext, useState, useEffect, useReducer } from "react"
-import UserInput from "./components/UserInput"
-import { shakesPhrases,randoShake } from "./data"
-// import reducer from "./reducer"
-const AppContext = React.createContext()
 
+//import the phrases both random and preset
+import { shakesPhrases, randoShake } from "./data"
+
+// import reducer from "./reducer"?
+const AppContext = React.createContext()
+//global context custom hook
 const useGlobalContext = () => {
   return useContext(AppContext)
 }
-
+//context provider
 const AppContextProvider = ({ children }) => {
+  //video background links
   const yeOldeVid = "https://www.youtube.com/watch?v=5L-4xVyUKqo"
   const ogGamerVid = "https://www.youtube.com/watch?v=sVYyjr84ZXI"
-
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> main state values <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  //difficulty level
   const [level, setLevel] = useState("normal")
+  //enemy writing animation scroll
   const [scroll, setScroll] = useState(false)
+  //'yeolde' mode
   const [isYeOlde, setIsYeOlde] = useState(true)
+  //has game run before or not?
   const [isNewGame, setIsNewGame] = useState(true)
+  //users typed text (controlled form)
   const [userText, setUserText] = useState("")
+  //user score
   const [score, setScore] = useState(0)
-  const [gameRunning, setGameRunning] = useState(true)
+  //is game in progress?T
+  const [gameRunning, setGameRunning] = useState(true) //TODO is this even used?
+  //has game ended?
   const [gameEnded, setGameEnded] = useState(false)
+  //user has attacked
   const [userAttacked, setUserAttacked] = useState(false)
-  const [successfulAttack, setSuccessfulAttack] = useState(false)
+  //opponent has succesfully attacked
+  const [successfulAttack, setSuccessfulAttack] = useState(false) //TODO change this value name its confusing
+  //visual representation of correct or incorrect letter typed (green/red background letters)
   const [visualMatches, setVisualMatches] = useState([])
+  //counts how many answers over 85% a user has achieved
   const [comboChain, setComboChain] = useState([])
 
-  //opp gets random phrase gen user gets shakesphrases
-
+  //opp gets random phrase gen from triplet list user gets actual shakespeare phrase
+  //TODO whats up with this?
   const getPhrases = () => {
     // return isYeOlde ? shakesPhrases : trashPhrases
     return shakesPhrases
   }
+  //current available list of phrases
   const [currentPhraseList, setCurrentPhraseList] = useState(getPhrases)
+  //current selected phrase
   const [currentPhrase, setCurrentPhrase] = useState("...")
+  //opponents available phrase list
   const [opponentPhrase, setOpponentPhrase] = useState("...")
-
+  //the percentage that userText matches the currentPhrase
   const [percentageMatch, setPercentageMatch] = useState(0)
+  //is user input disabled?
   const [isInputDisabled, setIsInputDisabled] = useState(false)
+  //array for holding streak gold coins
   const [streakArray, setStreakArray] = useState([])
 
-  // comparing values function
+  // comparing values function //TODO white space not accounted for, spaces at front are registered as a word and comparing to word after
   const compareValues = (userTyping) => {
-    //current testing phrase split
+    //current testing phrase split in to individual letters
     const testArray = currentPhrase.split("")
-    //user typing split
-    const userArray = userTyping.trim().split("") 
-    // words in test array
+    //user typing split in to individual letters
+    const userArray = userTyping.trim().split("")
+    // test phrase split into words
     const testArrayWords = currentPhrase.split(" ")
-    // words in user array
+    // user typing split into words
     const userArrayWords = userTyping.trim().split(" ")
-    //letter in each word
+    //test phrase words split into individual letters in each word
     const testArrayWordsLetters = currentPhrase
       .split(" ")
       .map((item) => item.split(""))
+    //user typing words split into individual letters in each word
     const userArrayWordsLetters = userTyping
       .split(" ")
       .map((item) => item.split(""))
@@ -77,7 +98,7 @@ const AppContextProvider = ({ children }) => {
             return { char: item, isCorrect: false }
           })
     })
-    
+
     //no of matches when comparing the two
     const matches = testArray.filter(
       (item, index) => item === userArray[index]
@@ -94,13 +115,14 @@ const AppContextProvider = ({ children }) => {
     setVisualMatches(newMatches)
 
     setPercentageMatch(Math.ceil((matches / testArray.length) * 100))
-    
   }
 
-  //checks to see percentage match is 100% we can move to next phrase automaically
+  //checks to see percentage match is 100% we can move to next phrase automatically
+  //TODO CAN REPLACE THIS WITH A SCORING FUNCTION
   useEffect(() => {
     if (percentageMatch === 100) {
       setSuccessfulAttack(true)
+      //TODO Why the delay?
       setTimeout(() => {
         setSuccessfulAttack(false)
       }, 500)
@@ -175,6 +197,7 @@ const AppContextProvider = ({ children }) => {
     //pause any other timer
     setIsInputDisabled(true)
     //stop input (change z index of screen barrier? or just make input disabled)
+    //TODO pausing does not pause opp animation or opp attack
   }
 
   //resume game conditions
@@ -186,10 +209,12 @@ const AppContextProvider = ({ children }) => {
     //resume any other timer
     //re enable input
     setIsInputDisabled(false)
+    //TODO see above about pausing resume should reverse this
   }
 
-  //SETTINGS
+  //SETTINGS menu showing?
   const [showSettings, setShowSettings] = useState(false)
+  //TODO this should auto pause when clicked 
 
   //get new random phrases
   const newPhrases = () => {
@@ -203,8 +228,7 @@ const AppContextProvider = ({ children }) => {
     //remove this phrase from the working array so it cannot be chosen for opp
     workingArray = workingArray.filter((_, index) => index !== randomUserIndex)
 
-
-    //TODO:CONVERT TO RANDOM 
+    //TODO:CONVERT TO RANDOM for opp?
     //three random indexes, one for each word in randoShake array
     //set opp phrase to a template literals starting with "thou" then the three variables
 
@@ -215,12 +239,12 @@ const AppContextProvider = ({ children }) => {
       (item, index) => index !== randomOppIndex
     )
 
-
     //set our current array to our working array
     setCurrentPhraseList(workingArray)
   }
 
-  //add to streak (is this used?)
+  //add to streak
+  //TODO(is this used? has it been replaced by combochain?)
   const streak = () => {
     if (comboChain > 0) {
       for (let i = 1; i <= comboChain; i++) {
@@ -230,10 +254,11 @@ const AppContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    //make visual progress phrase load in straight away
+    //make visual progress phrase load in straight away when current phrase is changed
+    //TODO can we usememo this?
     compareValues("")
   }, [currentPhrase])
-
+//TODO try and minimise these exports
   return (
     <AppContext.Provider
       value={{
