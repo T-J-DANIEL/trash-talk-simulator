@@ -28,20 +28,21 @@ const AppContextProvider = ({ children }) => {
   //user score
   const [score, setScore] = useState(0)
   //is game in progress?T
-  const [gameRunning, setGameRunning] = useState(true) //TODO is this even used? might be needed later
+  const [gameRunning, setGameRunning] = useState(false)
+
   //has game ended?
   const [gameEnded, setGameEnded] = useState(false)
   //user has attacked
   const [userAttacked, setUserAttacked] = useState(false)
   //opponent has succesfully attacked
-  const [oppAttack, setOppAttack] = useState(false) 
+  const [oppAttack, setOppAttack] = useState(false)
   //visual representation of correct or incorrect letter typed (green/red background letters)
   const [visualMatches, setVisualMatches] = useState([])
   //counts how many answers over 85% a user has achieved
   const [comboChain, setComboChain] = useState([])
 
   //TODO opp gets random phrase gen from triplet list user gets actual shakespeare phrase
- 
+
   const getPhrases = () => {
     //FUNCTION TO OPTIONALLY RENDER PHRASES DEPENDING ON THEME
     // return isYeOlde ? shakesPhrases : trashPhrases
@@ -122,6 +123,7 @@ const AppContextProvider = ({ children }) => {
   //TODO CAN REPLACE THIS WITH A SCORING FUNCTION
   useEffect(() => {
     if (percentageMatch === 100) {
+      //?what the h?
       setOppAttack(true)
       //TODO Why the delay?
       setTimeout(() => {
@@ -190,32 +192,34 @@ const AppContextProvider = ({ children }) => {
   }
 
   //pause game conditions
-  const pauseGame = () => {
+  const pauseResume = () => {
     //show settings/pause menu
-    setShowSettings(true)
+    // setShowSettings(true)
     //pause main game timer
-    setTimerRunning(false)
+    setTimerRunning(!timerRunning)
     //pause any other timer
-    setIsInputDisabled(true)
+    setIsInputDisabled(!isInputDisabled)
     //stop input (change z index of screen barrier? or just make input disabled)
-    //TODO pausing does not pause opp animation SCROLL or opp attack
+    //TODO pauses animations but not animiaitons do not repeat yo need to remobe and readd classes
+    setGameRunning(!gameRunning)
+    //reset user text
   }
 
-  //resume game conditions
-  const resumeGame = () => {
-    //hide settings/pause menu
-    setShowSettings(false)
-    //resume timer
-    setTimerRunning(true)
-    //resume any other timer
-    //re enable input
-    setIsInputDisabled(false)
-    //TODO see above about pausing resume should reverse this
-  }
+  // //resume game conditions
+  // const resumeGame = () => {
+  //   //hide settings/pause menu
+  //   setShowSettings(false)
+  //   //resume timer
+  //   setTimerRunning(true)
+  //   //resume any other timer
+  //   //re enable input
+  //   setIsInputDisabled(false)
+  //   //TODO see above about pausing resume should reverse this
+  // }
 
   //SETTINGS menu showing?
   const [showSettings, setShowSettings] = useState(false)
-  //TODO this should auto pause when clicked 
+  //TODO this should auto pause when clicked
 
   //get new random phrases
   const newPhrases = () => {
@@ -258,7 +262,7 @@ const AppContextProvider = ({ children }) => {
     //TODO can we usememo this?
     compareValues("")
   }, [currentPhrase])
-//TODO try and minimise these exports
+  //TODO try and minimise these exports
   return (
     <AppContext.Provider
       value={{
@@ -290,8 +294,7 @@ const AppContextProvider = ({ children }) => {
         setScore,
         isInputDisabled,
         setIsInputDisabled,
-        pauseGame,
-        resumeGame,
+        pauseResume,
         startGame,
         endGame,
         yeOldeVid,
@@ -309,6 +312,7 @@ const AppContextProvider = ({ children }) => {
         setLevel,
         userAttacked,
         setUserAttacked,
+        gameRunning,
       }}
     >
       {children}

@@ -18,7 +18,7 @@ const MainPage = () => {
       isYeOlde,
       setIsYeOlde,
       showSettings,
-      pauseGame,
+      pauseResume,
       yeOldeVid,
       ogGamerVid,
       isNewGame,
@@ -59,14 +59,9 @@ const MainPage = () => {
       </div>
       {/* vid container contains the vid background user input and opponent with an  */}
       <div className="settings">
-        {/* <button
-          className="pause-button"
-          onClick={() => {
-            setPlaying((prev) => !prev)
-          }}
-        >
+        <button className="pause-button" onClick={pauseResume}>
           Pause/play
-        </button> */}
+        </button>
         {/* <button
           onClick={() => {
             setIsYeOlde((prev) => !prev)
@@ -74,9 +69,9 @@ const MainPage = () => {
         >
           Ye Olde
         </button> */}
-      {/* </div>
+        {/* </div>
       <div> */}
-        <button onClick={pauseGame}>|||</button>
+        <button onClick={pauseResume}>|||</button>
         {showSettings && <Settings />}
         {/* pause button and show settings */}
       </div>

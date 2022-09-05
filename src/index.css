@@ -174,6 +174,7 @@ input::first-letter {
   padding: 2em;
   /* transition: all 1s ease; */
 }
+
 @media (max-width: 800px) {
   .opponent {
     flex-direction: column;
@@ -190,40 +191,19 @@ input::first-letter {
   border-right: 0.15em solid white;
   white-space: nowrap;
   overflow: hidden;
-  /* animation: type 5s steps(40, end); */
   animation-name: type;
- animation-timing-function: steps(40, end);
+  animation-timing-function: steps(40, end);
   animation-fill-mode: forwards;
+  animation-play-state: running;
 }
-.easy{
+.easy {
   animation-duration: 15s;
-  border-right: 0.15em solid white;
-  white-space: nowrap;
-  overflow: hidden;
-  /* animation: type 5s steps(40, end); */
-  animation-name: type;
- animation-timing-function: steps(40, end);
-  animation-fill-mode: forwards;
 }
-.normal{
-animation-duration: 10s;
-border-right: 0.15em solid white;
-  white-space: nowrap;
-  overflow: hidden;
-  /* animation: type 5s steps(40, end); */
-  animation-name: type;
- animation-timing-function: steps(40, end);
-  animation-fill-mode: forwards;
+.normal {
+  animation-duration: 10s;
 }
-.hard{
-animation-duration: 7s;
-border-right: 0.15em solid white;
-  white-space: nowrap;
-  overflow: hidden;
-  /* animation: type 5s steps(40, end); */
-  animation-name: type;
- animation-timing-function: steps(40, end);
-  animation-fill-mode: forwards;
+.hard {
+  animation-duration: 7s;
 }
 
 @keyframes type {
@@ -237,6 +217,13 @@ border-right: 0.15em solid white;
     width: 100%;
     border: none;
   }
+}
+
+.paused {
+  animation-play-state: paused;
+}
+.play {
+  animation-play-state: running;
 }
 
 .og {

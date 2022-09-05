@@ -11,10 +11,17 @@ const Opponent = () => {
     currentPhrase,
     userAttacked,
     setUserAttacked,
+    gameRunning
   } = useGlobalContext()
 
   //this checks what the difficulty is and then sets response time accordingly
+  //TODO take out all this logic and leave presentational logic only
+
+  
+    // const [gameProgress, setGameProgress] = useState(gameRunning)
+
   const responseTime = () => {
+    
     switch (level) {
       case "easy":
         return 15000
@@ -26,6 +33,7 @@ const Opponent = () => {
         return 10000
     }
   }
+  
   //Rewritten this to use switch case and have default
   /*  const responseTime =
     level === "easy"
@@ -37,52 +45,66 @@ const Opponent = () => {
       : "" */
 
   //whats this    ?
-  const [timer, setTimer] = useState(false)
+  // const [timer, setTimer] = useState(false)
   //ref to access timer and ?
   const timerRef = useRef(null)
+//startOppAttempt fn
+const startOppAttempt = () =>{
+    setScroll(true)
+
+}
+
+//endOppAttempt fn
+  //clear timeouts 
+  //end animation
+  //postive or negative animation
+
 
   //when opponent phrase changes...
-  useEffect(() => {
-    //stop the 'scroll reveal text' animation
-    setTimeout(() => {
-      setScroll(false)
-      console.log("ended")
-    }, 0)
-    //start a new 'scroll reveal text' animation
-    setTimeout(() => {
-      setScroll(true)
-      console.log("started")
-    }, 20)
-    //change the successful user attack state to false and clear the current countdown to attack and start a new countdown to attack all in order, 10ms difference
-    setTimeout(() => {
-      setUserAttacked(false)
-      clearTimeout(timerRef.current)
-    }, 30)
-    setTimeout(
-      () => {
-        //in more detail we make an attack countdown, this will run when the difficulty setting response time is up
-        //TODO something aint right here and change the variable names btw,
-        //currently at end of timer if  user has succesfully attacked then we set the user is attacked state to false if the not then we set it to true however we need to clear this time out if the user has succesfully attacked not check at end.
-        let attackTimer = setTimeout(() => {
-          oppAttack === true
-            ? setUserAttacked(false)
-            : setUserAttacked(true)
-          console.log("attack")
-        }, responseTime)
-        // attach current timer to timer ref
-        timerRef.current = attackTimer
-      },
-      40,
-      oppAttack
-    )
-  }, [opponentPhrase])
+  // useEffect(() => {
+  //   //stop the 'scroll reveal text' animation
+  //   setTimeout(() => {
+  //     setScroll(false)
+  //     console.log("ended")
+  //   }, 0)
+  //   //start a new 'scroll reveal text' animation
+  //   setTimeout(() => {
+  //     setScroll(true)
+  //     console.log("started")
+  //   }, 20)
+  //   //change the successful user attack state to false and clear the current countdown to attack and start a new countdown to attack all in order, 10ms difference
+  //   setTimeout(() => {
+  //     setUserAttacked(false)
+  //     clearTimeout(timerRef.current)
+  //   }, 30)
+  //   setTimeout(
+  //     () => {
+  //       //in more detail we make an attack countdown, this will run when the difficulty setting response time is up
+  //       //TODO something aint right here and change the variable names btw,
+  //       //currently at end of timer if  user has succesfully attacked then we set the user is attacked state to false if the not then we set it to true however we need to clear this time out if the user has succesfully attacked not check at end.
+  //       let attackTimer = setTimeout(() => {
+  //         oppAttack === true
+  //           ? setUserAttacked(false)
+  //           : setUserAttacked(true)
+  //         console.log("attack")
+  //       }, responseTime)
+  //       // attach current timer to timer ref
+  //       timerRef.current = attackTimer
+  //     },
+  //     40,
+  //     oppAttack
+  //   )
+  // }, [opponentPhrase])
   // TODO synchro issue, ending timer is causing ended,ended scroll, started
   //correct order is end start start scroll end scroll? check order of timouts they should be synced
 
   //if a successful attack is initiated then we add the animate class to opponent (shake and color red)
   const attackClasses = `opponent ${oppAttack ? "animate" : ""}`
-  const textClasses = `opponent-text ${scroll ? level : ""}`
-  // diff classes for each level
+  // const textClasses = ` ${gameRunning ? `${level} play` : `${level} pause`}`
+    // diff classes for each level
+    
+   
+
   return (
     <div className={attackClasses}>
       {oppAttack && (
@@ -106,13 +128,19 @@ const Opponent = () => {
         </div>
         <div>user{level}: </div>
       </div>
-      <p className={textClasses}>{opponentPhrase}</p>
+      <p
+        className={`opp-text-animation ${
+          gameRunning ? level : `${level} paused`
+        }`}
+      >
+        {opponentPhrase}
+      </p>
       <span>
         {userAttacked && oppAttack
           ? "NOT"
           : userAttacked
           ? "ATTACKED"
-          : "*"}
+          : `${gameRunning} ${level}`}
       </span>
     </div>
   )
