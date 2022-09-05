@@ -28,21 +28,22 @@ const AppContextProvider = ({ children }) => {
   //user score
   const [score, setScore] = useState(0)
   //is game in progress?T
-  const [gameRunning, setGameRunning] = useState(true) //TODO is this even used?
+  const [gameRunning, setGameRunning] = useState(true) //TODO is this even used? might be needed later
   //has game ended?
   const [gameEnded, setGameEnded] = useState(false)
   //user has attacked
   const [userAttacked, setUserAttacked] = useState(false)
   //opponent has succesfully attacked
-  const [successfulAttack, setSuccessfulAttack] = useState(false) //TODO change this value name its confusing
+  const [oppAttack, setOppAttack] = useState(false) 
   //visual representation of correct or incorrect letter typed (green/red background letters)
   const [visualMatches, setVisualMatches] = useState([])
   //counts how many answers over 85% a user has achieved
   const [comboChain, setComboChain] = useState([])
 
-  //opp gets random phrase gen from triplet list user gets actual shakespeare phrase
-  //TODO whats up with this?
+  //TODO opp gets random phrase gen from triplet list user gets actual shakespeare phrase
+ 
   const getPhrases = () => {
+    //FUNCTION TO OPTIONALLY RENDER PHRASES DEPENDING ON THEME
     // return isYeOlde ? shakesPhrases : trashPhrases
     return shakesPhrases
   }
@@ -56,7 +57,7 @@ const AppContextProvider = ({ children }) => {
   const [percentageMatch, setPercentageMatch] = useState(0)
   //is user input disabled?
   const [isInputDisabled, setIsInputDisabled] = useState(false)
-  //array for holding streak gold coins
+  //array for holding streak gold coins //TODO COULD USE THE VALUE OF STREAK ABOVE AND RENDER BASED ON THIS
   const [streakArray, setStreakArray] = useState([])
 
   // comparing values function //TODO white space not accounted for, spaces at front are registered as a word and comparing to word after
@@ -66,17 +67,17 @@ const AppContextProvider = ({ children }) => {
     //user typing split in to individual letters
     const userArray = userTyping.trim().split("")
     // test phrase split into words
-    const testArrayWords = currentPhrase.split(" ")
+    // const testArrayWords = currentPhrase.split(" ")
     // user typing split into words
-    const userArrayWords = userTyping.trim().split(" ")
+    // const userArrayWords = userTyping.trim().split(" ")
     //test phrase words split into individual letters in each word
     const testArrayWordsLetters = currentPhrase
       .split(" ")
       .map((item) => item.split(""))
     //user typing words split into individual letters in each word
-    const userArrayWordsLetters = userTyping
-      .split(" ")
-      .map((item) => item.split(""))
+    // const userArrayWordsLetters = userTyping
+    //   .split(" ")
+    //   .map((item) => item.split(""))
     //take word and compare all values in each word, each space signifies moving on to next word
     //so display words with letters?, get input select first word of current phrase compare values to the first word when a space is detected we are ontto next one
     const newMatches = testArrayWordsLetters.map((item, currentIndex) => {
@@ -121,10 +122,10 @@ const AppContextProvider = ({ children }) => {
   //TODO CAN REPLACE THIS WITH A SCORING FUNCTION
   useEffect(() => {
     if (percentageMatch === 100) {
-      setSuccessfulAttack(true)
+      setOppAttack(true)
       //TODO Why the delay?
       setTimeout(() => {
-        setSuccessfulAttack(false)
+        setOppAttack(false)
       }, 500)
 
       setScore((prev) => prev + 100)
@@ -197,7 +198,7 @@ const AppContextProvider = ({ children }) => {
     //pause any other timer
     setIsInputDisabled(true)
     //stop input (change z index of screen barrier? or just make input disabled)
-    //TODO pausing does not pause opp animation or opp attack
+    //TODO pausing does not pause opp animation SCROLL or opp attack
   }
 
   //resume game conditions
@@ -244,7 +245,7 @@ const AppContextProvider = ({ children }) => {
   }
 
   //add to streak
-  //TODO(is this used? has it been replaced by combochain?)
+  //TODO(is this used? has it been replaced by combochain?)highest streak
   const streak = () => {
     if (comboChain > 0) {
       for (let i = 1; i <= comboChain; i++) {
@@ -254,7 +255,6 @@ const AppContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    //make visual progress phrase load in straight away when current phrase is changed
     //TODO can we usememo this?
     compareValues("")
   }, [currentPhrase])
@@ -273,8 +273,8 @@ const AppContextProvider = ({ children }) => {
         compareValues,
         percentageMatch,
         setPercentageMatch,
-        successfulAttack,
-        setSuccessfulAttack,
+        oppAttack,
+        setOppAttack,
         timerExists,
         setTimerExists,
         timerRunning,

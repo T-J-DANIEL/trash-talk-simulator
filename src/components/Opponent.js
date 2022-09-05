@@ -4,7 +4,7 @@ import { useGlobalContext } from "../context"
 const Opponent = () => {
   const {
     opponentPhrase,
-    successfulAttack,
+    oppAttack,
     scroll,
     setScroll,
     level,
@@ -14,16 +14,28 @@ const Opponent = () => {
   } = useGlobalContext()
 
   //this checks what the difficulty is and then sets response time accordingly
-  //TODO:Rewrite this to use switch case or if and also return error if no level found?
-  const responseTime =
+  const responseTime = () => {
+    switch (level) {
+      case "easy":
+        return 15000
+      case "normal":
+        return 10000
+      case "hard":
+        return 7000
+      default:
+        return 10000
+    }
+  }
+  //Rewritten this to use switch case and have default
+  /*  const responseTime =
     level === "easy"
       ? 15000
       : level === "normal"
       ? 10000
       : level === "hard"
       ? 7000
-      : ""
-  
+      : "" */
+
   //whats this    ?
   const [timer, setTimer] = useState(false)
   //ref to access timer and ?
@@ -52,7 +64,7 @@ const Opponent = () => {
         //TODO something aint right here and change the variable names btw,
         //currently at end of timer if  user has succesfully attacked then we set the user is attacked state to false if the not then we set it to true however we need to clear this time out if the user has succesfully attacked not check at end.
         let attackTimer = setTimeout(() => {
-          successfulAttack === true
+          oppAttack === true
             ? setUserAttacked(false)
             : setUserAttacked(true)
           console.log("attack")
@@ -61,19 +73,19 @@ const Opponent = () => {
         timerRef.current = attackTimer
       },
       40,
-      successfulAttack
+      oppAttack
     )
   }, [opponentPhrase])
   // TODO synchro issue, ending timer is causing ended,ended scroll, started
   //correct order is end start start scroll end scroll? check order of timouts they should be synced
 
   //if a successful attack is initiated then we add the animate class to opponent (shake and color red)
-  const attackClasses = `opponent ${successfulAttack ? "animate" : ""}`
+  const attackClasses = `opponent ${oppAttack ? "animate" : ""}`
   const textClasses = `opponent-text ${scroll ? level : ""}`
   // diff classes for each level
   return (
     <div className={attackClasses}>
-      {successfulAttack && (
+      {oppAttack && (
         <div className="hitMarker">
           <div className="clock-hand clock">
             <div></div>
@@ -95,7 +107,13 @@ const Opponent = () => {
         <div>user{level}: </div>
       </div>
       <p className={textClasses}>{opponentPhrase}</p>
-      <span>{userAttacked && successfulAttack? "NOT" : userAttacked? "ATTACKED" : "*"}</span>
+      <span>
+        {userAttacked && oppAttack
+          ? "NOT"
+          : userAttacked
+          ? "ATTACKED"
+          : "*"}
+      </span>
     </div>
   )
 }

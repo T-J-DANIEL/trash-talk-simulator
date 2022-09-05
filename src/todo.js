@@ -20,6 +20,8 @@
           // )
 
   //TODO:pause button on mainpage should pause enemy input
+  //move util functions in context to utils file
+  //when combo reaches higher then 5 just cjange color and number
   //randomise opp text and check styling
   //add countdown when starting game
   //add attack classes to opp and user and handle attacks
@@ -35,3 +37,10 @@
   //change usefects for usememo where required
   //in settings menu pause game and end game buttons should exit settings menu and show their own menus
   //full ui redesign cohesive style and colors
+  //opp attacks from beginning
+
+
+  //todo history
+  //19th 
+  //rewrote difficulty selector fn to use switch case
+  //chnage succesfullAttack to oppAttack

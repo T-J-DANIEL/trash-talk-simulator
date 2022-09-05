@@ -10,7 +10,7 @@ const UserInput = () => {
     compareValues,
     percentageMatch,
     setPercentageMatch,
-    setSuccessfulAttack,
+    setOppAttack,
     isYeOlde,
     setIsYeOlde,
     score,
@@ -29,15 +29,19 @@ const UserInput = () => {
   const idea = visualMatches.map((item, currentIndex) =>
     item.map((item, index) =>
       item.isCorrect ? (
-        <span key={index} className="green">{item.char}</span>
+        <span key={index} className="green">
+          {item.char}
+        </span>
       ) : (
-        <span key={index} className="red">{item.char}</span>
+        <span key={index} className="red">
+          {item.char}
+        </span>
       )
     )
   )
 
   //wrap all in span
-  const wrappedIdea = idea.map(item=><span>{item}</span>)
+  const wrappedIdea = idea.map((item) => <span>{item}</span>)
   return (
     <div className="user-input">
       <div className="user-profile-container">
@@ -63,12 +67,15 @@ const UserInput = () => {
           //TODO make it so if opponent is successful then user is stopped,there is animation and then we get new phrase
           if (e.key === "Enter") {
             if (percentageMatch > 80) {
-              setSuccessfulAttack(true)
+              setOppAttack(true)
               setTimeout(() => {
-                setSuccessfulAttack(false)
+                setOppAttack(false)
               }, 500)
-              
-              setComboChain((prev) => [...prev, <div className={`gold-coin gold-streak`} />])
+
+              setComboChain((prev) => [
+                ...prev,
+                <div className={`gold-coin gold-streak`} />,
+              ])
             }
             setScore((prev) => prev + percentageMatch)
             setPercentageMatch(0)
@@ -97,12 +104,11 @@ const UserInput = () => {
         <span>{score}</span>
         <button
           onClick={(e) => {
-            setSuccessfulAttack((prev) => !prev)
+            setOppAttack((prev) => !prev)
           }}
         >
           attack
         </button>
-        
       </div>
     </div>
   )

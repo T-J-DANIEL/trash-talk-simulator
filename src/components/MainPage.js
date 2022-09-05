@@ -59,23 +59,23 @@ const MainPage = () => {
       </div>
       {/* vid container contains the vid background user input and opponent with an  */}
       <div className="settings">
-        <button
+        {/* <button
           className="pause-button"
           onClick={() => {
             setPlaying((prev) => !prev)
           }}
         >
           Pause/play
-        </button>
-        <button
+        </button> */}
+        {/* <button
           onClick={() => {
             setIsYeOlde((prev) => !prev)
           }}
         >
           Ye Olde
-        </button>
-      </div>
-      <div>
+        </button> */}
+      {/* </div>
+      <div> */}
         <button onClick={pauseGame}>|||</button>
         {showSettings && <Settings />}
         {/* pause button and show settings */}
