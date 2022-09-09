@@ -14,26 +14,35 @@ import { useGlobalContext } from "../context"
 const MainPage = () => {
   const [playing, setPlaying] = useState(false)
   //change this for autoplay
-    const {
-      isYeOlde,
-      setIsYeOlde,
-      showSettings,
-      pauseResume,
-      yeOldeVid,
+  const {
+    isYeOlde,
+    setIsYeOlde,
+    showSettings,
+    pauseResume,
+    yeOldeVid,
       ogGamerVid,
       isNewGame,
       gameRunning,
       gameEnded,
+      oppAttackTimer,
+      timerId,
+      start,
+      remaining,
+      st,
     } = useGlobalContext()
+    // useEffect(() => {console.log(st)}, [st])
     //imported state properties
     const vidRef = useRef(null)
     //grab ref of the video
-    useEffect(
-      ()=>{
-        vidRef.current.seekTo(300, 'seconds')
-      },[]
-    )
+    // useEffect(
+      //   ()=>{
+        //     vidRef.current.seekTo(300, 'seconds')
+        //   },[]
+    // )
     //when page loads auto seek to 300 seconds
+      useEffect(() => {
+        console.log(st)
+      }, [gameRunning])
   return (
     <>
       {isNewGame && <StartGame />}
@@ -71,11 +80,22 @@ const MainPage = () => {
         </button> */}
         {/* </div>
       <div> */}
+        <div className="dev-box">
+          <button
+            onClick={gameRunning ? oppAttackTimer("pause") : oppAttackTimer("resume")}
+          >
+            Pause/Play Opp
+          </button>
+          <p>status : {st}</p>
+          <p>start time : {start}</p>
+          <p>remaining time : {remaining}</p>
+        </div>
+
         <button onClick={pauseResume}>|||</button>
         {showSettings && <Settings />}
         {/* pause button and show settings */}
       </div>
-      <ScoreStreak />
+      {/* <ScoreStreak /> */}
     </>
   )
 }

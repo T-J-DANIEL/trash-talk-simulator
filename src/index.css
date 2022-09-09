@@ -449,3 +449,7 @@ input::first-letter {
   justify-content: center;
   align-items: center;
 }
+.dev-box *{
+  display: inline-block;
+  margin-right:1em;
+}

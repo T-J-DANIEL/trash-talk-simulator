@@ -68,9 +68,9 @@ const UserInput = () => {
           if (e.key === "Enter") {
             if (percentageMatch > 80) {
               setOppAttack(true)
-              setTimeout(() => {
-                setOppAttack(false)
-              }, 500)
+              // setTimeout(() => {
+              //   setOppAttack(false)
+              // }, 500)
 
               setComboChain((prev) => [
                 ...prev,

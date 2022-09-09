@@ -11,17 +11,16 @@ const Opponent = () => {
     currentPhrase,
     userAttacked,
     setUserAttacked,
-    gameRunning
+    gameRunning,
+    oppAttackTimer
   } = useGlobalContext()
 
   //this checks what the difficulty is and then sets response time accordingly
   //TODO take out all this logic and leave presentational logic only
 
-  
-    // const [gameProgress, setGameProgress] = useState(gameRunning)
+  // const [gameProgress, setGameProgress] = useState(gameRunning)
 
   const responseTime = () => {
-    
     switch (level) {
       case "easy":
         return 15000
@@ -33,32 +32,75 @@ const Opponent = () => {
         return 10000
     }
   }
-  
-  //Rewritten this to use switch case and have default
-  /*  const responseTime =
-    level === "easy"
-      ? 15000
-      : level === "normal"
-      ? 10000
-      : level === "hard"
-      ? 7000
-      : "" */
+
+
 
   //whats this    ?
   // const [timer, setTimer] = useState(false)
   //ref to access timer and ?
-  const timerRef = useRef(null)
-//startOppAttempt fn
-const startOppAttempt = () =>{
-    setScroll(true)
+  // const timerRef = useRef(null)
+  // //startOppAttempt fn
+  // const oppSuccess = () => {
+  //   //pause game
+  //   pauseResume()
+  //   //decrement player score
+  //   setScore(prev=>prev-30)
+  //   //clear player streak
+  //   setStreak(0)
+    //clear text animation
+      //TODO new variable here or base it on pp attack?
+    //play opp success animation
+      //TODO oppAttack?
+    //play user loss animation
+      //same?
+    //start timeout and at end stop success animation
+      //set attack to false?
+    //restart opp text scroll animation
 
-}
+    //new phrases
+    //pauseResume() //resume game
+    //set new opp timer
+    
+  // }
+  // const resetAfterScore
 
-//endOppAttempt fn
-  //clear timeouts 
+  // const playerSuccess = () => {
+  //   pauseResume()
+    //calulate playe score and incrment
+    //incremnt streak if required
+    //clear opp text animatino
+    //play user success animation
+    //play opp loss animation
+    //start timeout and at end stop success animation
+    //new phrases
+    //restart opp text scroll animation
+    //pauseResume()
+
+    //copied from context
+    //TODOpercentageMatch<50? oppatck true else use attack true
+    //   setUserAttack(true)
+    //   setScore((prev) => prev + percentageMatch)
+    //   setTimeout(() => {
+    //     setUserAttack(false)
+
+    //   }, 500)
+
+    //   //same as above in 'enter' function really
+    //   setPercentageMatch(0)
+    //   setUserText("")
+    //   setComboChain((prev) => [
+    //     ...prev,
+    //     <div className={`gold-coin gold-streak`}>{comboChain.length + 1}X</div>,
+    //   ])
+    //   // see this
+    //   newPhrases()
+    //   //should call this it own function
+    // }
+  // }
+  //endOppAttempt fn
+  //clear timeouts
   //end animation
   //postive or negative animation
-
 
   //when opponent phrase changes...
   // useEffect(() => {
@@ -100,25 +142,25 @@ const startOppAttempt = () =>{
 
   //if a successful attack is initiated then we add the animate class to opponent (shake and color red)
   const attackClasses = `opponent ${oppAttack ? "animate" : ""}`
-  // const textClasses = ` ${gameRunning ? `${level} play` : `${level} pause`}`
-    // diff classes for each level
-    
-   
+  const textClasses = ` ${gameRunning ? `${level} play` : `${level} pause`}`
+  // diff classes for each level
 
   return (
     <div className={attackClasses}>
-      {oppAttack && (
-        <div className="hitMarker">
-          <div className="clock-hand clock">
-            <div></div>
-            <div></div>
+      {
+        userAttacked && (
+          <div className="hitMarker">
+            <div className="clock-hand clock">
+              <div></div>
+              <div></div>
+            </div>
+            <div className="clock-hand anti">
+              <div></div>
+              <div></div>
+            </div>
           </div>
-          <div className="clock-hand anti">
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-      )}
+        )
+      }
       <div className="opp-user-container">
         <div className="op-avatar">
           <img

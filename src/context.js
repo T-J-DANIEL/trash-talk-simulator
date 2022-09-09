@@ -12,41 +12,49 @@ const useGlobalContext = () => {
 //context provider
 const AppContextProvider = ({ children }) => {
   //video background links
-  const yeOldeVid = "https://www.youtube.com/watch?v=5L-4xVyUKqo"
-  const ogGamerVid = "https://www.youtube.com/watch?v=sVYyjr84ZXI"
-  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> main state values <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  // const yeOldeVid = "https://www.youtube.com/watch?v=5L-4xVyUKqo"
+  // const ogGamerVid = "https://www.youtube.com/watch?v=sVYyjr84ZXI"
+  const yeOldeVid = "#"
+  const ogGamerVid = "#"
+  //<><><><><><><> //GAME STATE VALUES\\ <><><><><><><>
   //difficulty level
   const [level, setLevel] = useState("normal")
-  //enemy writing animation scroll
-  const [scroll, setScroll] = useState(false)
   //'yeolde' mode
   const [isYeOlde, setIsYeOlde] = useState(true)
   //has game run before or not?
   const [isNewGame, setIsNewGame] = useState(true)
+  //is game in progress?
+  const [gameRunning, setGameRunning] = useState(false)
+  //has game ended?
+  const [gameEnded, setGameEnded] = useState(false)
+  //TODO MAYBE DEPRECATED enemy writing animation scroll
+  const [scroll, setScroll] = useState(false)
+
+  //<><><><><><><> //USER STATE VALUES\\ <><><><><><><>
   //users typed text (controlled form)
   const [userText, setUserText] = useState("")
   //user score
   const [score, setScore] = useState(0)
-  //is game in progress?T
-  const [gameRunning, setGameRunning] = useState(false)
-
-  //has game ended?
-  const [gameEnded, setGameEnded] = useState(false)
   //user has attacked
   const [userAttacked, setUserAttacked] = useState(false)
-  //opponent has succesfully attacked
-  const [oppAttack, setOppAttack] = useState(false)
-  //visual representation of correct or incorrect letter typed (green/red background letters)
-  const [visualMatches, setVisualMatches] = useState([])
   //counts how many answers over 85% a user has achieved
   const [comboChain, setComboChain] = useState([])
+  //visual representation of correct or incorrect letter typed (green/red background letters)
+  const [visualMatches, setVisualMatches] = useState([])
 
+  //<><><><><><><> //OPPONENT STATE VALUES\\ <><><><><><><>
+  //opponent has succesfully attacked
+  const [oppAttack, setOppAttack] = useState(false)
+  const [oppAttackSuccess, setOppAttackSuccess] = useState(false)
+  // display the timrs and variables and attach to pause fuinction
   //TODO opp gets random phrase gen from triplet list user gets actual shakespeare phrase
-
+  //TODO MAYBE IT WOULD BE BETTER IF BOTH GOT TRIPLETS (easy to type and less ofensive)
   const getPhrases = () => {
     //FUNCTION TO OPTIONALLY RENDER PHRASES DEPENDING ON THEME
+    //evilinsult.com/generate_insult.php?lang=en&type=json
     // return isYeOlde ? shakesPhrases : trashPhrases
-    return shakesPhrases
+
+    https: return shakesPhrases
   }
   //current available list of phrases
   const [currentPhraseList, setCurrentPhraseList] = useState(getPhrases)
@@ -124,11 +132,11 @@ const AppContextProvider = ({ children }) => {
   useEffect(() => {
     if (percentageMatch === 100) {
       //?what the h?
-      setOppAttack(true)
+      // setOppAttack(true)
       //TODO Why the delay?
-      setTimeout(() => {
-        setOppAttack(false)
-      }, 500)
+      // setTimeout(() => {
+      //   setOppAttack(false)
+      // }, 500)
 
       setScore((prev) => prev + 100)
       //same as above in 'enter' function really
@@ -162,8 +170,12 @@ const AppContextProvider = ({ children }) => {
     // start a game timer 30s?
     mountRunning()
     //set up 1st suggestion/opponent
-    newPhrases()
+    // newPhrases()
     //level reset?
+
+    //TODO remember me
+    //Start Attack timer
+    oppAttackTimer("start")
   }
 
   //set end game conditions
@@ -173,9 +185,12 @@ const AppContextProvider = ({ children }) => {
     setIsInputDisabled(true)
     setGameEnded(true)
     //run end game score modal
+    //remove all attacktimers
+    timerId = null
+    oppAttackTimer("exit")
   }
 
-  //timer functions
+  //Main timer state variables & functions
   const [timerExists, setTimerExists] = useState(false)
   const [timerRunning, setTimerRunning] = useState(true)
   const [resetTimer, setResetTimer] = useState(false)
@@ -221,11 +236,71 @@ const AppContextProvider = ({ children }) => {
   const [showSettings, setShowSettings] = useState(false)
   //TODO this should auto pause when clicked
 
+  //tracking time
+
+  let timerId = null
+  const [start, setStart] = useState(0)
+  const [remaining, setRemaining] = useState(0)
+  const [st, setSt] = useState("0")
+    // useEffect(() => {
+    //   console.log(st)
+    // }, [st])
+  //game running animatino starts at end change status to attacking
+  //TODO maybe use same timer id for attack and win state/lose state
+  const oppAttackEnd = () => {
+    setOppAttackSuccess(true)
+    //setUserAttacked(true)
+  }
+  const oppAttackTimer = (status) => {
+    switch (status) {
+      case "start":
+       setSt("start")
+        timerId = setTimeout(oppAttackEnd, level)
+        setStart(Date.now())
+        setRemaining(level)
+        break
+      case "pause":
+        setSt("pause")
+        clearTimeout(timerId)
+        setRemaining(setRemaining - (Date.now() - start))
+        break
+      case "resume":
+        setSt("resume")
+        timerId = setTimeout(oppAttackEnd, remaining)
+        setStart(Date.now())
+        break
+      case "exit":
+        setSt("exit")
+        clearTimeout(timerId)
+        break
+      default:
+        return "error no status found"
+    }
+  }
+  
+  // const startOppAttackTimer = () => {
+  //   timerId = setTimeout(oppAttackEnd, level)
+  //   start = Date.now()
+  //   remaining = level
+  // }
+  // const pauseOppAttackTimer = () => {
+  //   clearTimeout(timerId)
+  //   remaining -= Date.now() - start
+  // }
+  // const resumeOppAttackTimer = () => {
+  //   // timerId = setTimeout(oppAttackStart,remaining)
+  //   start = Date.now()
+  //TODO MAYBE START RESUME COULD BE COMBINED IF  WE CHECK REMAINIGI VALUE
+  // }
+  // const endOppAttack = () => {
+  //   clearTimeout(timerId)
+  //   // oppAttack success
+  // }
+
   //get new random phrases
   const newPhrases = () => {
     //copy phrase list into new working array
     let workingArray = [...currentPhraseList]
-
     //pick a random phrase from this workingArray and set it as the current phrase
     const randomUserIndex = Math.floor(Math.random() * workingArray.length)
     setCurrentPhrase(workingArray[randomUserIndex].insult)
@@ -236,18 +311,21 @@ const AppContextProvider = ({ children }) => {
     //TODO:CONVERT TO RANDOM for opp?
     //three random indexes, one for each word in randoShake array
     //set opp phrase to a template literals starting with "thou" then the three variables
-
     //pick random phrase from this filtered working array and filter it out frm working array
     const randomOppIndex = Math.floor(Math.random() * workingArray.length)
     setOpponentPhrase(workingArray[randomOppIndex].insult)
     workingArray = workingArray.filter(
       (item, index) => index !== randomOppIndex
     )
-
     //set our current array to our working array
     setCurrentPhraseList(workingArray)
   }
-
+  // =======================================================
+  useEffect(() => {
+    //TODO can we usememo this?
+    compareValues("")
+  }, [currentPhrase])
+  
   //add to streak
   //TODO(is this used? has it been replaced by combochain?)highest streak
   const streak = () => {
@@ -257,11 +335,7 @@ const AppContextProvider = ({ children }) => {
       }
     }
   }
-
-  useEffect(() => {
-    //TODO can we usememo this?
-    compareValues("")
-  }, [currentPhrase])
+//TODO
   //TODO try and minimise these exports
   return (
     <AppContext.Provider
@@ -313,6 +387,11 @@ const AppContextProvider = ({ children }) => {
         userAttacked,
         setUserAttacked,
         gameRunning,
+        oppAttackTimer,
+        timerId,
+        start,
+        remaining,
+        st,
       }}
     >
       {children}
