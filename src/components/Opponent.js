@@ -7,12 +7,14 @@ const Opponent = () => {
     oppAttack,
     scroll,
     setScroll,
-    level,
+    responseTime,
     currentPhrase,
     userAttacked,
     setUserAttacked,
     gameRunning,
-    oppAttackTimer
+    oppAttackTimer,
+    oppAttackSuccess,
+    level,
   } = useGlobalContext()
 
   //this checks what the difficulty is and then sets response time accordingly
@@ -20,18 +22,18 @@ const Opponent = () => {
 
   // const [gameProgress, setGameProgress] = useState(gameRunning)
 
-  const responseTime = () => {
-    switch (level) {
-      case "easy":
-        return 15000
-      case "normal":
-        return 10000
-      case "hard":
-        return 7000
-      default:
-        return 10000
-    }
-  }
+  // const responseTime = () => {
+  //   switch (level) {
+  //     case "easy":
+  //       return 15000
+  //     case "normal":
+  //       return 10000
+  //     case "hard":
+  //       return 7000
+  //     default:
+  //       return 10000
+  //   }
+  // }
 
 
 
@@ -147,20 +149,18 @@ const Opponent = () => {
 
   return (
     <div className={attackClasses}>
-      {
-        userAttacked && (
-          <div className="hitMarker">
-            <div className="clock-hand clock">
-              <div></div>
-              <div></div>
-            </div>
-            <div className="clock-hand anti">
-              <div></div>
-              <div></div>
-            </div>
+      {userAttacked && (
+        <div className="hitMarker">
+          <div className="clock-hand clock">
+            <div></div>
+            <div></div>
           </div>
-        )
-      }
+          <div className="clock-hand anti">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      )}
       <div className="opp-user-container">
         <div className="op-avatar">
           <img
@@ -178,11 +178,11 @@ const Opponent = () => {
         {opponentPhrase}
       </p>
       <span>
-        {userAttacked && oppAttack
-          ? "NOT"
-          : userAttacked
+        {/* {oppAttackSuccess===true
           ? "ATTACKED"
-          : `${gameRunning} ${level}`}
+          : `${gameRunning} ${level}`} */}
+        {`${gameRunning} ${level}`}
+        {`${oppAttackSuccess}`}
       </span>
     </div>
   )

@@ -4,7 +4,8 @@ import { useGlobalContext } from "../context"
 //TODO not clear what difficulty is set, also opponent starts immediately after difficulty is set not when game starts
 //also can add other user settings sound?, change layout its pretty badly spaced at the moment
 const StartGame = () => {
-    const { setIsNewGame, startGame, level, setLevel } = useGlobalContext()
+    const { setIsNewGame, startGame, level, changeDifficulty } =
+      useGlobalContext()
     return (
       <div className="overlay-container">
         <div className="start-game-inner-container">
@@ -25,21 +26,21 @@ const StartGame = () => {
       
         <button
           onClick={(e) => {
-            setLevel("easy")
+            changeDifficulty("easy")
           }}
         >
           easy
         </button>
         <button
           onClick={(e) => {
-            setLevel("normal")
+            changeDifficulty("normal")
           }}
         >
           normal
         </button>
         <button
           onClick={(e) => {
-            setLevel("hard")
+            changeDifficulty("hard")
           }}
         >
           hard

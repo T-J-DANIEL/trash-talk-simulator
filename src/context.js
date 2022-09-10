@@ -18,7 +18,28 @@ const AppContextProvider = ({ children }) => {
   const ogGamerVid = "#"
   //<><><><><><><> //GAME STATE VALUES\\ <><><><><><><>
   //difficulty level
+  const [responseTime, setResponseTime] = useState(10000)
   const [level, setLevel] = useState("normal")
+  const changeDifficulty = (difficulty = "normal") => {
+    switch (difficulty) {
+      case "easy":
+        setResponseTime(15000)
+        setLevel(15000)
+        break
+      case "normal":
+        setResponseTime(10000)
+        setLevel(10000)
+        break
+      case "hard":
+        setResponseTime(7000)
+        setLevel(7000)
+        break
+      default:
+        setResponseTime(10000)
+        setLevel(10000)
+    }
+  }
+
   //'yeolde' mode
   const [isYeOlde, setIsYeOlde] = useState(true)
   //has game run before or not?
@@ -29,7 +50,7 @@ const AppContextProvider = ({ children }) => {
   const [gameEnded, setGameEnded] = useState(false)
   //TODO MAYBE DEPRECATED enemy writing animation scroll
   const [scroll, setScroll] = useState(false)
-
+  const [gameStatus,setGameStatus] = useState("loading")
   //<><><><><><><> //USER STATE VALUES\\ <><><><><><><>
   //users typed text (controlled form)
   const [userText, setUserText] = useState("")
@@ -242,22 +263,26 @@ const AppContextProvider = ({ children }) => {
   const [start, setStart] = useState(0)
   const [remaining, setRemaining] = useState(0)
   const [st, setSt] = useState("0")
-    // useEffect(() => {
-    //   console.log(st)
-    // }, [st])
+  // useEffect(() => {
+  //   console.log(st)
+  // }, [st])
   //game running animatino starts at end change status to attacking
   //TODO maybe use same timer id for attack and win state/lose state
+  //useEffect(()=>{
+//switch statement with status
+  // },[startOppAttack])
   const oppAttackEnd = () => {
+    console.log("executed")
     setOppAttackSuccess(true)
     //setUserAttacked(true)
   }
   const oppAttackTimer = (status) => {
     switch (status) {
       case "start":
-       setSt("start")
-        timerId = setTimeout(oppAttackEnd, level)
+        setSt("start")
+        timerId = setTimeout(oppAttackEnd, responseTime)
         setStart(Date.now())
-        setRemaining(level)
+        setRemaining(responseTime)
         break
       case "pause":
         setSt("pause")
@@ -277,7 +302,7 @@ const AppContextProvider = ({ children }) => {
         return "error no status found"
     }
   }
-  
+
   // const startOppAttackTimer = () => {
   //   timerId = setTimeout(oppAttackEnd, level)
   //   start = Date.now()
@@ -325,7 +350,7 @@ const AppContextProvider = ({ children }) => {
     //TODO can we usememo this?
     compareValues("")
   }, [currentPhrase])
-  
+
   //add to streak
   //TODO(is this used? has it been replaced by combochain?)highest streak
   const streak = () => {
@@ -335,7 +360,12 @@ const AppContextProvider = ({ children }) => {
       }
     }
   }
-//TODO
+  //TODO TODAY continue testing your pause function, write an interval companion function that logs each second if needs be.
+  //WE NEED A CLEAN UP FUNCTION TO CLEAR ALL TIMOUTS ETC ON DISMOUNT 
+  //must use ueeffects to stop multiple rerenders
+  //need to stop rendering to a non mounted component
+  //think about a status fuinction that manages what he curent status is for the opp. what the user does and doesnt do will effect what is called
+  //function is firing striaght away
   //TODO try and minimise these exports
   return (
     <AppContext.Provider
@@ -382,8 +412,9 @@ const AppContextProvider = ({ children }) => {
         gameEnded,
         scroll,
         setScroll,
-        level,
-        setLevel,
+        responseTime,
+        setResponseTime,
+        changeDifficulty,
         userAttacked,
         setUserAttacked,
         gameRunning,
@@ -392,6 +423,8 @@ const AppContextProvider = ({ children }) => {
         start,
         remaining,
         st,
+        oppAttackSuccess,
+        level,
       }}
     >
       {children}
