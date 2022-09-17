@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useReducer } from "react"
+import React, { useContext, useState, useEffect, useReducer, useRef } from "react"
 
 //import the phrases both random and preset
 import { shakesPhrases, randoShake } from "./data"
@@ -50,7 +50,7 @@ const AppContextProvider = ({ children }) => {
   const [gameEnded, setGameEnded] = useState(false)
   //TODO MAYBE DEPRECATED enemy writing animation scroll
   const [scroll, setScroll] = useState(false)
-  const [gameStatus,setGameStatus] = useState("loading")
+  const [gameStatus, setGameStatus] = useState("loading")
   //<><><><><><><> //USER STATE VALUES\\ <><><><><><><>
   //users typed text (controlled form)
   const [userText, setUserText] = useState("")
@@ -65,7 +65,7 @@ const AppContextProvider = ({ children }) => {
 
   //<><><><><><><> //OPPONENT STATE VALUES\\ <><><><><><><>
   //opponent has succesfully attacked
-  const [oppAttack, setOppAttack] = useState(false)
+  const [oppAttacked, setOppAttacked] = useState(false)
   const [oppAttackSuccess, setOppAttackSuccess] = useState(false)
   // display the timrs and variables and attach to pause fuinction
   //TODO opp gets random phrase gen from triplet list user gets actual shakespeare phrase
@@ -191,12 +191,13 @@ const AppContextProvider = ({ children }) => {
     // start a game timer 30s?
     mountRunning()
     //set up 1st suggestion/opponent
-    // newPhrases()
+    newPhrases()
     //level reset?
 
     //TODO remember me
     //Start Attack timer
-    oppAttackTimer("start")
+    // oppAttackTimer("start")
+    setSt("start")
   }
 
   //set end game conditions
@@ -207,8 +208,9 @@ const AppContextProvider = ({ children }) => {
     setGameEnded(true)
     //run end game score modal
     //remove all attacktimers
-    timerId = null
-    oppAttackTimer("exit")
+    timerId.current = null
+    // oppAttackTimer("exit")
+    setSt("exit")
   }
 
   //Main timer state variables & functions
@@ -237,6 +239,7 @@ const AppContextProvider = ({ children }) => {
     setIsInputDisabled(!isInputDisabled)
     //stop input (change z index of screen barrier? or just make input disabled)
     //TODO pauses animations but not animiaitons do not repeat yo need to remobe and readd classes
+    gameRunning?setSt("pause"):setSt("resume")
     setGameRunning(!gameRunning)
     //reset user text
   }
@@ -258,64 +261,80 @@ const AppContextProvider = ({ children }) => {
   //TODO this should auto pause when clicked
 
   //tracking time
-
-  let timerId = null
+  const timerId = useRef()
+  // let timerId = null
   const [start, setStart] = useState(0)
   const [remaining, setRemaining] = useState(0)
   const [st, setSt] = useState("0")
-  // useEffect(() => {
-  //   console.log(st)
-  // }, [st])
+  
+
+  const opponentAttackPhase = () =>{
+    //end scroll animation
+//TODO scroll animation is not starting
+
+    setSt("exit")
+    //oppattack animation (pausable)
+      setOppAttackSuccess(true)
+      //disable use input (pause does not effect this)
+      setIsInputDisabled(true)
+      //TODO Start time must be variable how to plug it in?
+      timerId.current = setTimeout(()=>{
+          setOppAttackSuccess(false)
+          setIsInputDisabled(false)
+          newPhrases() 
+          setSt("start")
+
+          //start new scroll animation
+      },2000)
+
+    //set a timeout 
+    }
+
   //game running animatino starts at end change status to attacking
+  // Assignments to the 'timerId' variable from inside React Hook useEffect will be lost after each render. To preserve the value over time, store it in a useRef Hook and keep the mutable value in the '.current' property. Otherwise, you can move this variable directly inside useEffect.eslintreact-hooks/exhaustive-deps
   //TODO maybe use same timer id for attack and win state/lose state
-  //useEffect(()=>{
-//switch statement with status
-  // },[startOppAttack])
-  const oppAttackEnd = () => {
-    console.log("executed")
-    setOppAttackSuccess(true)
-    //setUserAttacked(true)
-  }
-  const oppAttackTimer = (status) => {
-    switch (status) {
+  useEffect(() => {
+    switch (st) {
       case "start":
-        setSt("start")
-        timerId = setTimeout(oppAttackEnd, responseTime)
+        // setSt("start")
+
+        timerId.current = setTimeout(()=>{
+          console.log("started opp attack?")
+          // setOppAttackSuccess(true)
+          opponentAttackPhase()
+        }, responseTime)
         setStart(Date.now())
         setRemaining(responseTime)
         break
       case "pause":
-        setSt("pause")
-        clearTimeout(timerId)
-        setRemaining(setRemaining - (Date.now() - start))
+        // setSt("pause")
+        clearTimeout(timerId.current)
+        setRemaining(remaining - (Date.now() - start))
         break
       case "resume":
-        setSt("resume")
-        timerId = setTimeout(oppAttackEnd, remaining)
+        // setSt("resume")
+        timerId.current = setTimeout(()=>{ console.log("resumed")
+        setOppAttackSuccess(true)}, remaining)
         setStart(Date.now())
         break
       case "exit":
-        setSt("exit")
-        clearTimeout(timerId)
+        // setSt("exit")
+        clearTimeout(timerId.current)
         break
       default:
         return "error no status found"
     }
-  }
+    //clear on unnmount
+    return () => {
+      clearTimeout(timerId.current)
+    }
+  }, [st])
+  // const oppAttackEnd = () => {
+    //   setOppAttackSuccess(true)
+    //   //setUserAttacked(true)
+  //   console.log("executed")
+  // }
 
-  // const startOppAttackTimer = () => {
-  //   timerId = setTimeout(oppAttackEnd, level)
-  //   start = Date.now()
-  //   remaining = level
-  // }
-  // const pauseOppAttackTimer = () => {
-  //   clearTimeout(timerId)
-  //   remaining -= Date.now() - start
-  // }
-  // const resumeOppAttackTimer = () => {
-  //   // timerId = setTimeout(oppAttackStart,remaining)
-  //   start = Date.now()
-  //TODO MAYBE START RESUME COULD BE COMBINED IF  WE CHECK REMAINIGI VALUE
   // }
   // const endOppAttack = () => {
   //   clearTimeout(timerId)
@@ -361,7 +380,7 @@ const AppContextProvider = ({ children }) => {
     }
   }
   //TODO TODAY continue testing your pause function, write an interval companion function that logs each second if needs be.
-  //WE NEED A CLEAN UP FUNCTION TO CLEAR ALL TIMOUTS ETC ON DISMOUNT 
+  //WE NEED A CLEAN UP FUNCTION TO CLEAR ALL TIMOUTS ETC ON DISMOUNT
   //must use ueeffects to stop multiple rerenders
   //need to stop rendering to a non mounted component
   //think about a status fuinction that manages what he curent status is for the opp. what the user does and doesnt do will effect what is called
@@ -381,8 +400,8 @@ const AppContextProvider = ({ children }) => {
         compareValues,
         percentageMatch,
         setPercentageMatch,
-        oppAttack,
-        setOppAttack,
+        oppAttacked,
+        setOppAttacked,
         timerExists,
         setTimerExists,
         timerRunning,
@@ -418,7 +437,7 @@ const AppContextProvider = ({ children }) => {
         userAttacked,
         setUserAttacked,
         gameRunning,
-        oppAttackTimer,
+        // oppAttackTimer,
         timerId,
         start,
         remaining,

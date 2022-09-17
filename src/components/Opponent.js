@@ -12,7 +12,7 @@ const Opponent = () => {
     userAttacked,
     setUserAttacked,
     gameRunning,
-    oppAttackTimer,
+    // oppAttackTimer,
     oppAttackSuccess,
     level,
   } = useGlobalContext()

@@ -10,7 +10,7 @@ const UserInput = () => {
     compareValues,
     percentageMatch,
     setPercentageMatch,
-    setOppAttack,
+    setOppAttacked,
     isYeOlde,
     setIsYeOlde,
     score,
@@ -21,6 +21,7 @@ const UserInput = () => {
     visualMatches,
     comboChain,
     setComboChain,
+    oppAttackSuccess,
   } = useGlobalContext()
 
   const interleave = (arr, thing) =>
@@ -43,7 +44,8 @@ const UserInput = () => {
   //wrap all in span
   const wrappedIdea = idea.map((item) => <span>{item}</span>)
   return (
-    <div className="user-input">
+    //{`user input ${oppAttackSuccesfull?"animate":""}`}
+    <div className={`user-input ${oppAttackSuccess ? "animate" : ""}`}>
       <div className="user-profile-container">
         <div className="user-avatar-container">
           <img
@@ -67,7 +69,7 @@ const UserInput = () => {
           //TODO make it so if opponent is successful then user is stopped,there is animation and then we get new phrase
           if (e.key === "Enter") {
             if (percentageMatch > 80) {
-              setOppAttack(true)
+              setOppAttacked(true)
               // setTimeout(() => {
               //   setOppAttack(false)
               // }, 500)
@@ -104,7 +106,7 @@ const UserInput = () => {
         <span>{score}</span>
         <button
           onClick={(e) => {
-            setOppAttack((prev) => !prev)
+            setOppAttacked((prev) => !prev)
           }}
         >
           attack

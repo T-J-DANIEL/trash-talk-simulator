@@ -24,7 +24,7 @@ const MainPage = () => {
       isNewGame,
       gameRunning,
       gameEnded,
-      oppAttackTimer,
+      // oppAttackTimer,
       timerId,
       start,
       remaining,
@@ -81,14 +81,14 @@ const MainPage = () => {
         {/* </div>
       <div> */}
         <div className="dev-box">
-          <button
+          {/* <button
             onClick={gameRunning ? oppAttackTimer("pause") : oppAttackTimer("resume")}
           >
             Pause/Play Opp
-          </button>
+          </button> */}
           <p>status : {st}</p>
           <p>start time : {start}</p>
-          <p>remaining time : {remaining}</p>
+          <p>remaining time : {parseInt(remaining,10)}</p>
         </div>
 
         <button onClick={pauseResume}>|||</button>
