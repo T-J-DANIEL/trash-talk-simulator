@@ -317,6 +317,15 @@ const AppContextProvider = ({ children }) => {
         setOppAttackSuccess(true)}, remaining)
         setStart(Date.now())
         break
+      case "oppSuccess":
+        //TODO pausable opponent success phase
+        // this must set the ref to the opp success timeout
+        //start and resume amounts must be updated
+        //
+        break
+      case "userSuccess":
+        // TODO pausable user sccuess phase
+        break
       case "exit":
         // setSt("exit")
         clearTimeout(timerId.current)

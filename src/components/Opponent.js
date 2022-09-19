@@ -171,9 +171,15 @@ const Opponent = () => {
         <div>user{level}: </div>
       </div>
       <p
-        className={`opp-text-animation ${
-          gameRunning ? level : `${level} paused`
-        }`}
+        className={`${
+          oppAttackSuccess ? "successfulAttack" : `opp-text-animation ${level}`
+        } ${!gameRunning && `paused`}`}
+        // className={`opp-text-animation ${
+        //   gameRunning ? level : `${level} paused`
+        // }`}
+        //TODO need to have pause based on running and animation+level based on attack status
+
+        //`${oppAttackSuccess?"enlarge":`opp-text-animation ${level}`} ${!gameRunning && `paused`}`
       >
         {opponentPhrase}
       </p>

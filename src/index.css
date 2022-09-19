@@ -250,9 +250,6 @@ input::first-letter {
   align-items: center;
   margin-right: 0.5em;
 }
-.enlarge {
-  transform: scale(200%);
-}
 @keyframes shake {
   0% {
     transform: translateY(-20px);
@@ -269,6 +266,24 @@ input::first-letter {
     transform: translateX(-10px);
   }
 }
+
+.successfulAttack{
+  transform: scale(100%);
+  overflow: hidden;
+  animation: enlarge 0.4s ease-in-out infinite;
+  animation-play-state: running;
+  animation-direction: alternate;
+}
+
+@keyframes enlarge{
+  0% {
+    transform: scale(100%);
+  }
+  100% {
+    transform: scale(120%);
+  }
+}
+
 .hitMarker {
   position: absolute;
   top: 10px;
