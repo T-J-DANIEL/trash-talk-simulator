@@ -272,11 +272,14 @@ const AppContextProvider = ({ children }) => {
     //end scroll animation
 //TODO scroll animation is not starting
 
-    setSt("exit")
+    // setSt("exit")
+    clearTimeout(timerId.current)
     //oppattack animation (pausable)
       setOppAttackSuccess(true)
       //disable use input (pause does not effect this)
       setIsInputDisabled(true)
+      setStart(Date.now())
+      setRemaining(2000)
       //TODO Start time must be variable how to plug it in?
       timerId.current = setTimeout(()=>{
           setOppAttackSuccess(false)
@@ -300,8 +303,8 @@ const AppContextProvider = ({ children }) => {
 
         timerId.current = setTimeout(()=>{
           console.log("started opp attack?")
-          // setOppAttackSuccess(true)
-          opponentAttackPhase()
+          setSt("oppSuccess")
+          // opponentAttackPhase()
         }, responseTime)
         setStart(Date.now())
         setRemaining(responseTime)
@@ -313,15 +316,42 @@ const AppContextProvider = ({ children }) => {
         break
       case "resume":
         // setSt("resume")
-        timerId.current = setTimeout(()=>{ console.log("resumed")
-        setOppAttackSuccess(true)}, remaining)
+        if(oppAttackSuccess){
+          timerId.current = setTimeout(()=>{ console.log("resumed")
+          //TODO must resume the correct timer
+            setOppAttackSuccess(false)
+            setIsInputDisabled(false)
+            newPhrases()
+            setSt("start")
+            //start new scroll animation
+          }, remaining)
+        }
+        else{
+          timerId.current = setTimeout(() => {
+            console.log("started opp attack?")
+            setSt("oppSuccess")
+            // opponentAttackPhase()
+          }, remaining)
+        }
         setStart(Date.now())
         break
       case "oppSuccess":
-        //TODO pausable opponent success phase
-        // this must set the ref to the opp success timeout
-        //start and resume amounts must be updated
-        //
+        clearTimeout(timerId.current)
+        //oppattack animation (pausable)
+        setOppAttackSuccess(true)
+        //disable use input (pause does not effect this)
+        setIsInputDisabled(true)
+        setStart(Date.now())
+        setRemaining(2000)
+        //TODO Start time must be variable how to plug it in?
+        timerId.current = setTimeout(() => {
+          setOppAttackSuccess(false)
+          setIsInputDisabled(false)
+          newPhrases()
+          setSt("start")
+
+          //start new scroll animation
+        }, 2000)
         break
       case "userSuccess":
         // TODO pausable user sccuess phase
