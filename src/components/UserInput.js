@@ -22,6 +22,7 @@ const UserInput = () => {
     comboChain,
     setComboChain,
     oppAttackSuccess,
+    gameRunning
   } = useGlobalContext()
 
   const interleave = (arr, thing) =>
@@ -45,7 +46,11 @@ const UserInput = () => {
   const wrappedIdea = idea.map((item) => <span>{item}</span>)
   return (
     //{`user input ${oppAttackSuccesfull?"animate":""}`}
-    <div className={`user-input ${oppAttackSuccess ? "animate" : ""}`}>
+    <div
+      className={`user-input ${oppAttackSuccess ? "animate" : ""} ${
+        !gameRunning && "paused"
+      }`}
+    >
       <div className="user-profile-container">
         <div className="user-avatar-container">
           <img

@@ -1,4 +1,10 @@
-import React, { useContext, useState, useEffect, useReducer, useRef } from "react"
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useReducer,
+  useRef,
+} from "react"
 
 //import the phrases both random and preset
 import { shakesPhrases, randoShake } from "./data"
@@ -21,22 +27,23 @@ const AppContextProvider = ({ children }) => {
   const [responseTime, setResponseTime] = useState(10000)
   const [level, setLevel] = useState("normal")
   const changeDifficulty = (difficulty = "normal") => {
+    //TODO CHANGED THESE LEVELS TO WORDS INSTEAD OF SAME AS NUMBER looks like i fixed it
     switch (difficulty) {
       case "easy":
         setResponseTime(15000)
-        setLevel(15000)
+        setLevel("easy")
         break
       case "normal":
         setResponseTime(10000)
-        setLevel(10000)
+        setLevel("normal")
         break
       case "hard":
         setResponseTime(7000)
-        setLevel(7000)
+        setLevel("hard")
         break
       default:
         setResponseTime(10000)
-        setLevel(10000)
+        setLevel("normal")
     }
   }
 
@@ -48,8 +55,6 @@ const AppContextProvider = ({ children }) => {
   const [gameRunning, setGameRunning] = useState(false)
   //has game ended?
   const [gameEnded, setGameEnded] = useState(false)
-  //TODO MAYBE DEPRECATED enemy writing animation scroll
-  const [scroll, setScroll] = useState(false)
   const [gameStatus, setGameStatus] = useState("loading")
   //<><><><><><><> //USER STATE VALUES\\ <><><><><><><>
   //users typed text (controlled form)
@@ -194,23 +199,25 @@ const AppContextProvider = ({ children }) => {
     newPhrases()
     //level reset?
 
-    //TODO remember me
     //Start Attack timer
-    // oppAttackTimer("start")
     setSt("start")
   }
 
   //set end game conditions
   const endGame = () => {
+    setSt("exit")
     setTimerExists(false)
     setUserText("")
     setIsInputDisabled(true)
     setGameEnded(true)
+    setGameRunning(false)
     //run end game score modal
     //remove all attacktimers
     timerId.current = null
     // oppAttackTimer("exit")
-    setSt("exit")
+    setUserText("")
+    //TODO should ask are you sure and close settings
+    //TODO manage scoring
   }
 
   //Main timer state variables & functions
@@ -239,7 +246,7 @@ const AppContextProvider = ({ children }) => {
     setIsInputDisabled(!isInputDisabled)
     //stop input (change z index of screen barrier? or just make input disabled)
     //TODO pauses animations but not animiaitons do not repeat yo need to remobe and readd classes
-    gameRunning?setSt("pause"):setSt("resume")
+    gameRunning ? setSt("pause") : setSt("resume")
     setGameRunning(!gameRunning)
     //reset user text
   }
@@ -258,40 +265,45 @@ const AppContextProvider = ({ children }) => {
 
   //SETTINGS menu showing?
   const [showSettings, setShowSettings] = useState(false)
-  //TODO this should auto pause when clicked
 
+  const displaySettings = () => {
+    if (gameEnded) {
+      setShowSettings(false)
+      setGameRunning(false)
+    } else {
+      pauseResume()
+      setShowSettings(!showSettings)
+    }
+  }
   //tracking time
   const timerId = useRef()
   // let timerId = null
   const [start, setStart] = useState(0)
   const [remaining, setRemaining] = useState(0)
   const [st, setSt] = useState("0")
-  
 
-  const opponentAttackPhase = () =>{
-    //end scroll animation
-//TODO scroll animation is not starting
+  // const opponentAttackPhase = () =>{
 
-    // setSt("exit")
-    clearTimeout(timerId.current)
-    //oppattack animation (pausable)
-      setOppAttackSuccess(true)
-      //disable use input (pause does not effect this)
-      setIsInputDisabled(true)
-      setStart(Date.now())
-      setRemaining(2000)
-      //TODO Start time must be variable how to plug it in?
-      timerId.current = setTimeout(()=>{
-          setOppAttackSuccess(false)
-          setIsInputDisabled(false)
-          newPhrases() 
-          setSt("start")
+  //   // setSt("exit")
+  //   clearTimeout(timerId.current)
+  //   //oppattack animation (pausable)
+  //     setOppAttackSuccess(true)
+  //     //disable use input (pause does not effect this)
+  //     setIsInputDisabled(true)
+  //     setStart(Date.now())
+  //     setRemaining(2000)
+  //     //Start time must be variable how to plug it in?
+  //     timerId.current = setTimeout(()=>{
+  //         setOppAttackSuccess(false)
+  //         setIsInputDisabled(false)
+  //         newPhrases()
+  //         //start new scroll animation
+  //         setSt("start")
 
-          //start new scroll animation
-      },2000)
+  //     },2000)
 
-    //set a timeout 
-    }
+  //   //set a timeout
+  //   }
 
   //game running animatino starts at end change status to attacking
   // Assignments to the 'timerId' variable from inside React Hook useEffect will be lost after each render. To preserve the value over time, store it in a useRef Hook and keep the mutable value in the '.current' property. Otherwise, you can move this variable directly inside useEffect.eslintreact-hooks/exhaustive-deps
@@ -301,7 +313,7 @@ const AppContextProvider = ({ children }) => {
       case "start":
         // setSt("start")
 
-        timerId.current = setTimeout(()=>{
+        timerId.current = setTimeout(() => {
           console.log("started opp attack?")
           setSt("oppSuccess")
           // opponentAttackPhase()
@@ -316,17 +328,17 @@ const AppContextProvider = ({ children }) => {
         break
       case "resume":
         // setSt("resume")
-        if(oppAttackSuccess){
-          timerId.current = setTimeout(()=>{ console.log("resumed")
-          //TODO must resume the correct timer
+        if (oppAttackSuccess) {
+          timerId.current = setTimeout(() => {
+            console.log("resumed")
+            //TODO must resume the correct timer
             setOppAttackSuccess(false)
             setIsInputDisabled(false)
             newPhrases()
             setSt("start")
             //start new scroll animation
           }, remaining)
-        }
-        else{
+        } else {
           timerId.current = setTimeout(() => {
             console.log("started opp attack?")
             setSt("oppSuccess")
@@ -358,7 +370,11 @@ const AppContextProvider = ({ children }) => {
         break
       case "exit":
         // setSt("exit")
+        setStart(0)
+        setRemaining(0)
         clearTimeout(timerId.current)
+        //TODO added timer values
+        //TODOwhen the game is ended at pause screen the animation is not reset
         break
       default:
         return "error no status found"
@@ -369,8 +385,8 @@ const AppContextProvider = ({ children }) => {
     }
   }, [st])
   // const oppAttackEnd = () => {
-    //   setOppAttackSuccess(true)
-    //   //setUserAttacked(true)
+  //   setOppAttackSuccess(true)
+  //   //setUserAttacked(true)
   //   console.log("executed")
   // }
 
@@ -402,6 +418,8 @@ const AppContextProvider = ({ children }) => {
     )
     //set our current array to our working array
     setCurrentPhraseList(workingArray)
+    setUserText("")
+    //TODO set focus on USER INPUT USING USEREF
   }
   // =======================================================
   useEffect(() => {
@@ -468,8 +486,6 @@ const AppContextProvider = ({ children }) => {
         isNewGame,
         setIsNewGame,
         gameEnded,
-        scroll,
-        setScroll,
         responseTime,
         setResponseTime,
         changeDifficulty,
@@ -483,6 +499,7 @@ const AppContextProvider = ({ children }) => {
         st,
         oppAttackSuccess,
         level,
+        displaySettings,
       }}
     >
       {children}

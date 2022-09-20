@@ -20,16 +20,17 @@ const MainPage = () => {
     showSettings,
     pauseResume,
     yeOldeVid,
-      ogGamerVid,
-      isNewGame,
-      gameRunning,
-      gameEnded,
-      // oppAttackTimer,
-      timerId,
-      start,
-      remaining,
-      st,
-    } = useGlobalContext()
+    ogGamerVid,
+    isNewGame,
+    gameRunning,
+    gameEnded,
+    // oppAttackTimer,
+    timerId,
+    start,
+    remaining,
+    st,
+    displaySettings,
+  } = useGlobalContext()
     // useEffect(() => {console.log(st)}, [st])
     //imported state properties
     const vidRef = useRef(null)
@@ -88,10 +89,10 @@ const MainPage = () => {
           </button> */}
           <p>status : {st}</p>
           <p>start time : {start}</p>
-          <p>remaining time : {parseInt(remaining,10)}</p>
+          <p>remaining time : {parseInt(remaining, 10)}</p>
         </div>
 
-        <button onClick={pauseResume}>|||</button>
+        <button onClick={displaySettings}>|||</button>
         {showSettings && <Settings />}
         {/* pause button and show settings */}
       </div>

@@ -5,8 +5,6 @@ const Opponent = () => {
   const {
     opponentPhrase,
     oppAttack,
-    scroll,
-    setScroll,
     responseTime,
     currentPhrase,
     userAttacked,
@@ -14,7 +12,8 @@ const Opponent = () => {
     gameRunning,
     // oppAttackTimer,
     oppAttackSuccess,
-    level,
+    gameEnded,
+    level
   } = useGlobalContext()
 
   //this checks what the difficulty is and then sets response time accordingly
@@ -171,9 +170,7 @@ const Opponent = () => {
         <div>user{level}: </div>
       </div>
       <p
-        className={`${
-          oppAttackSuccess ? "successfulAttack" : `opp-text-animation ${level}`
-        } ${!gameRunning && `paused`}`}
+        className={!gameEnded&&`${oppAttackSuccess ? "successfulAttack" : `opp-text-animation ${level}`} ${!gameRunning && `paused`}`}
         // className={`opp-text-animation ${
         //   gameRunning ? level : `${level} paused`
         // }`}
