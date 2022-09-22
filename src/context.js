@@ -201,6 +201,7 @@ const AppContextProvider = ({ children }) => {
 
     //Start Attack timer
     setSt("start")
+    // focusInput.current.focus()
   }
 
   //set end game conditions
@@ -248,7 +249,9 @@ const AppContextProvider = ({ children }) => {
     //TODO pauses animations but not animiaitons do not repeat yo need to remobe and readd classes
     gameRunning ? setSt("pause") : setSt("resume")
     setGameRunning(!gameRunning)
-    //reset user text
+    
+    //focus on text
+    //  focusInput.current.focus()
   }
 
   // //resume game conditions
@@ -270,10 +273,13 @@ const AppContextProvider = ({ children }) => {
     if (gameEnded) {
       setShowSettings(false)
       setGameRunning(false)
+      
     } else {
       pauseResume()
       setShowSettings(!showSettings)
+
     }
+     //focusInput.current.focus()
   }
   //tracking time
   const timerId = useRef()
@@ -281,9 +287,15 @@ const AppContextProvider = ({ children }) => {
   const [start, setStart] = useState(0)
   const [remaining, setRemaining] = useState(0)
   const [st, setSt] = useState("0")
-
+  
+  //TODO DO we need to mention focus anywhere else or is this enough?
+  useEffect(
+    ()=>{
+      !showSettings && (st==="start"||"resume")&&focusInput.current.focus()
+    },[showSettings,st]
+  )
   // const opponentAttackPhase = () =>{
-
+    
   //   // setSt("exit")
   //   clearTimeout(timerId.current)
   //   //oppattack animation (pausable)
@@ -361,7 +373,9 @@ const AppContextProvider = ({ children }) => {
           setIsInputDisabled(false)
           newPhrases()
           setSt("start")
-
+          //reset user text
+          setUserText("")
+          // focusInput.current.focus()
           //start new scroll animation
         }, 2000)
         break
@@ -395,6 +409,8 @@ const AppContextProvider = ({ children }) => {
   //   clearTimeout(timerId)
   //   // oppAttack success
   // }
+const focusInput = useRef(null)
+
 
   //get new random phrases
   const newPhrases = () => {
@@ -419,7 +435,7 @@ const AppContextProvider = ({ children }) => {
     //set our current array to our working array
     setCurrentPhraseList(workingArray)
     setUserText("")
-    //TODO set focus on USER INPUT USING USEREF
+    // focusInput.current.focus()
   }
   // =======================================================
   useEffect(() => {
@@ -500,6 +516,7 @@ const AppContextProvider = ({ children }) => {
         oppAttackSuccess,
         level,
         displaySettings,
+        focusInput,
       }}
     >
       {children}

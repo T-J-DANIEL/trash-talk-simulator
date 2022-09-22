@@ -22,7 +22,8 @@ const UserInput = () => {
     comboChain,
     setComboChain,
     oppAttackSuccess,
-    gameRunning
+    gameRunning,
+    focusInput,
   } = useGlobalContext()
 
   const interleave = (arr, thing) =>
@@ -69,6 +70,7 @@ const UserInput = () => {
         type="text"
         placeholder={currentPhrase}
         value={userText}
+        ref={focusInput}
         onKeyPress={(e) => {
           //  e.key === "Enter" && setUserText("")
           //TODO make it so if opponent is successful then user is stopped,there is animation and then we get new phrase

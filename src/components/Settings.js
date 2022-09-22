@@ -2,7 +2,7 @@ import ReactDOM from "react-dom"
 import { useGlobalContext } from "../context"
 //settings component accessed by clicking hamburger button
 const Settings = () => {
-  //all these timer methods and timer state values  are imported from context 
+  //all these timer methods and timer state values  are imported from context
   const {
     setPlaying,
     setTimerExists,
@@ -13,7 +13,7 @@ const Settings = () => {
     newPhrases,
     startGame,
     endGame,
-    displaySettings
+    displaySettings,
   } = useGlobalContext()
   return ReactDOM.createPortal(
     <div className="overlay-container">
@@ -31,7 +31,17 @@ const Settings = () => {
           <button onClick={() => setResetTimer(true)}>Reset</button> */}
           <button onClick={newPhrases}>newPhrases</button>
           {/* <button onClick={startGame}>Start Game</button> */}
-          <button onClick={endGame}>End Game</button>
+          <button
+            // onClick={() => {
+            //   if (window.confirm("are you sure?")) {
+            //     endGame()
+            //   }
+            //   displaySettings()
+            // }}
+            onClick={endGame}
+          >
+            End Game
+          </button>
           <button>Sound </button>
         </div>
       </div>
