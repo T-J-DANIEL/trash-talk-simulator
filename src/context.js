@@ -17,17 +17,17 @@ const useGlobalContext = () => {
 }
 //context provider
 const AppContextProvider = ({ children }) => {
-  //video background links
+  //<><><><><><><> //VIDEO BACKGROUND STATE VALUES\\ <><><><><><><>
   // const yeOldeVid = "https://www.youtube.com/watch?v=5L-4xVyUKqo"
   // const ogGamerVid = "https://www.youtube.com/watch?v=sVYyjr84ZXI"
   const yeOldeVid = "#"
   const ogGamerVid = "#"
-  //<><><><><><><> //GAME STATE VALUES\\ <><><><><><><>
+
+  //<><><><><><><> //RESPONSE TIME STATE VALUES\\ <><><><><><><>
   //difficulty level
   const [responseTime, setResponseTime] = useState(10000)
   const [level, setLevel] = useState("normal")
   const changeDifficulty = (difficulty = "normal") => {
-    //TODO CHANGED THESE LEVELS TO WORDS INSTEAD OF SAME AS NUMBER looks like i fixed it
     switch (difficulty) {
       case "easy":
         setResponseTime(15000)
@@ -47,6 +47,7 @@ const AppContextProvider = ({ children }) => {
     }
   }
 
+  //<><><><><><><> //GAME STATE VALUES\\ <><><><><><><>
   //'yeolde' mode
   const [isYeOlde, setIsYeOlde] = useState(true)
   //has game run before or not?
@@ -56,46 +57,66 @@ const AppContextProvider = ({ children }) => {
   //has game ended?
   const [gameEnded, setGameEnded] = useState(false)
   const [gameStatus, setGameStatus] = useState("loading")
+  //TODO whats this?
+  //current available list of phrases
+  const getPhrases = () => {
+    //FUNCTION TO OPTIONALLY RENDER PHRASES DEPENDING ON THEME
+    //evilinsult.com/generate_insult.php?lang=en&type=json
+    // return isYeOlde ? shakesPhrases : trashPhrases
+    
+    return shakesPhrases
+  }
+  const [currentPhraseList, setCurrentPhraseList] = useState(getPhrases)
+  //SETTINGS menu showing?
+  const [showSettings, setShowSettings] = useState(false)
+  
+  //<><><><><><><> //TIME SYNCHRO VALUES\\ <><><><><><><>
+  const timerId = useRef()
+  // TODO let timerId = null?
+  const [start, setStart] = useState(0)
+  const [remaining, setRemaining] = useState(0)
+  const [st, setSt] = useState("0")
+  
   //<><><><><><><> //USER STATE VALUES\\ <><><><><><><>
+  //current selected phrase
+  const [currentPhrase, setCurrentPhrase] = useState("...")
   //users typed text (controlled form)
   const [userText, setUserText] = useState("")
   //user score
   const [score, setScore] = useState(0)
-  //user has attacked
-  const [userAttacked, setUserAttacked] = useState(false)
   //counts how many answers over 85% a user has achieved
   const [comboChain, setComboChain] = useState([])
+  //array for holding streak gold coins //TODO COULD USE THE VALUE OF STREAK ABOVE AND RENDER BASED ON THIS
+  const [streakArray, setStreakArray] = useState([])
+  //the percentage that userText matches the currentPhrase
+  const [percentageMatch, setPercentageMatch] = useState(0)
   //visual representation of correct or incorrect letter typed (green/red background letters)
   const [visualMatches, setVisualMatches] = useState([])
+  //user has attacked
+  const [userAttacked, setUserAttacked] = useState(false)
+  //is user input disabled?
+  const [isInputDisabled, setIsInputDisabled] = useState(false)
+  //User input focus ref
+  const focusInput = useRef(null)
 
   //<><><><><><><> //OPPONENT STATE VALUES\\ <><><><><><><>
   //opponent has succesfully attacked
   const [oppAttacked, setOppAttacked] = useState(false)
   const [oppAttackSuccess, setOppAttackSuccess] = useState(false)
+  //opponents available phrase list?
+  const [opponentPhrase, setOpponentPhrase] = useState("...")
   // display the timrs and variables and attach to pause fuinction
   //TODO opp gets random phrase gen from triplet list user gets actual shakespeare phrase
   //TODO MAYBE IT WOULD BE BETTER IF BOTH GOT TRIPLETS (easy to type and less ofensive)
-  const getPhrases = () => {
-    //FUNCTION TO OPTIONALLY RENDER PHRASES DEPENDING ON THEME
-    //evilinsult.com/generate_insult.php?lang=en&type=json
-    // return isYeOlde ? shakesPhrases : trashPhrases
 
-    https: return shakesPhrases
-  }
-  //current available list of phrases
-  const [currentPhraseList, setCurrentPhraseList] = useState(getPhrases)
-  //current selected phrase
-  const [currentPhrase, setCurrentPhrase] = useState("...")
-  //opponents available phrase list
-  const [opponentPhrase, setOpponentPhrase] = useState("...")
-  //the percentage that userText matches the currentPhrase
-  const [percentageMatch, setPercentageMatch] = useState(0)
-  //is user input disabled?
-  const [isInputDisabled, setIsInputDisabled] = useState(false)
-  //array for holding streak gold coins //TODO COULD USE THE VALUE OF STREAK ABOVE AND RENDER BASED ON THIS
-  const [streakArray, setStreakArray] = useState([])
+  //<><><><><><><> //MAIN TIMER STATE VALUES\\ <><><><><><><>
+  const [timerExists, setTimerExists] = useState(false)
+  const [timerRunning, setTimerRunning] = useState(true)
+  const [resetTimer, setResetTimer] = useState(false)
 
-  // comparing values function //TODO white space not accounted for, spaces at front are registered as a word and comparing to word after
+  //<><><><><><><> //TEXT FUNCTIONS\\ <><><><><><><>
+  // Function to compare values of user text typed text with the current phrase
+  //TODO white space not accounted for, spaces at front are registered as a word and comparing to word after
   const compareValues = (userTyping) => {
     //current testing phrase split in to individual letters
     const testArray = currentPhrase.split("")
@@ -153,7 +174,7 @@ const AppContextProvider = ({ children }) => {
     setPercentageMatch(Math.ceil((matches / testArray.length) * 100))
   }
 
-  //checks to see percentage match is 100% we can move to next phrase automatically
+  //Function to check to see percentage match is 100% we can move to next phrase automatically
   //TODO CAN REPLACE THIS WITH A SCORING FUNCTION
   useEffect(() => {
     if (percentageMatch === 100) {
@@ -178,8 +199,51 @@ const AppContextProvider = ({ children }) => {
     }
   }, [percentageMatch])
 
-  //set new game conditions
+  //Function to get new random phrases for user and opponent
+  const newPhrases = () => {
+    //copy phrase list into new working array
+    let workingArray = [...currentPhraseList]
+    //pick a random phrase from this workingArray and set it as the current phrase
+    const randomUserIndex = Math.floor(Math.random() * workingArray.length)
+    setCurrentPhrase(workingArray[randomUserIndex].insult)
+
+    //remove this phrase from the working array so it cannot be chosen for opp
+    workingArray = workingArray.filter((_, index) => index !== randomUserIndex)
+
+    //TODO:CONVERT TO RANDOM for opp?
+    //three random indexes, one for each word in randoShake array
+    //set opp phrase to a template literals starting with "thou" then the three variables
+    //pick random phrase from this filtered working array and filter it out frm working array
+    const randomOppIndex = Math.floor(Math.random() * workingArray.length)
+    setOpponentPhrase(workingArray[randomOppIndex].insult)
+    workingArray = workingArray.filter(
+      (item, index) => index !== randomOppIndex
+    )
+    //set our current array to our working array
+    setCurrentPhraseList(workingArray)
+    setUserText("")
+  }
+  // useEffect to run compareValues function as soon as currentPhrase changes
+  useEffect(() => {
+    //TODO can we usememo this?
+    compareValues("")
+  }, [currentPhrase])
+
+  //Function for streak,possibly deprecated
+  //TODO(is this used? has it been replaced by combochain?)highest streak
+  const streak = () => {
+    if (comboChain > 0) {
+      for (let i = 1; i <= comboChain; i++) {
+        setStreakArray((prev) => [...prev, <div className="gold-coin" />])
+      }
+    }
+  }
+
+  //<><><><><><><> //GAMESTATE FUNCTIONS\\ <><><><><><><>
+  //Function to set new game conditions
   const startGame = () => {
+    //TODO start game screeen not showing when we pause and end game/end game?
+
     setGameEnded(false)
     //clear any timers
     setTimerExists(false)
@@ -201,10 +265,9 @@ const AppContextProvider = ({ children }) => {
 
     //Start Attack timer
     setSt("start")
-    // focusInput.current.focus()
   }
 
-  //set end game conditions
+  //Function to set end game conditions
   const endGame = () => {
     setSt("exit")
     setTimerExists(false)
@@ -218,26 +281,23 @@ const AppContextProvider = ({ children }) => {
     // oppAttackTimer("exit")
     setUserText("")
     //TODO should ask are you sure and close settings
-    //TODO manage scoring
+    //TODO manage scoring and maybe high score local memory
   }
 
-  //Main timer state variables & functions
-  const [timerExists, setTimerExists] = useState(false)
-  const [timerRunning, setTimerRunning] = useState(true)
-  const [resetTimer, setResetTimer] = useState(false)
   //new timer is loaded in a paused state, awaiting 'play' command
+  //TODO not used shall we get rid of it?
   const mountPaused = () => {
     setTimerExists(true)
     setTimerRunning(false)
   }
-
-  //new timer is loaded already in a running state
+  //Function to load a timer already in a running state
   const mountRunning = () => {
     setTimerExists(true)
     setTimerRunning(true)
   }
 
-  //pause game conditions
+  //Function to pause and resume game conditions
+  //TODO  maybe a separate pause function?
   const pauseResume = () => {
     //show settings/pause menu
     // setShowSettings(true)
@@ -246,80 +306,27 @@ const AppContextProvider = ({ children }) => {
     //pause any other timer
     setIsInputDisabled(!isInputDisabled)
     //stop input (change z index of screen barrier? or just make input disabled)
-    //TODO pauses animations but not animiaitons do not repeat yo need to remobe and readd classes
     gameRunning ? setSt("pause") : setSt("resume")
     setGameRunning(!gameRunning)
-    
-    //focus on text
-    //  focusInput.current.focus()
   }
 
-  // //resume game conditions
-  // const resumeGame = () => {
-  //   //hide settings/pause menu
-  //   setShowSettings(false)
-  //   //resume timer
-  //   setTimerRunning(true)
-  //   //resume any other timer
-  //   //re enable input
-  //   setIsInputDisabled(false)
-  //   //TODO see above about pausing resume should reverse this
-  // }
-
-  //SETTINGS menu showing?
-  const [showSettings, setShowSettings] = useState(false)
-
+  //Function to show and hide pause/settings menu
   const displaySettings = () => {
     if (gameEnded) {
       setShowSettings(false)
       setGameRunning(false)
-      
     } else {
       pauseResume()
       setShowSettings(!showSettings)
-
     }
-     //focusInput.current.focus()
   }
-  //tracking time
-  const timerId = useRef()
-  // let timerId = null
-  const [start, setStart] = useState(0)
-  const [remaining, setRemaining] = useState(0)
-  const [st, setSt] = useState("0")
-  
-  //TODO DO we need to mention focus anywhere else or is this enough?
-  useEffect(
-    ()=>{
-      !showSettings && (st==="start"||"resume")&&focusInput.current.focus()
-    },[showSettings,st]
-  )
-  // const opponentAttackPhase = () =>{
-    
-  //   // setSt("exit")
-  //   clearTimeout(timerId.current)
-  //   //oppattack animation (pausable)
-  //     setOppAttackSuccess(true)
-  //     //disable use input (pause does not effect this)
-  //     setIsInputDisabled(true)
-  //     setStart(Date.now())
-  //     setRemaining(2000)
-  //     //Start time must be variable how to plug it in?
-  //     timerId.current = setTimeout(()=>{
-  //         setOppAttackSuccess(false)
-  //         setIsInputDisabled(false)
-  //         newPhrases()
-  //         //start new scroll animation
-  //         setSt("start")
 
-  //     },2000)
+  //usEffect to set focus on input box when required
+  useEffect(() => {
+    !showSettings && (st === "start" || "resume") && focusInput.current.focus()
+  }, [showSettings, st])
 
-  //   //set a timeout
-  //   }
-
-  //game running animatino starts at end change status to attacking
-  // Assignments to the 'timerId' variable from inside React Hook useEffect will be lost after each render. To preserve the value over time, store it in a useRef Hook and keep the mutable value in the '.current' property. Otherwise, you can move this variable directly inside useEffect.eslintreact-hooks/exhaustive-deps
-  //TODO maybe use same timer id for attack and win state/lose state
+  //useEffect for game state synchronization
   useEffect(() => {
     switch (st) {
       case "start":
@@ -343,7 +350,7 @@ const AppContextProvider = ({ children }) => {
         if (oppAttackSuccess) {
           timerId.current = setTimeout(() => {
             console.log("resumed")
-            //TODO must resume the correct timer
+
             setOppAttackSuccess(false)
             setIsInputDisabled(false)
             newPhrases()
@@ -367,7 +374,7 @@ const AppContextProvider = ({ children }) => {
         setIsInputDisabled(true)
         setStart(Date.now())
         setRemaining(2000)
-        //TODO Start time must be variable how to plug it in?
+
         timerId.current = setTimeout(() => {
           setOppAttackSuccess(false)
           setIsInputDisabled(false)
@@ -375,12 +382,10 @@ const AppContextProvider = ({ children }) => {
           setSt("start")
           //reset user text
           setUserText("")
-          // focusInput.current.focus()
           //start new scroll animation
         }, 2000)
         break
       case "userSuccess":
-        // TODO pausable user sccuess phase
         break
       case "exit":
         // setSt("exit")
@@ -398,66 +403,7 @@ const AppContextProvider = ({ children }) => {
       clearTimeout(timerId.current)
     }
   }, [st])
-  // const oppAttackEnd = () => {
-  //   setOppAttackSuccess(true)
-  //   //setUserAttacked(true)
-  //   console.log("executed")
-  // }
 
-  // }
-  // const endOppAttack = () => {
-  //   clearTimeout(timerId)
-  //   // oppAttack success
-  // }
-const focusInput = useRef(null)
-
-
-  //get new random phrases
-  const newPhrases = () => {
-    //copy phrase list into new working array
-    let workingArray = [...currentPhraseList]
-    //pick a random phrase from this workingArray and set it as the current phrase
-    const randomUserIndex = Math.floor(Math.random() * workingArray.length)
-    setCurrentPhrase(workingArray[randomUserIndex].insult)
-
-    //remove this phrase from the working array so it cannot be chosen for opp
-    workingArray = workingArray.filter((_, index) => index !== randomUserIndex)
-
-    //TODO:CONVERT TO RANDOM for opp?
-    //three random indexes, one for each word in randoShake array
-    //set opp phrase to a template literals starting with "thou" then the three variables
-    //pick random phrase from this filtered working array and filter it out frm working array
-    const randomOppIndex = Math.floor(Math.random() * workingArray.length)
-    setOpponentPhrase(workingArray[randomOppIndex].insult)
-    workingArray = workingArray.filter(
-      (item, index) => index !== randomOppIndex
-    )
-    //set our current array to our working array
-    setCurrentPhraseList(workingArray)
-    setUserText("")
-    // focusInput.current.focus()
-  }
-  // =======================================================
-  useEffect(() => {
-    //TODO can we usememo this?
-    compareValues("")
-  }, [currentPhrase])
-
-  //add to streak
-  //TODO(is this used? has it been replaced by combochain?)highest streak
-  const streak = () => {
-    if (comboChain > 0) {
-      for (let i = 1; i <= comboChain; i++) {
-        setStreakArray((prev) => [...prev, <div className="gold-coin" />])
-      }
-    }
-  }
-  //TODO TODAY continue testing your pause function, write an interval companion function that logs each second if needs be.
-  //WE NEED A CLEAN UP FUNCTION TO CLEAR ALL TIMOUTS ETC ON DISMOUNT
-  //must use ueeffects to stop multiple rerenders
-  //need to stop rendering to a non mounted component
-  //think about a status fuinction that manages what he curent status is for the opp. what the user does and doesnt do will effect what is called
-  //function is firing striaght away
   //TODO try and minimise these exports
   return (
     <AppContext.Provider
@@ -508,7 +454,6 @@ const focusInput = useRef(null)
         userAttacked,
         setUserAttacked,
         gameRunning,
-        // oppAttackTimer,
         timerId,
         start,
         remaining,

@@ -1,25 +1,6 @@
 
-
-
-
-// const splitLists = (list) => {
-  //   let count = 0
-  //   return list.split(" ").reduce(
-    //     (total, item, index) => {
-      //       total[count].push(item)
-      //       count = count < 2 ? count + 1 : 0
-      //       return total
-      //     },
-      //     [[], [], []]
-      //   )
-      // }
-      // console.log(
-        //   splitLists(
-          //     "artless base-court apple-john bawdy bat-fowling baggage beslubbering beef-witted barnacle bootless beetle-headed bladder churlish boil-brained boar-pig cockered clapper-clawed bugbear clouted clay-brained bum-bailey craven common-kissing canker-blossom currish crook-pated clack-dish dankish dismal-dreaming clotpole dissembling dizzy-eyed coxcomb droning doghearted codpiece errant dread-bolted death-token fawning earth-vexing dewberry fobbing elf-skinned flap-dragon froward fat-kidneyed flax-wench frothy fen-sucked flirt-gill gleeking flap-mouthed foot-licker goatish fly-bitten fustilarian gorbellied folly-fallen giglet impertinent fool-born gudgeon infectious full-gorged haggard jarring guts-griping harpy loggerheaded half-faced hedge-pig lumpish hasty-witted horn-beast mammering hedge-born hugger-mugger mangled hell-hated joithead mewling idle-headed lewdster paunchy ill-breeding lout pribbling ill-nurtured maggot-pie puking knotty-pated malt-worm puny milk-livered mammet qualling motley-minded measle rank onion-eyed minnow reeky plume-plucked miscreant roguish pottle-deep moldwarp ruttish pox-marked mumble-news saucy reeling-ripe nut-hook spleeny rough-hewn pigeon-egg spongy rude-growing pignut surly rump-fed puttock tottering shard-borne pumpion unmuzzled sheep-biting ratsbane vain spur-galled scut venomed swag-bellied skainsmate villainous tardy-gaited strumpet warped tickle-brained varlot wayward toad-spotted vassal weedy unchin-snouted whey-face yeasty weather-bitten wagtail"
-          //   )[2]
-          // )
-
-  //TODO:pause button on mainpage should pause enemy input
+//TODO ideas
+  //animations on score number when you score
   //move util functions in context to utils file
   //when combo reaches higher then 5 just cjange color and number
   //randomise opp text and check styling
@@ -40,7 +21,23 @@
   //opp attacks from beginning
 
 
+  //TODO WHAT TO DO NOW?
+  //Move non display logic code from user input to context 
+  //pause and new game not showing new screen, probably because its a new game
+  //finish off any toDos and finish refactoring for now
+  //copy and paste phrase getting function and rewrite for triple word for user and opponent
+  //write new function to check accuracy of the triplets
+  //work on scoring attack and combo streaks functions and animations
+  //add high score with local memory
+  //add selector for profile pic and name nad finalize name for opp
+  //finalize all layouts and css including mobile
+  //add sound effects
+  //publish this project on github
+  //refactor in useReducer
+  //could we use a useMemo some where?
+  //later add css in js method or similar
+
+
+
   //todo history
-  //19th 
-  //rewrote difficulty selector fn to use switch case
-  //chnage succesfullAttack to oppAttack
+ 

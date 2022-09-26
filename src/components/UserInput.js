@@ -73,7 +73,7 @@ const UserInput = () => {
         ref={focusInput}
         onKeyPress={(e) => {
           //  e.key === "Enter" && setUserText("")
-          //TODO make it so if opponent is successful then user is stopped,there is animation and then we get new phrase
+          //If opponent is successful then user is stopped,there is animation and then we get new phrase
           if (e.key === "Enter") {
             if (percentageMatch > 80) {
               setOppAttacked(true)
