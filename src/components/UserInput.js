@@ -24,29 +24,13 @@ const UserInput = () => {
     oppAttackSuccess,
     gameRunning,
     focusInput,
+    wrappedIdea,
+    interleave,
   } = useGlobalContext()
 
-  const interleave = (arr, thing) =>
-    [].concat(...arr.map((n) => [n, thing])).slice(0, -1)
 
-  const idea = visualMatches.map((item, currentIndex) =>
-    item.map((item, index) =>
-      item.isCorrect ? (
-        <span key={index} className="green">
-          {item.char}
-        </span>
-      ) : (
-        <span key={index} className="red">
-          {item.char}
-        </span>
-      )
-    )
-  )
 
-  //wrap all in span
-  const wrappedIdea = idea.map((item) => <span>{item}</span>)
   return (
-    //{`user input ${oppAttackSuccesfull?"animate":""}`}
     <div
       className={`user-input ${oppAttackSuccess ? "animate" : ""} ${
         !gameRunning && "paused"
@@ -97,6 +81,7 @@ const UserInput = () => {
           }
         }}
         onChange={(e) => {
+          //TODO why are we changing both state values?
           setUserText(e.target.value)
           //TODOwhy wont this update on time?
           //maybe if we used a handle change function? it might force update every time

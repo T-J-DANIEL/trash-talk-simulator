@@ -19,10 +19,16 @@
   //in settings menu pause game and end game buttons should exit settings menu and show their own menus
   //full ui redesign cohesive style and colors
   //opp attacks from beginning
-
+ //TODO: IDEA CONVERT TO RANDOM for opp?
+        //three random indexes, one for each word in randoShake array
+        //set opp phrase to a template literals starting with "thou" then the three variables
+        //extreme mode with full sentences
+        //local memopry remmebers name hioghscore pic and difficluty
+        //also look at animation "steps" they look like too many steps till end
 
   //TODO WHAT TO DO NOW?
   //Move non display logic code from user input to context 
+  
   //pause and new game not showing new screen, probably because its a new game
   //finish off any toDos and finish refactoring for now
   //copy and paste phrase getting function and rewrite for triple word for user and opponent

@@ -31,9 +31,10 @@ const MainPage = () => {
     st,
     displaySettings,
   } = useGlobalContext()
-    // useEffect(() => {console.log(st)}, [st])
     //imported state properties
-    const vidRef = useRef(null)
+
+    //vid logic
+    //const vidRef = useRef(null)
     //grab ref of the video
     // useEffect(
       //   ()=>{
@@ -41,9 +42,7 @@ const MainPage = () => {
         //   },[]
     // )
     //when page loads auto seek to 300 seconds
-      useEffect(() => {
-        console.log(st)
-      }, [gameRunning])
+     
   return (
     <>
       {isNewGame && <StartGame />}
@@ -53,7 +52,7 @@ const MainPage = () => {
 
       <div className="vid-container">
         <Opponent />
-        <ReactPlayer
+        {/* <ReactPlayer
           ref={vidRef}
           muted={true}
           loop={true}
@@ -62,8 +61,8 @@ const MainPage = () => {
           url={isYeOlde ? yeOldeVid : ogGamerVid}
           width="100%"
           height="100%"
-          // onPause={setPlaying(true)}
-        />
+          onPause={setPlaying(true)}
+       /> */}
         <div className="vid-cover"></div>
         <UserInput />
       </div>
@@ -82,7 +81,8 @@ const MainPage = () => {
         {/* </div>
       <div> */}
         <div className="dev-box">
-          {/* <button
+          {/* 
+          <button
             onClick={gameRunning ? oppAttackTimer("pause") : oppAttackTimer("resume")}
           >
             Pause/Play Opp

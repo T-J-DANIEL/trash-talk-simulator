@@ -63,20 +63,20 @@ const AppContextProvider = ({ children }) => {
     //FUNCTION TO OPTIONALLY RENDER PHRASES DEPENDING ON THEME
     //evilinsult.com/generate_insult.php?lang=en&type=json
     // return isYeOlde ? shakesPhrases : trashPhrases
-    
+
     return shakesPhrases
   }
   const [currentPhraseList, setCurrentPhraseList] = useState(getPhrases)
   //SETTINGS menu showing?
   const [showSettings, setShowSettings] = useState(false)
-  
+
   //<><><><><><><> //TIME SYNCHRO VALUES\\ <><><><><><><>
   const timerId = useRef()
   // TODO let timerId = null?
   const [start, setStart] = useState(0)
   const [remaining, setRemaining] = useState(0)
   const [st, setSt] = useState("0")
-  
+
   //<><><><><><><> //USER STATE VALUES\\ <><><><><><><>
   //current selected phrase
   const [currentPhrase, setCurrentPhrase] = useState("...")
@@ -115,6 +115,36 @@ const AppContextProvider = ({ children }) => {
   const [resetTimer, setResetTimer] = useState(false)
 
   //<><><><><><><> //TEXT FUNCTIONS\\ <><><><><><><>
+
+  //Function to get new random phrases for user and opponent
+  const newPhrases = () => {
+    //copy phrase list into new working array
+    let workingArray = [...currentPhraseList]
+
+    //TODO opp and user both use same code can be replaced with a function
+
+    //For User
+    //pick a random phrase from this workingArray
+    const randomUserIndex = Math.floor(Math.random() * workingArray.length)
+    //and set it as the current phrase
+    setCurrentPhrase(workingArray[randomUserIndex].insult)
+    //remove this phrase from the working array so it cannot be chosen for opp
+    workingArray = workingArray.filter((_, index) => index !== randomUserIndex)
+
+    //For Opp
+    //pick random phrase from this now filtered working array for opp
+    const randomOppIndex = Math.floor(Math.random() * workingArray.length)
+    setOpponentPhrase(workingArray[randomOppIndex].insult)
+    //and filter it out frm working array
+    workingArray = workingArray.filter(
+      (item, index) => index !== randomOppIndex
+    )
+    //set our current array to be our working array so when we call new phrase next time it won contain the phrases we just used
+    setCurrentPhraseList(workingArray)
+    //clear users text box, ready for new input
+    setUserText("")
+  }
+
   // Function to compare values of user text typed text with the current phrase
   //TODO white space not accounted for, spaces at front are registered as a word and comparing to word after
   const compareValues = (userTyping) => {
@@ -122,10 +152,12 @@ const AppContextProvider = ({ children }) => {
     const testArray = currentPhrase.split("")
     //user typing split in to individual letters
     const userArray = userTyping.trim().split("")
+
     // test phrase split into words
     // const testArrayWords = currentPhrase.split(" ")
     // user typing split into words
     // const userArrayWords = userTyping.trim().split(" ")
+
     //test phrase words split into individual letters in each word
     const testArrayWordsLetters = currentPhrase
       .split(" ")
@@ -136,6 +168,9 @@ const AppContextProvider = ({ children }) => {
     //   .map((item) => item.split(""))
     //take word and compare all values in each word, each space signifies moving on to next word
     //so display words with letters?, get input select first word of current phrase compare values to the first word when a space is detected we are ontto next one
+
+    //userTyping.split(" ").map((item) => item.split(""))
+    //EXPLANATION take the tawl(testArrayWordsLetters) and create a similar array for userTyping and check if within this array there is a "word" at the same index as the one in tawl. If there is then check this words letters against the word in tawl and if it matches then add an object with the letter and true or false for isccorrect. If the word is not present then add an array of objects for the words containing the letter and iscorrect:false
     const newMatches = testArrayWordsLetters.map((item, currentIndex) => {
       return userTyping.split(" ").map((item) => item.split(""))[currentIndex]
         ? item.map((item, index) => {
@@ -155,13 +190,13 @@ const AppContextProvider = ({ children }) => {
             return { char: item, isCorrect: false }
           })
     })
-
-    //no of matches when comparing the two
+    //TODO  Maybe it would be better to have seperate fnuction for visual matches or een pull everything into this function
+    //no of matches when comparing the letters of the test phase and user typed phrase (used only as raw data for percentage match)
     const matches = testArray.filter(
       (item, index) => item === userArray[index]
     ).length
-    //checking for each value of test array if usertyping char macthes or not and we return true or false
-    //currentPhrase.split("")
+
+    //checking for each value of test array if userTyping char matches or not and we return true or false
     const calcVisualMatches = testArray.map((item, index) =>
       item === userTyping.split("")[index]
         ? { char: currentPhrase.split("")[index], isCorrect: true }
@@ -169,9 +204,26 @@ const AppContextProvider = ({ children }) => {
     )
     //updating visual matches
     // setVisualMatches(calcVisualMatches)
+    //so visual mataches is sent an arary of arrays for each word containing an object for each letter with its value and isCorrect boolean value
     setVisualMatches(newMatches)
 
     setPercentageMatch(Math.ceil((matches / testArray.length) * 100))
+  }
+
+  // useEffect to run compareValues function as soon as currentPhrase changes
+  useEffect(() => {
+    //TODO can we usememo this?
+    compareValues("")
+  }, [currentPhrase])
+
+  //Function for streak,possibly deprecated
+  //TODO(is this used? has it been replaced by combochain?)highest streak
+  const streak = () => {
+    if (comboChain > 0) {
+      for (let i = 1; i <= comboChain; i++) {
+        setStreakArray((prev) => [...prev, <div className="gold-coin" />])
+      }
+    }
   }
 
   //Function to check to see percentage match is 100% we can move to next phrase automatically
@@ -199,45 +251,27 @@ const AppContextProvider = ({ children }) => {
     }
   }, [percentageMatch])
 
-  //Function to get new random phrases for user and opponent
-  const newPhrases = () => {
-    //copy phrase list into new working array
-    let workingArray = [...currentPhraseList]
-    //pick a random phrase from this workingArray and set it as the current phrase
-    const randomUserIndex = Math.floor(Math.random() * workingArray.length)
-    setCurrentPhrase(workingArray[randomUserIndex].insult)
+  //<><><><><><><> //Visual progress indicator functions\\ <><><><><><><>
+  //REMEMBER visualMatches is an array pf arrays for each word which hold objects for each letter in the word that have char and isCorrect values
+  //Used to add something between each item, we use a non breaking space in userInput to make the spans display next to each other
+  const interleave = (arr, thing) =>
+    [].concat(...arr.map((n) => [n, thing])).slice(0, -1)
 
-    //remove this phrase from the working array so it cannot be chosen for opp
-    workingArray = workingArray.filter((_, index) => index !== randomUserIndex)
-
-    //TODO:CONVERT TO RANDOM for opp?
-    //three random indexes, one for each word in randoShake array
-    //set opp phrase to a template literals starting with "thou" then the three variables
-    //pick random phrase from this filtered working array and filter it out frm working array
-    const randomOppIndex = Math.floor(Math.random() * workingArray.length)
-    setOpponentPhrase(workingArray[randomOppIndex].insult)
-    workingArray = workingArray.filter(
-      (item, index) => index !== randomOppIndex
+  const idea = visualMatches.map((item, currentIndex) =>
+    item.map((item, index) =>
+      item.isCorrect ? (
+        <span key={index} className="green">
+          {item.char}
+        </span>
+      ) : (
+        <span key={index} className="red">
+          {item.char}
+        </span>
+      )
     )
-    //set our current array to our working array
-    setCurrentPhraseList(workingArray)
-    setUserText("")
-  }
-  // useEffect to run compareValues function as soon as currentPhrase changes
-  useEffect(() => {
-    //TODO can we usememo this?
-    compareValues("")
-  }, [currentPhrase])
-
-  //Function for streak,possibly deprecated
-  //TODO(is this used? has it been replaced by combochain?)highest streak
-  const streak = () => {
-    if (comboChain > 0) {
-      for (let i = 1; i <= comboChain; i++) {
-        setStreakArray((prev) => [...prev, <div className="gold-coin" />])
-      }
-    }
-  }
+  )
+  //wrap all in span
+  const wrappedIdea = idea.map((item) => <span>{item}</span>)
 
   //<><><><><><><> //GAMESTATE FUNCTIONS\\ <><><><><><><>
   //Function to set new game conditions
@@ -326,7 +360,7 @@ const AppContextProvider = ({ children }) => {
     !showSettings && (st === "start" || "resume") && focusInput.current.focus()
   }, [showSettings, st])
 
-  //useEffect for game state synchronization
+  //Main useEffect for game state synchronization
   useEffect(() => {
     switch (st) {
       case "start":
@@ -404,6 +438,11 @@ const AppContextProvider = ({ children }) => {
     }
   }, [st])
 
+  //debugging useEffect to keep track of st
+  useEffect(() => {
+    console.log(st)
+  }, [gameRunning])
+
   //TODO try and minimise these exports
   return (
     <AppContext.Provider
@@ -462,6 +501,8 @@ const AppContextProvider = ({ children }) => {
         level,
         displaySettings,
         focusInput,
+        interleave,
+        wrappedIdea,
       }}
     >
       {children}
