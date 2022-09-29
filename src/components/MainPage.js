@@ -68,18 +68,6 @@ const MainPage = () => {
       </div>
       {/* vid container contains the vid background user input and opponent with an  */}
       <div className="settings">
-        {/* <button className="pause-button" onClick={pauseResume}>
-          Pause/play
-        </button> */}
-        {/* <button
-          onClick={() => {
-            setIsYeOlde((prev) => !prev)
-          }}
-        >
-          Ye Olde
-        </button> */}
-        {/* </div>
-      <div> */}
         <div className="dev-box">
           {/* 
           <button

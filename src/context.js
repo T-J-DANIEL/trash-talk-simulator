@@ -158,7 +158,7 @@ const AppContextProvider = ({ children }) => {
     // user typing split into words
     // const userArrayWords = userTyping.trim().split(" ")
 
-    //test phrase words split into individual letters in each word
+    //test phrase words split into individual letters in each word (tawl)
     const testArrayWordsLetters = currentPhrase
       .split(" ")
       .map((item) => item.split(""))
@@ -169,14 +169,16 @@ const AppContextProvider = ({ children }) => {
     //take word and compare all values in each word, each space signifies moving on to next word
     //so display words with letters?, get input select first word of current phrase compare values to the first word when a space is detected we are ontto next one
 
-    //userTyping.split(" ").map((item) => item.split(""))
+    const userArrayWordsLetters = userTyping
+      .trim()
+      .replace(/ +/g, " ")
+      .split(" ")
+      .map((item) => item.split(""))
     //EXPLANATION take the tawl(testArrayWordsLetters) and create a similar array for userTyping and check if within this array there is a "word" at the same index as the one in tawl. If there is then check this words letters against the word in tawl and if it matches then add an object with the letter and true or false for isccorrect. If the word is not present then add an array of objects for the words containing the letter and iscorrect:false
     const newMatches = testArrayWordsLetters.map((item, currentIndex) => {
-      return userTyping.split(" ").map((item) => item.split(""))[currentIndex]
+      return userArrayWordsLetters[currentIndex]
         ? item.map((item, index) => {
-            return userTyping.split(" ").map((item) => item.split(""))[
-              currentIndex
-            ][index] === item
+            return userArrayWordsLetters[currentIndex][index] === item
               ? {
                   char: testArrayWordsLetters[currentIndex][index],
                   isCorrect: true,
@@ -503,6 +505,7 @@ const AppContextProvider = ({ children }) => {
         focusInput,
         interleave,
         wrappedIdea,
+        setGameEnded,
       }}
     >
       {children}

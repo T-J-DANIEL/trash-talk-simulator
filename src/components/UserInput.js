@@ -26,6 +26,7 @@ const UserInput = () => {
     focusInput,
     wrappedIdea,
     interleave,
+    setIsNewGame
   } = useGlobalContext()
 
 
@@ -102,6 +103,13 @@ const UserInput = () => {
           }}
         >
           attack
+        </button>
+        <button
+          onClick={(e) => {
+            setIsNewGame(true)
+          }}
+        >
+          newgame
         </button>
       </div>
     </div>

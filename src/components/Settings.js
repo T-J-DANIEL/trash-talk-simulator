@@ -14,12 +14,13 @@ const Settings = () => {
     startGame,
     endGame,
     displaySettings,
+    setShowSettings,
   } = useGlobalContext()
   return ReactDOM.createPortal(
     <div className="overlay-container">
       <div className="settings-inner-container">
         {/* TODO need to sort these buttons out and standardize all popups design */}
-        <button onClick={displaySettings}>X</button>
+        <button onClick={displaySettings}>RESUME</button>
         <h1>Settings</h1>
         <div className="settings-button-container">
           {/* <button onClick={() => mountRunning()}>
@@ -39,7 +40,12 @@ const Settings = () => {
             //   }
             //   displaySettings()
             // }}
-            onClick={endGame}
+            onClick={() => {
+              if (window.confirm("are you sure?")) {
+                endGame()
+                setShowSettings(false)
+              }
+            }}
           >
             End Game
           </button>

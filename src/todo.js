@@ -29,10 +29,10 @@
   //TODO WHAT TO DO NOW?
   //Move non display logic code from user input to context 
   
-  //pause and new game not showing new screen, probably because its a new game
+  //new component for end game confirm screen or other solution (conditional rendering)
   //finish off any toDos and finish refactoring for now
   //copy and paste phrase getting function and rewrite for triple word for user and opponent
-  //write new function to check accuracy of the triplets
+  //write new function to check accuracy of the triplets compare the tawl with the new modified user tawl
   //work on scoring attack and combo streaks functions and animations
   //add high score with local memory
   //add selector for profile pic and name nad finalize name for opp

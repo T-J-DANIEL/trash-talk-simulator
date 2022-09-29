@@ -1,6 +1,7 @@
 
 import { useGlobalContext } from "../context"
 // component that displays when the game ends
+
 const EndGame = () => {
   const { startGame } = useGlobalContext()
   return (
