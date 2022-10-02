@@ -80,7 +80,7 @@ const MainPage = () => {
           <p>remaining time : {parseInt(remaining, 10)}</p>
         </div>
 
-        <button onClick={displaySettings}>|||</button>
+        <button onClick={displaySettings}>Pause</button>
         {showSettings && <Settings />}
         {/* pause button and show settings */}
       </div>

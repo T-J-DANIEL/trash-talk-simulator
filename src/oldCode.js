@@ -41,3 +41,99 @@
 
   //game running animatino starts at end change status to attacking
   // Assignments to the 'timerId' variable from inside React Hook useEffect will be lost after each render. To preserve the value over time, store it in a useRef Hook and keep the mutable value in the '.current' property. Otherwise, you can move this variable directly inside useEffect.eslintreact-hooks/exhaustive-deps
+
+
+//phrase choosing function v1
+// //Function to get new random phrases for user and opponent
+  // const newPhrases = () => {
+  //   //copy phrase list into new working array
+  //   let workingArray = [...currentPhraseList]
+
+  //   //NOTE opp and user both use same code can be replaced with a function
+
+  //   //For User
+  //   //pick a random phrase from this workingArray
+  //   const randomUserIndex = Math.floor(Math.random() * workingArray.length)
+  //   //and set it as the current phrase
+  //   setCurrentPhrase(workingArray[randomUserIndex].insult)
+  //   //remove this phrase from the working array so it cannot be chosen for opp
+  //   workingArray = workingArray.filter((_, index) => index !== randomUserIndex)
+
+  //   //For Opp
+  //   //pick random phrase from this now filtered working array for opp
+  //   const randomOppIndex = Math.floor(Math.random() * workingArray.length)
+  //   setOpponentPhrase(workingArray[randomOppIndex].insult)
+  //   //and filter it out frm working array
+  //   workingArray = workingArray.filter(
+  //     (item, index) => index !== randomOppIndex
+  //   )
+  //   //set our current array to be our working array so when we call new phrase next time it won contain the phrases we just used
+  //   setCurrentPhraseList(workingArray)
+  //   //clear users text box, ready for new input
+  //   setUserText("")
+  // }
+
+  //phrase choosing function v2 (added functions to clean up code)
+  // const newPhrases = () => {
+  //   //copy phrase list into new working array
+  //   let workingArray = [...currentPhraseList]
+  //   const getRandomIndex = () =>
+  //     Math.floor(Math.random() * workingArray.length)
+  //   const filterWorkingArray = (contender) => {
+  //     workingArray.filter((_, index) => index !== contender)
+  //   }
+
+  //   //For User
+  //   //pick a random phrase from this workingArray
+  //   const randomUserIndex = getRandomIndex()
+  //   //and set it as the current phrase
+  //   setCurrentPhrase(workingArray[randomUserIndex].insult)
+  //   //remove this phrase from the working array so it cannot be chosen for opp
+  //   filterWorkingArray(randomUserIndex)
+
+  //   //For Opp
+  //   //pick random phrase from this now filtered working array for opp
+  //   const randomOppIndex = getRandomIndex()
+  //   setOpponentPhrase(workingArray[randomOppIndex].insult)
+  //   //and filter it out frm working array
+  //   filterWorkingArray(randomOppIndex)
+
+  //   //Game setup
+  //   //set our current array to be our working array so when we call new phrase next time it won contain the phrases we just used
+  //   setCurrentPhraseList(workingArray)
+  //   //clear users text box, ready for new input
+  //   setUserText("")
+  // }
+  
+  // const newPhrasesv2 = () => {
+  //   //copy phrase list into new working array
+  //   let workingArray = [...currentPhraseList]
+
+  //   //choose a random index from the working array
+  //   const getRandomIndex = () => Math.floor(Math.random() * workingArray.length)
+  //   const filterWorkingArray = (contender) => {
+  //     workingArray.filter((_, index) => index !== contender)
+  //   }
+
+  //   //For User
+  //   //pick a random phrase from this workingArray
+  //   const randomUserIndex = getRandomIndex()
+  //   //and set it as the current phrase
+  //   setCurrentPhrase(workingArray[randomUserIndex].insult)
+  //   //remove this phrase from the working array so it cannot be chosen for opp
+  //   filterWorkingArray(randomUserIndex)
+
+  //   //For Opp
+  //   //pick random phrase from this now filtered working array for opp
+  //   const randomOppIndex = getRandomIndex()
+  //   setOpponentPhrase(workingArray[randomOppIndex].insult)
+  //   //and filter it out frm working array
+  //   filterWorkingArray(randomOppIndex)
+
+  //   //Game setup
+  //   //set our current array to be our working array so when we call new phrase next time it won contain the phrases we just used
+  //   setCurrentPhraseList(workingArray)
+  //   //clear users text box, ready for new input
+  //   setUserText("")
+  // }
+  

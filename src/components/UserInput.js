@@ -84,8 +84,7 @@ const UserInput = () => {
         onChange={(e) => {
           //TODO why are we changing both state values?
           setUserText(e.target.value)
-          //TODOwhy wont this update on time?
-          //maybe if we used a handle change function? it might force update every time
+          
           compareValues(e.target.value)
           //if 100% or timer reaches 0 then next question
           // if score is higher than 80% then hitmarker and bonus points

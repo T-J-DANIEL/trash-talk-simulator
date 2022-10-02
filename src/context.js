@@ -41,6 +41,11 @@ const AppContextProvider = ({ children }) => {
         setResponseTime(7000)
         setLevel("hard")
         break
+      //TODO Change the response time for extreme
+      case "extreme":
+        setResponseTime(7000)
+        setLevel("extreme")
+        break
       default:
         setResponseTime(10000)
         setLevel("normal")
@@ -63,8 +68,10 @@ const AppContextProvider = ({ children }) => {
     //FUNCTION TO OPTIONALLY RENDER PHRASES DEPENDING ON THEME
     //evilinsult.com/generate_insult.php?lang=en&type=json
     // return isYeOlde ? shakesPhrases : trashPhrases
-
+    //extreme mode?
     return shakesPhrases
+
+    //else
   }
   const [currentPhraseList, setCurrentPhraseList] = useState(getPhrases)
   //SETTINGS menu showing?
@@ -115,38 +122,44 @@ const AppContextProvider = ({ children }) => {
   const [resetTimer, setResetTimer] = useState(false)
 
   //<><><><><><><> //TEXT FUNCTIONS\\ <><><><><><><>
-
+  
   //Function to get new random phrases for user and opponent
   const newPhrases = () => {
-    //copy phrase list into new working array
-    let workingArray = [...currentPhraseList]
+    //choose a random index from the array
+    const randomIndex = (phraseIndex) =>
+      Math.floor(Math.random() * phraseIndex.length)
 
-    //TODO opp and user both use same code can be replaced with a function
-
-    //For User
-    //pick a random phrase from this workingArray
-    const randomUserIndex = Math.floor(Math.random() * workingArray.length)
-    //and set it as the current phrase
-    setCurrentPhrase(workingArray[randomUserIndex].insult)
-    //remove this phrase from the working array so it cannot be chosen for opp
-    workingArray = workingArray.filter((_, index) => index !== randomUserIndex)
-
-    //For Opp
-    //pick random phrase from this now filtered working array for opp
-    const randomOppIndex = Math.floor(Math.random() * workingArray.length)
-    setOpponentPhrase(workingArray[randomOppIndex].insult)
-    //and filter it out frm working array
-    workingArray = workingArray.filter(
-      (item, index) => index !== randomOppIndex
+    if (level === "extreme") {
+      //copy shakespeare phrase array as working array
+      let workingArray = [...currentPhraseList]
+      //choose a random index from the working array
+      const randomUserIndex = randomIndex(workingArray)
+      //and set it as the current phrase
+      setCurrentPhrase(workingArray[randomUserIndex].insult)
+      //remove this phrase from the working array so it cannot be chosen for opp
+      //and set our current array to be our working array so when we call new phrase next time it won contain the phrases we just used
+      setCurrentPhraseList(
+        workingArray.filter((_, index) => index !== randomUserIndex)
+      )
+      // //clear users text box, ready for new input
+      // setUserText("")
+    } else {
+      setCurrentPhrase(
+        `Thou ${randoShake[0][randomIndex(randoShake[0])]} ${
+          randoShake[1][randomIndex(randoShake[1])]
+        } ${randoShake[2][randomIndex(randoShake[2])]}`
+      )
+    }
+    setOpponentPhrase(
+      `Thou ${randoShake[0][randomIndex(randoShake[0])]} ${
+        randoShake[1][randomIndex(randoShake[1])]
+      } ${randoShake[2][randomIndex(randoShake[2])]}`
     )
-    //set our current array to be our working array so when we call new phrase next time it won contain the phrases we just used
-    setCurrentPhraseList(workingArray)
     //clear users text box, ready for new input
     setUserText("")
   }
 
   // Function to compare values of user text typed text with the current phrase
-  //TODO white space not accounted for, spaces at front are registered as a word and comparing to word after
   const compareValues = (userTyping) => {
     //current testing phrase split in to individual letters
     const testArray = currentPhrase.split("")

@@ -440,7 +440,14 @@ input::first-letter {
   font-size: 1.2rem;
   border-radius: 15px;
 }
-
+/* below button container used in start game component */
+.buttonContainer{
+  display:  flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 30%;
+  outline:2px solid red;
+}
 .header {
   display: flex;
   /* flex */
