@@ -82,7 +82,7 @@ const UserInput = () => {
           }
         }}
         onChange={(e) => {
-          //TODO why are we changing both state values?
+          //TODO why are you changing both state values?
           setUserText(e.target.value)
           
           compareValues(e.target.value)

@@ -112,9 +112,7 @@ const AppContextProvider = ({ children }) => {
   const [oppAttackSuccess, setOppAttackSuccess] = useState(false)
   //opponents available phrase list?
   const [opponentPhrase, setOpponentPhrase] = useState("...")
-  // display the timrs and variables and attach to pause fuinction
-  //TODO opp gets random phrase gen from triplet list user gets actual shakespeare phrase
-  //TODO MAYBE IT WOULD BE BETTER IF BOTH GOT TRIPLETS (easy to type and less ofensive)
+  //TODO display the timrs and variables and attach to pause fuinction. what does this mean?
 
   //<><><><><><><> //MAIN TIMER STATE VALUES\\ <><><><><><><>
   const [timerExists, setTimerExists] = useState(false)
@@ -122,7 +120,7 @@ const AppContextProvider = ({ children }) => {
   const [resetTimer, setResetTimer] = useState(false)
 
   //<><><><><><><> //TEXT FUNCTIONS\\ <><><><><><><>
-  
+
   //Function to get new random phrases for user and opponent
   const newPhrases = () => {
     //choose a random index from the array
@@ -130,6 +128,7 @@ const AppContextProvider = ({ children }) => {
       Math.floor(Math.random() * phraseIndex.length)
 
     if (level === "extreme") {
+      //if level is set to extreme then choose random phrase from shakespeare phrases instead of random triplet
       //copy shakespeare phrase array as working array
       let workingArray = [...currentPhraseList]
       //choose a random index from the working array
@@ -145,12 +144,14 @@ const AppContextProvider = ({ children }) => {
       // setUserText("")
     } else {
       setCurrentPhrase(
+        //set user phrase to a triplet made from random elizabethan words
         `Thou ${randoShake[0][randomIndex(randoShake[0])]} ${
           randoShake[1][randomIndex(randoShake[1])]
         } ${randoShake[2][randomIndex(randoShake[2])]}`
       )
     }
     setOpponentPhrase(
+      //set opp phrase to a triplet made from random elizabethan words
       `Thou ${randoShake[0][randomIndex(randoShake[0])]} ${
         randoShake[1][randomIndex(randoShake[1])]
       } ${randoShake[2][randomIndex(randoShake[2])]}`
@@ -243,6 +244,27 @@ const AppContextProvider = ({ children }) => {
 
   //Function to check to see percentage match is 100% we can move to next phrase automatically
   //TODO CAN REPLACE THIS WITH A SCORING FUNCTION
+const scoreHandler = () => {
+  //80% 
+  if (percentageMatch > 80) {
+    setUserAttacked(true)
+    setIsInputDisabled(true)
+    setSt("userSuccess")
+      setComboChain((prev) => [
+      ...prev,
+      <div className={`gold-coin gold-streak`} />,
+    ])
+  }
+
+  setScore((prev) => prev + percentageMatch)
+  setPercentageMatch(0)
+  setUserText("")
+  setComboChain([])
+  newPhrases()
+  //if user accuracy is low it should count as a failed attack and opponent should attack successfully
+  //there should also be a brief pause bttween each question for the animation success  or fail
+}
+
   useEffect(() => {
     if (percentageMatch === 100) {
       //?what the h?
@@ -384,7 +406,7 @@ const AppContextProvider = ({ children }) => {
         timerId.current = setTimeout(() => {
           console.log("started opp attack?")
           setSt("oppSuccess")
-          // opponentAttackPhase()
+          // opponentAttackPhase()e
         }, responseTime)
         setStart(Date.now())
         setRemaining(responseTime)
@@ -399,8 +421,18 @@ const AppContextProvider = ({ children }) => {
         if (oppAttackSuccess) {
           timerId.current = setTimeout(() => {
             console.log("resumed")
-
             setOppAttackSuccess(false)
+            setIsInputDisabled(false)
+            newPhrases()
+            setSt("start")
+            //start new scroll animation
+          }, remaining)
+        } 
+        else if (userAttacked) {
+          timerId.current = setTimeout(() => {
+            console.log("resumed")
+
+            setUserAttacked(false)
             setIsInputDisabled(false)
             newPhrases()
             setSt("start")
@@ -435,6 +467,22 @@ const AppContextProvider = ({ children }) => {
         }, 2000)
         break
       case "userSuccess":
+        clearTimeout(timerId.current)
+        //userAttck animation (pausable)
+        setUserAttacked(true)
+        //disable use input (pause does not effect this)
+        setIsInputDisabled(true)
+        setStart(Date.now())
+        setRemaining(2000)
+        timerId.current = setTimeout(() => {
+          setUserAttacked(true)
+          setIsInputDisabled(false)
+          newPhrases()
+          setSt("start")
+          //reset user text
+          setUserText("")
+          //start new scroll animation
+        }, 2000)
         break
       case "exit":
         // setSt("exit")
