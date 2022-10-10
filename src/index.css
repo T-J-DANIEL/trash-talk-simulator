@@ -195,6 +195,7 @@ input::first-letter {
   animation-timing-function: steps(40, end);
   animation-fill-mode: forwards;
   animation-play-state: running;
+  max-width: min-content;
 }
 .easy {
   animation-duration: 15s;
@@ -208,13 +209,17 @@ input::first-letter {
 
 @keyframes type {
   0% {
-    width: 0;
+    width:0%;
   }
+  80% {
+    background: none;
+  }  
   99.9% {
     border-right: 0.15em solid white;
   }
   100% {
     width: 100%;
+    background: red;
     border: none;
   }
 }
@@ -474,4 +479,9 @@ input::first-letter {
 }
 .paused {
   animation-play-state: paused;
+}
+
+.feather{
+  width: 10em;
+  height: 10em;
 }

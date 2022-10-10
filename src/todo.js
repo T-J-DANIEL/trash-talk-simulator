@@ -1,6 +1,7 @@
 
 //TODO ideas
   //animations on score number when you score
+  //need aan animation for less than 1 sec left
   //move util functions in context to utils file
   //when combo reaches higher then 5 just cjange color and number
   //randomise opp text and check styling

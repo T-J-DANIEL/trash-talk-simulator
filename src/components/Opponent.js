@@ -13,7 +13,8 @@ const Opponent = () => {
     // oppAttackTimer,
     oppAttackSuccess,
     gameEnded,
-    level
+    level,
+    remaining
   } = useGlobalContext()
 
   //this checks what the difficulty is and then sets response time accordingly
@@ -34,8 +35,6 @@ const Opponent = () => {
   //   }
   // }
 
-
-
   //whats this    ?
   // const [timer, setTimer] = useState(false)
   //ref to access timer and ?
@@ -48,55 +47,55 @@ const Opponent = () => {
   //   setScore(prev=>prev-30)
   //   //clear player streak
   //   setStreak(0)
-    //clear text animation
-      //TODO new variable here or base it on pp attack?
-    //play opp success animation
-      //TODO oppAttack?
-    //play user loss animation
-      //same?
-    //start timeout and at end stop success animation
-      //set attack to false?
-    //restart opp text scroll animation
+  //clear text animation
+  //TODO new variable here or base it on pp attack?
+  //play opp success animation
+  //TODO oppAttack?
+  //play user loss animation
+  //same?
+  //start timeout and at end stop success animation
+  //set attack to false?
+  //restart opp text scroll animation
 
-    //new phrases
-    //pauseResume() //resume game
-    //set new opp timer
-    
+  //new phrases
+  //pauseResume() //resume game
+  //set new opp timer
+
   // }
   // const resetAfterScore
 
   // const playerSuccess = () => {
   //   pauseResume()
-    //calulate playe score and incrment
-    //incremnt streak if required
-    //clear opp text animatino
-    //play user success animation
-    //play opp loss animation
-    //start timeout and at end stop success animation
-    //new phrases
-    //restart opp text scroll animation
-    //pauseResume()
+  //calulate playe score and incrment
+  //incremnt streak if required
+  //clear opp text animatino
+  //play user success animation
+  //play opp loss animation
+  //start timeout and at end stop success animation
+  //new phrases
+  //restart opp text scroll animation
+  //pauseResume()
 
-    //copied from context
-    //TODOpercentageMatch<50? oppatck true else use attack true
-    //   setUserAttack(true)
-    //   setScore((prev) => prev + percentageMatch)
-    //   setTimeout(() => {
-    //     setUserAttack(false)
+  //copied from context
+  //TODOpercentageMatch<50? oppatck true else use attack true
+  //   setUserAttack(true)
+  //   setScore((prev) => prev + percentageMatch)
+  //   setTimeout(() => {
+  //     setUserAttack(false)
 
-    //   }, 500)
+  //   }, 500)
 
-    //   //same as above in 'enter' function really
-    //   setPercentageMatch(0)
-    //   setUserText("")
-    //   setComboChain((prev) => [
-    //     ...prev,
-    //     <div className={`gold-coin gold-streak`}>{comboChain.length + 1}X</div>,
-    //   ])
-    //   // see this
-    //   newPhrases()
-    //   //should call this it own function
-    // }
+  //   //same as above in 'enter' function really
+  //   setPercentageMatch(0)
+  //   setUserText("")
+  //   setComboChain((prev) => [
+  //     ...prev,
+  //     <div className={`gold-coin gold-streak`}>{comboChain.length + 1}X</div>,
+  //   ])
+  //   // see this
+  //   newPhrases()
+  //   //should call this it own function
+  // }
   // }
   //endOppAttempt fn
   //clear timeouts
@@ -144,6 +143,7 @@ const Opponent = () => {
   //if a successful attack is initiated then we add the animate class to opponent (shake and color red)
   const attackClasses = `opponent ${oppAttack ? "animate" : ""}`
   const textClasses = ` ${gameRunning ? `${level} play` : `${level} pause`}`
+  // TODO need to add opp attacked animation based on userAttacked
   // diff classes for each level
 
   return (
@@ -169,17 +169,22 @@ const Opponent = () => {
         </div>
         <div>user{level}: </div>
       </div>
-      <p
-        className={!gameEnded&&`${oppAttackSuccess ? "successfulAttack" : `opp-text-animation ${level}`} ${!gameRunning && `paused`}`}
-        // className={`opp-text-animation ${
-        //   gameRunning ? level : `${level} paused`
-        // }`}
-        //TODO need to have pause based on running and animation+level based on attack status
-
-        //`${oppAttackSuccess?"enlarge":`opp-text-animation ${level}`} ${!gameRunning && `paused`}`
+      <div
+      //TODO ADDED a div here around p tag is this better?
+        className={
+          !gameEnded &&
+          `${
+            oppAttackSuccess
+              ? "successfulAttack"
+              : userAttacked
+              ? "animate"
+              : `opp-text-animation ${level}`
+          } ${!gameRunning && `paused`} `
+        }
       >
-        {opponentPhrase}
-      </p>
+        <p>{opponentPhrase}</p>
+      </div>
+      {/* <img src="quill2.svg" alt="quill" className="feather" /> */}
       <span>
         {/* {oppAttackSuccess===true
           ? "ATTACKED"

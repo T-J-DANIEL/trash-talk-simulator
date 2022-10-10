@@ -245,46 +245,39 @@ const AppContextProvider = ({ children }) => {
   //Function to check to see percentage match is 100% we can move to next phrase automatically
   //TODO CAN REPLACE THIS WITH A SCORING FUNCTION
 const scoreHandler = () => {
+  //score handler will fire when enter is pressed or 100% is reached
+  //check score if >80
+  //set setSt(userAttack)
+  //execute all required code for attack
+  //if 100% then add combo
+  //else setSt(oppAttack)
   //80% 
   if (percentageMatch > 80) {
-    setUserAttacked(true)
-    setIsInputDisabled(true)
+    //all handled in the useEffect
     setSt("userSuccess")
+    setScore((prev) => prev + percentageMatch)
+    if (percentageMatch === 100) {
       setComboChain((prev) => [
-      ...prev,
-      <div className={`gold-coin gold-streak`} />,
-    ])
+        ...prev,
+        <div className={`gold-coin gold-streak`} />,
+      ])
+      // setComboChain((prev) => [
+      //   ...prev,
+      //   <div className={`gold-coin gold-streak`}>{comboChain.length + 1}X</div>,
+      // ])
+    }
   }
-
-  setScore((prev) => prev + percentageMatch)
+  else{
+    setSt("oppSuccess")
+    setComboChain([])
+  }
   setPercentageMatch(0)
-  setUserText("")
-  setComboChain([])
-  newPhrases()
   //if user accuracy is low it should count as a failed attack and opponent should attack successfully
-  //there should also be a brief pause bttween each question for the animation success  or fail
 }
 
   useEffect(() => {
     if (percentageMatch === 100) {
-      //?what the h?
-      // setOppAttack(true)
-      //TODO Why the delay?
-      // setTimeout(() => {
-      //   setOppAttack(false)
-      // }, 500)
-
-      setScore((prev) => prev + 100)
-      //same as above in 'enter' function really
-      setPercentageMatch(0)
-      setUserText("")
-      setComboChain((prev) => [
-        ...prev,
-        <div className={`gold-coin gold-streak`}>{comboChain.length + 1}X</div>,
-      ])
-      // see this
-      newPhrases()
-      //should call this it own function
+      scoreHandler()      
     }
   }, [percentageMatch])
 
@@ -429,9 +422,10 @@ const scoreHandler = () => {
           }, remaining)
         } 
         else if (userAttacked) {
+          //    TODO can make this into a function
+          //timeout to end attack phase,set with remaining time
           timerId.current = setTimeout(() => {
             console.log("resumed")
-
             setUserAttacked(false)
             setIsInputDisabled(false)
             newPhrases()
@@ -467,15 +461,17 @@ const scoreHandler = () => {
         }, 2000)
         break
       case "userSuccess":
+        //TODO REFACTOR into function
         clearTimeout(timerId.current)
         //userAttck animation (pausable)
         setUserAttacked(true)
+        //opp has been attacked true
         //disable use input (pause does not effect this)
         setIsInputDisabled(true)
         setStart(Date.now())
         setRemaining(2000)
         timerId.current = setTimeout(() => {
-          setUserAttacked(true)
+          setUserAttacked(false)
           setIsInputDisabled(false)
           newPhrases()
           setSt("start")
@@ -567,6 +563,7 @@ const scoreHandler = () => {
         interleave,
         wrappedIdea,
         setGameEnded,
+        scoreHandler,
       }}
     >
       {children}
