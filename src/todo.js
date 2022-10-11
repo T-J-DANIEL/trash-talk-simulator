@@ -23,6 +23,7 @@
 //TODO KNOWN BUGS
 //game continues after end screen
   //if game is left at end screen it continues by itself (maybe timeouts are being cleared and must be putin local memory)
+  
   // If  game is left at pause screen for extended time the timers no longer work (mayb ebecause browser is clearing timeouts fro performance)
       //when resuming after extended time it just goes to end game screen
   //same happens if paused for too long >>>> SOLUTION: place timer variables lin local memory

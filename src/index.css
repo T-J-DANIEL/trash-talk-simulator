@@ -188,11 +188,12 @@ input::first-letter {
   justify-self: flex-start;
 } */
 .opp-text-animation {
-  border-right: 0.15em solid white;
+  /* border-right: 0.15em solid white; */
   white-space: nowrap;
   overflow: hidden;
   animation-name: type;
-  animation-timing-function: steps(40, end);
+  /* animation-timing-function: steps(40, end); */
+  animation-timing-function:ease-in-out;
   animation-fill-mode: forwards;
   animation-play-state: running;
   max-width: min-content;
@@ -215,7 +216,7 @@ input::first-letter {
     background: none;
   }  
   99.9% {
-    border-right: 0.15em solid white;
+    /* border-right: 0.15em solid white; */
   }
   100% {
     width: 100%;
@@ -223,7 +224,37 @@ input::first-letter {
     border: none;
   }
 }
-
+.feather-svg{
+  transform: scaleX(-1);
+  position: absolute;
+  left:-3px;
+}
+.feather{
+  width: 2.5em;
+  height: 2.5em;
+  animation-name:writing;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-fill-mode:forwards;
+  animation-iteration-count: infinite;
+}
+@keyframes writing {
+ 0%{
+  transform: translateY(0);
+ }
+25%{
+  transform: translateY(0.5em);
+ }
+ 50%{
+  transform: translateY(0);
+ }
+ 75%{
+  transform: translateY(-0.5em);
+ }
+ 100%{
+  transform: translateY(0);
+ }
+}
 .play {
   animation-play-state: running;
 }
@@ -481,7 +512,4 @@ input::first-letter {
   animation-play-state: paused;
 }
 
-.feather{
-  width: 10em;
-  height: 10em;
-}
+

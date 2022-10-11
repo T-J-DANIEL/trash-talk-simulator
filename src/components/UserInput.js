@@ -106,6 +106,7 @@ const UserInput = () => {
           attack
         </button>
         <button
+      
           onClick={(e) => {
             setIsNewGame(true)
           }}
