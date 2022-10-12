@@ -1,10 +1,11 @@
 import { useGlobalContext } from "../context"
-
+import Feather from "./Feather"
 //component for user's input
 //TODO too much imported all over the place take a look a this stuff everywhere
 const UserInput = () => {
   const {
     userText,
+    highScore,
     setUserText,
     currentPhrase,
     compareValues,
@@ -95,10 +96,12 @@ const UserInput = () => {
         }}
         disabled={isInputDisabled}
       />
+      <Feather />
       <div className="extras">
-        <span>{percentageMatch}</span>
-        <span>{score}</span>
-        <button
+        <span>perc match{percentageMatch}</span>
+        <span>score:{score}</span>
+        <span>high score :{highScore}</span>
+        {/* <button
           onClick={(e) => {
             setOppAttacked((prev) => !prev)
           }}
@@ -112,7 +115,7 @@ const UserInput = () => {
           }}
         >
           newgame
-        </button>
+        </button> */}
       </div>
     </div>
   )

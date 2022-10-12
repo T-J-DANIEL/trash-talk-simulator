@@ -1,6 +1,8 @@
 
 //TODO ideas
   //animations on score number when you score
+  //show if high score has been bested on end screen (newHigh score state already exists)
+  //show average score using (avgAcc state already exists)
   //need aan animation for less than 1 sec left
   //move util functions in context to utils file
   //when combo reaches higher then 5 just cjange color and number

@@ -91,7 +91,13 @@ const AppContextProvider = ({ children }) => {
   const [userText, setUserText] = useState("")
   //user score
   const [score, setScore] = useState(0)
-  //counts how many answers over 85% a user has achieved
+  //user highscore
+  const [highScore, setHighScore] = useState(null)
+  //Is this a new high score? also a flag for end screen
+  const [newHigh,setNewHigh] = useState(false)
+  //average accuracy
+  const [avgAcc,setAvgAcc] = useState(0)
+  //counts how many answers at 100% a user has achieved
   const [comboChain, setComboChain] = useState([])
   //array for holding streak gold coins //TODO COULD USE THE VALUE OF STREAK ABOVE AND RENDER BASED ON THIS
   const [streakArray, setStreakArray] = useState([])
@@ -244,40 +250,39 @@ const AppContextProvider = ({ children }) => {
 
   //Function to check to see percentage match is 100% we can move to next phrase automatically
   //TODO CAN REPLACE THIS WITH A SCORING FUNCTION
-const scoreHandler = () => {
-  //score handler will fire when enter is pressed or 100% is reached
-  //check score if >80
-  //set setSt(userAttack)
-  //execute all required code for attack
-  //if 100% then add combo
-  //else setSt(oppAttack)
-  //80% 
-  if (percentageMatch > 80) {
-    //all handled in the useEffect
-    setSt("userSuccess")
-    setScore((prev) => prev + percentageMatch)
-    if (percentageMatch === 100) {
-      setComboChain((prev) => [
-        ...prev,
-        <div className={`gold-coin gold-streak`} />,
-      ])
-      // setComboChain((prev) => [
-      //   ...prev,
-      //   <div className={`gold-coin gold-streak`}>{comboChain.length + 1}X</div>,
-      // ])
+  const scoreHandler = () => {
+    //score handler will fire when enter is pressed or 100% is reached
+    //check score if >80
+    //set setSt(userAttack)
+    //execute all required code for attack
+    //if 100% then add combo
+    //else setSt(oppAttack)
+    //80%
+    if (percentageMatch > 80) {
+      //all handled in the useEffect
+      setSt("userSuccess")
+      setScore((prev) => prev + percentageMatch)
+      if (percentageMatch === 100) {
+        setComboChain((prev) => [
+          ...prev,
+          <div className={`gold-coin gold-streak`} />,
+        ])
+        // setComboChain((prev) => [
+        //   ...prev,
+        //   <div className={`gold-coin gold-streak`}>{comboChain.length + 1}X</div>,
+        // ])
+      }
+    } else {
+      setSt("oppSuccess")
+      setComboChain([])
     }
+    setPercentageMatch(0)
+    //if user accuracy is low it should count as a failed attack and opponent should attack successfully
   }
-  else{
-    setSt("oppSuccess")
-    setComboChain([])
-  }
-  setPercentageMatch(0)
-  //if user accuracy is low it should count as a failed attack and opponent should attack successfully
-}
 
   useEffect(() => {
     if (percentageMatch === 100) {
-      scoreHandler()      
+      scoreHandler()
     }
   }, [percentageMatch])
 
@@ -420,8 +425,7 @@ const scoreHandler = () => {
             setSt("start")
             //start new scroll animation
           }, remaining)
-        } 
-        else if (userAttacked) {
+        } else if (userAttacked) {
           //    TODO can make this into a function
           //timeout to end attack phase,set with remaining time
           timerId.current = setTimeout(() => {
@@ -502,6 +506,25 @@ const scoreHandler = () => {
     console.log(st)
   }, [gameRunning])
 
+  //useEffect to check for high score in local memory and create one if not available
+  useEffect(() => {
+    const userHighScore = JSON.parse(localStorage.getItem("highScore"))
+    if (userHighScore) {
+      setHighScore(userHighScore)
+    } else {
+      localStorage.setItem("highScore", JSON.stringify(0))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (score > highScore) {
+      setHighScore(score)
+      localStorage.setItem("highScore", JSON.stringify(score))
+      //new high score
+      //remember to reset this on newgame
+    } 
+  }, [score])
+
   //TODO try and minimise these exports
   return (
     <AppContext.Provider
@@ -564,6 +587,7 @@ const scoreHandler = () => {
         wrappedIdea,
         setGameEnded,
         scoreHandler,
+        highScore
       }}
     >
       {children}

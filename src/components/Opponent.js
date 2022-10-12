@@ -68,8 +68,8 @@ const Opponent = () => {
         {/* {oppAttackSuccess===true
           ? "ATTACKED"
           : `${gameRunning} ${level}`} */}
-        {`${gameRunning} ${level}`}
-        {`${oppAttackSuccess}`}
+        {/* {`${gameRunning} ${level}`}
+        {`${oppAttackSuccess}`} */}
       </span>
     </div>
   )
