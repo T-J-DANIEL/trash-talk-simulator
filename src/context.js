@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useReducer,
   useRef,
+  useCallback,
 } from "react"
 
 //import the phrases both random and preset
@@ -94,9 +95,9 @@ const AppContextProvider = ({ children }) => {
   //user highscore
   const [highScore, setHighScore] = useState(null)
   //Is this a new high score? also a flag for end screen
-  const [newHigh,setNewHigh] = useState(false)
+  const [newHigh, setNewHigh] = useState(false)
   //average accuracy
-  const [avgAcc,setAvgAcc] = useState(0)
+  const [avgAcc, setAvgAcc] = useState(0)
   //counts how many answers at 100% a user has achieved
   const [comboChain, setComboChain] = useState([])
   //array for holding streak gold coins //TODO COULD USE THE VALUE OF STREAK ABOVE AND RENDER BASED ON THIS
@@ -374,7 +375,7 @@ const AppContextProvider = ({ children }) => {
     setTimerRunning(!timerRunning)
     //pause any other timer
     setIsInputDisabled(!isInputDisabled)
-    //stop input (change z index of screen barrier? or just make input disabled)
+    //disable text input
     gameRunning ? setSt("pause") : setSt("resume")
     setGameRunning(!gameRunning)
   }
@@ -506,9 +507,57 @@ const AppContextProvider = ({ children }) => {
     console.log(st)
   }, [gameRunning])
 
-  //useEffect to check for high score in local memory and create one if not available
+  //useEffect to check for high score in local memory and create one if not available and create an event listener so user can press escape and pause
+  // const escFunction = useCallback((e) => {
+  //   if (e.key === "Escape") {
+  //     e.preventDefault()
+  //     console.log("received")
+  //     pauseResume()
+  //     setShowSettings(!showSettings)
+  //     //not able to reseume
+  //   }
+  // }, [])
+ 
+  // const handleEsc = (event) => {
+  //   // if (event.key === "Escape") {
+  //   //   setTimerRunning(prev=>!prev)
+  //   //   console.log("hi")
+  //   //   //pause any other timer
+  //   //   setGameRunning(prev=>!prev)
+  //   //   setIsInputDisabled(prev=>!prev)
+  //   //   //disable text input
+  //   //   // gameRunning ? setSt(()=>"pause") : setSt(()=>"resume")
+  //   //   setSt(prev=>prev==="start"||"oppSuccess"||"userSuccess"||"exit"?"pause":prev==="pause"?"resume":"")
+  //   // //Function to show and hide pause/settings menu
+  //   //   if (gameEnded) {
+  //   //     setShowSettings(()=>false)
+  //   //     setGameRunning(()=>false)
+  //   //   } else {
+  //   //     setShowSettings(prev=>!prev)
+  //   //   }
+  //   // }
+  // }
+   const [esc, setEsc] = useState(null)
+  useEffect(() => {
+   !gameEnded && displaySettings()
+  }, [esc])
+  //TODO FLOUT OCCURS ON LOAD
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      e.key === "Escape" && setEsc((prev) => !prev)
+    })
+    setEsc(false)
+
+    return () => {
+      document.removeEventListener("keydown", (e) => {
+        e.key === "Escape" && setEsc((prev) => !prev)
+      })
+    }
+  }, [])
+
   useEffect(() => {
     const userHighScore = JSON.parse(localStorage.getItem("highScore"))
+
     if (userHighScore) {
       setHighScore(userHighScore)
     } else {
@@ -522,7 +571,7 @@ const AppContextProvider = ({ children }) => {
       localStorage.setItem("highScore", JSON.stringify(score))
       //new high score
       //remember to reset this on newgame
-    } 
+    }
   }, [score])
 
   //TODO try and minimise these exports
@@ -587,7 +636,7 @@ const AppContextProvider = ({ children }) => {
         wrappedIdea,
         setGameEnded,
         scoreHandler,
-        highScore
+        highScore,
       }}
     >
       {children}
