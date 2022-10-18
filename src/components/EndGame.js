@@ -2,15 +2,23 @@ import { useGlobalContext } from "../context"
 // component that displays when the game ends
 
 const EndGame = () => {
-  const { startGame, highScore, avgAcc, newHighScore, shared, setShared } =
-    useGlobalContext()
+  const {
+    startGame,
+    highScore,
+    avgAcc,
+    newHigh,
+    shared,
+    setShared,
+    
+  } = useGlobalContext()
   return (
     <div className="overlay-container">
       <div className="start-game-inner-container">
         <h1>Game Over!</h1>
         <p>Thou hast vanquished this poor quiveling fool.</p>
         <p>
-          <span>{newHighScore && "New"}</span>High Score:{highScore}
+          {/* TODO special styling for new high score here and in header */}
+          <span>{newHigh && "New"}</span>High Score:{highScore}
         </p>
         <p>Average accuracy:{avgAcc}</p>
         <p>
@@ -28,7 +36,7 @@ const EndGame = () => {
               }, 5000)
             }}
           >
-            {shared?"Copied":"Share"}
+            {shared ? "Copied" : "Share"}
           </button>
         </p>
         <button onClick={startGame}>Start New Game</button>

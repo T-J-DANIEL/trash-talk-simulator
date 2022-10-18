@@ -62,7 +62,7 @@ const AppContextProvider = ({ children }) => {
   const [gameRunning, setGameRunning] = useState(false)
   //has game ended?
   const [gameEnded, setGameEnded] = useState(false)
-  const [gameStatus, setGameStatus] = useState("loading")
+  const [gameState, setGameState] = useState("loading")
   //TODO whats this?
   const [shared,setShared] = useState(false)
   //current available list of phrases
@@ -84,7 +84,7 @@ const AppContextProvider = ({ children }) => {
   // TODO let timerId = null?
   const [start, setStart] = useState(0)
   const [remaining, setRemaining] = useState(0)
-  const [st, setSt] = useState("0")
+  // const [st, setSt] = useState("0")
 
   //<><><><><><><> //USER STATE VALUES\\ <><><><><><><>
   //current selected phrase
@@ -262,7 +262,7 @@ const AppContextProvider = ({ children }) => {
     //80%
     if (percentageMatch > 80) {
       //all handled in the useEffect
-      setSt("userSuccess")
+      setGameState("userSuccess")
       setScore((prev) => prev + percentageMatch)
       if (percentageMatch === 100) {
         setComboChain((prev) => [
@@ -275,7 +275,7 @@ const AppContextProvider = ({ children }) => {
         // ])
       }
     } else {
-      setSt("oppSuccess")
+      setGameState("oppSuccess")
       setComboChain([])
     }
     setPercentageMatch(0)
@@ -332,15 +332,15 @@ const AppContextProvider = ({ children }) => {
     mountRunning()
     //set up 1st suggestion/opponent
     newPhrases()
-    //level reset?
-
+    //reset new high score
+    setNewHigh(false)
     //Start Attack timer
-    setSt("start")
+    setGameState("start")
   }
 
   //Function to set end game conditions
   const endGame = () => {
-    setSt("exit")
+    setGameState("exit")
     setTimerExists(false)
     setUserText("")
     setIsInputDisabled(true)
@@ -377,7 +377,7 @@ const AppContextProvider = ({ children }) => {
     //pause any other timer
     setIsInputDisabled(!isInputDisabled)
     //disable text input
-    gameRunning ? setSt("pause") : setSt("resume")
+    gameRunning ? setGameState("pause") : setGameState("resume")
     setGameRunning(!gameRunning)
   }
 
@@ -394,37 +394,33 @@ const AppContextProvider = ({ children }) => {
 
   //usEffect to set focus on input box when required
   useEffect(() => {
-    !showSettings && (st === "start" || "resume") && focusInput.current.focus()
-  }, [showSettings, st])
+    !showSettings && (gameState === "start" || "resume") && focusInput.current.focus()
+  }, [showSettings, gameState])
 
   //Main useEffect for game state synchronization
   useEffect(() => {
-    switch (st) {
+    switch (gameState) {
       case "start":
-        // setSt("start")
-
         timerId.current = setTimeout(() => {
           console.log("started opp attack?")
-          setSt("oppSuccess")
+          setGameState("oppSuccess")
           // opponentAttackPhase()e
         }, responseTime)
         setStart(Date.now())
         setRemaining(responseTime)
         break
       case "pause":
-        // setSt("pause")
         clearTimeout(timerId.current)
         setRemaining(remaining - (Date.now() - start))
         break
       case "resume":
-        // setSt("resume")
         if (oppAttackSuccess) {
           timerId.current = setTimeout(() => {
             console.log("resumed")
             setOppAttackSuccess(false)
             setIsInputDisabled(false)
             newPhrases()
-            setSt("start")
+            setGameState("start")
             //start new scroll animation
           }, remaining)
         } else if (userAttacked) {
@@ -435,13 +431,13 @@ const AppContextProvider = ({ children }) => {
             setUserAttacked(false)
             setIsInputDisabled(false)
             newPhrases()
-            setSt("start")
+            setGameState("start")
             //start new scroll animation
           }, remaining)
         } else {
           timerId.current = setTimeout(() => {
             console.log("started opp attack?")
-            setSt("oppSuccess")
+            setGameState("oppSuccess")
             // opponentAttackPhase()
           }, remaining)
         }
@@ -460,7 +456,7 @@ const AppContextProvider = ({ children }) => {
           setOppAttackSuccess(false)
           setIsInputDisabled(false)
           newPhrases()
-          setSt("start")
+          setGameState("start")
           //reset user text
           setUserText("")
           //start new scroll animation
@@ -480,7 +476,7 @@ const AppContextProvider = ({ children }) => {
           setUserAttacked(false)
           setIsInputDisabled(false)
           newPhrases()
-          setSt("start")
+          setGameState("start")
           //reset user text
           setUserText("")
           //start new scroll animation
@@ -501,43 +497,14 @@ const AppContextProvider = ({ children }) => {
     return () => {
       clearTimeout(timerId.current)
     }
-  }, [st])
+  }, [gameState])
 
   //debugging useEffect to keep track of st
   useEffect(() => {
-    console.log(st)
+    console.log(gameState)
   }, [gameRunning])
 
-  //useEffect to check for high score in local memory and create one if not available and create an event listener so user can press escape and pause
-  // const escFunction = useCallback((e) => {
-  //   if (e.key === "Escape") {
-  //     e.preventDefault()
-  //     console.log("received")
-  //     pauseResume()
-  //     setShowSettings(!showSettings)
-  //     //not able to reseume
-  //   }
-  // }, [])
-
-  // const handleEsc = (event) => {
-  //   // if (event.key === "Escape") {
-  //   //   setTimerRunning(prev=>!prev)
-  //   //   console.log("hi")
-  //   //   //pause any other timer
-  //   //   setGameRunning(prev=>!prev)
-  //   //   setIsInputDisabled(prev=>!prev)
-  //   //   //disable text input
-  //   //   // gameRunning ? setSt(()=>"pause") : setSt(()=>"resume")
-  //   //   setSt(prev=>prev==="start"||"oppSuccess"||"userSuccess"||"exit"?"pause":prev==="pause"?"resume":"")
-  //   // //Function to show and hide pause/settings menu
-  //   //   if (gameEnded) {
-  //   //     setShowSettings(()=>false)
-  //   //     setGameRunning(()=>false)
-  //   //   } else {
-  //   //     setShowSettings(prev=>!prev)
-  //   //   }
-  //   // }
-  // }
+  
   const [esc, setEsc] = useState(null)
   useEffect(() => {
     !gameEnded && displaySettings()
@@ -570,6 +537,7 @@ const AppContextProvider = ({ children }) => {
     if (score > highScore) {
       setHighScore(score)
       localStorage.setItem("highScore", JSON.stringify(score))
+      setNewHigh(true)
       //new high score
       //remember to reset this on newgame
     }
@@ -628,7 +596,7 @@ const AppContextProvider = ({ children }) => {
         timerId,
         start,
         remaining,
-        st,
+        gameState,
         oppAttackSuccess,
         level,
         displaySettings,
@@ -640,6 +608,7 @@ const AppContextProvider = ({ children }) => {
         highScore,
         shared,
         setShared,
+        newHigh
       }}
     >
       {children}

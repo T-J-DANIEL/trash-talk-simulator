@@ -53,7 +53,7 @@ const Modal = ({ children }) => {
     timerId,
     start,
     remaining,
-    st,
+    gameState,
     oppAttackSuccess,
     level,
     displaySettings,

@@ -1,7 +1,7 @@
 //TODO TASKS and features to add no styling:
-
+//finish the streak
 //animations on score number when you score put ib heading bar
-//animation to show if high score has been bested on end screen (newHigh score state already exists)
+//animation to show if high score has been bested on end screen (newHigh score state already exists) use state value 
 //show average accuracy  (avgAcc state already exists)
 //when combo reaches higher then 5 just change color and number
 //display pic and name selector seperate componnet for user avatar

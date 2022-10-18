@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import {GameTimer} from "./GameTimer"
 import { useGlobalContext } from "../context"
 const Header = () => {
- const { timerExists, score, highScore } = useGlobalContext()
+ const { timerExists, score, highScore, newHigh } = useGlobalContext()
   return (
     <div className="header">
       

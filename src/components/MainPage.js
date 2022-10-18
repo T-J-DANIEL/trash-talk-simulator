@@ -28,7 +28,7 @@ const MainPage = () => {
     timerId,
     start,
     remaining,
-    st,
+    gameState,
     displaySettings,
   } = useGlobalContext()
   //imported state properties
@@ -77,7 +77,7 @@ const MainPage = () => {
           >
             Pause/Play Opp
           </button> */}
-          <p>status : {st}</p>
+          <p>status : {gameState}</p>
           <p>start time : {start}</p>
           <p>remaining time : {parseInt(remaining, 10)}</p>
         </div>
