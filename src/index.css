@@ -348,10 +348,10 @@ input::first-letter {
 }
 
 .timer {
-  display: flex;
-  flex-direction: column;
-  margin-top: 2em;
-  margin-right: 4em;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* margin-top: 2em;
+  margin-right: 4em; */
 }
 
 .timer-functions {
@@ -487,7 +487,9 @@ input::first-letter {
 .header {
   display: flex;
   /* flex */
-  justify-content: center;
+  justify-content: space-around;
+  background-color: rgba(0, 0, 0, 0.409);
+  padding: 1em;
 }
 @media (max-width: 600px) {
   .header h1 {
@@ -514,4 +516,25 @@ input::first-letter {
 /* html {
   cursor: url("https://i.stack.imgur.com/wu8CP.png"), auto;
 } */
+.btn{
+  background-color: rgb(255, 255, 255);
+  color: black;
+  transition: all 0.7s ease;
+}
+.shared-success{
+  background-color:rgb(81, 229, 81);
+  color: rgb(15, 164, 5);
+}
 
+.background-image{
+  background-image: url(../public/assets/woodBackground.jpg);
+  height: 100vh;
+  width: 100vw;
+  z-index: -1000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-position: center;
+  background-repeat: none;
+  background-size:contain;
+}

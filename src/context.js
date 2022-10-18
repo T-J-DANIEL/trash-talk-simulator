@@ -64,6 +64,7 @@ const AppContextProvider = ({ children }) => {
   const [gameEnded, setGameEnded] = useState(false)
   const [gameStatus, setGameStatus] = useState("loading")
   //TODO whats this?
+  const [shared,setShared] = useState(false)
   //current available list of phrases
   const getPhrases = () => {
     //FUNCTION TO OPTIONALLY RENDER PHRASES DEPENDING ON THEME
@@ -517,7 +518,7 @@ const AppContextProvider = ({ children }) => {
   //     //not able to reseume
   //   }
   // }, [])
- 
+
   // const handleEsc = (event) => {
   //   // if (event.key === "Escape") {
   //   //   setTimerRunning(prev=>!prev)
@@ -537,9 +538,9 @@ const AppContextProvider = ({ children }) => {
   //   //   }
   //   // }
   // }
-   const [esc, setEsc] = useState(null)
+  const [esc, setEsc] = useState(null)
   useEffect(() => {
-   !gameEnded && displaySettings()
+    !gameEnded && displaySettings()
   }, [esc])
   //TODO FLOUT OCCURS ON LOAD
   useEffect(() => {
@@ -637,6 +638,8 @@ const AppContextProvider = ({ children }) => {
         setGameEnded,
         scoreHandler,
         highScore,
+        shared,
+        setShared,
       }}
     >
       {children}

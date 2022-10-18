@@ -74,27 +74,12 @@ const UserInput = () => {
         }}
         disabled={isInputDisabled}
       />
-      <Feather />
-      <div className="extras">
+      {/* <Feather /> */}
+      {/* <div className="extras">
         <span>perc match{percentageMatch}</span>
         <span>score:{score}</span>
         <span>high score :{highScore}</span>
-        {/* <button
-          onClick={(e) => {
-            setOppAttacked((prev) => !prev)
-          }}
-        >
-          attack
-        </button>
-        <button
-      
-          onClick={(e) => {
-            setIsNewGame(true)
-          }}
-        >
-          newgame
-        </button> */}
-      </div>
+      </div> */}
     </div>
   )
 }

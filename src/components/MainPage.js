@@ -1,4 +1,4 @@
-import { useState,useEffect,useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import UserInput from "./UserInput"
 import Opponent from "./Opponent"
 import Header from "./Header"
@@ -31,23 +31,25 @@ const MainPage = () => {
     st,
     displaySettings,
   } = useGlobalContext()
-    //imported state properties
+  //imported state properties
 
-    //vid logic
-    //const vidRef = useRef(null)
-    //grab ref of the video
-    // useEffect(
-      //   ()=>{
-        //     vidRef.current.seekTo(300, 'seconds')
-        //   },[]
-    // )
-    //when page loads auto seek to 300 seconds
-     
+  //vid logic
+  //const vidRef = useRef(null)
+  //grab ref of the video
+  // useEffect(
+  //   ()=>{
+  //     vidRef.current.seekTo(300, 'seconds')
+  //   },[]
+  // )
+  //when page loads auto seek to 300 seconds
+
   return (
     <>
+    <div className="background-image"></div>
       {isNewGame && <StartGame />}
       {/* optionally render startgame or endgame screen depending on state values */}
       {gameEnded && <EndGame />}
+      {showSettings && <Settings />}
       <Header />
 
       <div className="vid-container">
@@ -81,7 +83,7 @@ const MainPage = () => {
         </div>
 
         <button onClick={displaySettings}>Pause</button>
-        {showSettings && <Settings />}
+
         {/* pause button and show settings */}
       </div>
       {/* <ScoreStreak /> */}
