@@ -66,7 +66,7 @@ const UserInput = () => {
               //   setOppAttack(false)
               // }, 500)
 
-              setComboChain((prev) => [
+              setComboChain((prev) => [ 
                 ...prev,
                 <div className={`gold-coin gold-streak`} />,
               ])
