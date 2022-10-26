@@ -12,6 +12,7 @@ const Header = () => {
       
       <div>
         {timerExists ? <GameTimer /> : <h1>Shakespearean Roast Battle</h1>}
+        {/* {gameState===!"paused"&&<Settings} */}
       </div>
 
       <div> Percentage Match :{0}</div>

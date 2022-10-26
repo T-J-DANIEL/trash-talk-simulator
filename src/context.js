@@ -9,6 +9,8 @@ import React, {
 
 //import the phrases both random and preset
 import { shakesPhrases, randoShake } from "./data"
+import useSound from "use-sound"
+// import boopSfx from "../../sounds/boop.mp3"
 
 // import reducer from "./reducer"?
 const AppContext = React.createContext()

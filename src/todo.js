@@ -26,7 +26,8 @@
 // If  game is left at pause screen for extended time the timers no longer work (mayb ebecause browser is clearing timeouts fro performance)
 //when resuming after extended time it just goes to end game screen
 // >>>> SOLUTION?: maybe place timer variables lin local memory
-//escape button useffect causes flout also messes up everything when pressed at start screen
+//escape button useffect causes flout also messes up everything when pressed at start screen needs to be disabled
+
 //TODO WHAT TO DO NOW?
 //work on scoring attack and combo streaks functions and animations
 //tighten up all animations

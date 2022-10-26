@@ -18,7 +18,7 @@ const EndGame = () => {
         <p>Thou hast vanquished this poor quiveling fool.</p>
         <p>
           {/* TODO special styling for new high score here and in header */}
-          <span>{newHigh && "New"}</span>High Score:{highScore}
+          <span className="new-high-score">{newHigh && `New `}</span>High Score:{highScore}
         </p>
         <p>Average accuracy:{avgAcc}</p>
         <p>
