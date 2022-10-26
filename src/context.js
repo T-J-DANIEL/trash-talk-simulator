@@ -4,10 +4,13 @@ import React, {
   useEffect,
   useReducer,
   useRef,
+  useCallback,
 } from "react"
 
 //import the phrases both random and preset
 import { shakesPhrases, randoShake } from "./data"
+import useSound from "use-sound"
+// import boopSfx from "../../sounds/boop.mp3"
 
 // import reducer from "./reducer"?
 const AppContext = React.createContext()
@@ -61,8 +64,9 @@ const AppContextProvider = ({ children }) => {
   const [gameRunning, setGameRunning] = useState(false)
   //has game ended?
   const [gameEnded, setGameEnded] = useState(false)
-  const [gameStatus, setGameStatus] = useState("loading")
+  const [gameState, setGameState] = useState("loading")
   //TODO whats this?
+  const [shared,setShared] = useState(false)
   //current available list of phrases
   const getPhrases = () => {
     //FUNCTION TO OPTIONALLY RENDER PHRASES DEPENDING ON THEME
@@ -82,7 +86,7 @@ const AppContextProvider = ({ children }) => {
   // TODO let timerId = null?
   const [start, setStart] = useState(0)
   const [remaining, setRemaining] = useState(0)
-  const [st, setSt] = useState("0")
+  // const [st, setSt] = useState("0")
 
   //<><><><><><><> //USER STATE VALUES\\ <><><><><><><>
   //current selected phrase
@@ -91,7 +95,13 @@ const AppContextProvider = ({ children }) => {
   const [userText, setUserText] = useState("")
   //user score
   const [score, setScore] = useState(0)
-  //counts how many answers over 85% a user has achieved
+  //user highscore
+  const [highScore, setHighScore] = useState(null)
+  //Is this a new high score? also a flag for end screen
+  const [newHigh, setNewHigh] = useState(false)
+  //average accuracy
+  const [avgAcc, setAvgAcc] = useState(0)
+  //counts how many answers at 100% a user has achieved
   const [comboChain, setComboChain] = useState([])
   //array for holding streak gold coins //TODO COULD USE THE VALUE OF STREAK ABOVE AND RENDER BASED ON THIS
   const [streakArray, setStreakArray] = useState([])
@@ -244,47 +254,39 @@ const AppContextProvider = ({ children }) => {
 
   //Function to check to see percentage match is 100% we can move to next phrase automatically
   //TODO CAN REPLACE THIS WITH A SCORING FUNCTION
-const scoreHandler = () => {
-  //80% 
-  if (percentageMatch > 80) {
-    setUserAttacked(true)
-    setIsInputDisabled(true)
-    setSt("userSuccess")
-      setComboChain((prev) => [
-      ...prev,
-      <div className={`gold-coin gold-streak`} />,
-    ])
+  const scoreHandler = () => {
+    //score handler will fire when enter is pressed or 100% is reached
+    //check score if >80
+    //set setSt(userAttack)
+    //execute all required code for attack
+    //if 100% then add combo
+    //else setSt(oppAttack)
+    //80%
+    if (percentageMatch > 80) {
+      //all handled in the useEffect
+      setGameState("userSuccess")
+      setScore((prev) => prev + percentageMatch)
+      if (percentageMatch === 100) {
+        setComboChain((prev) => [
+          ...prev,
+          <div className={`gold-coin gold-streak`} />,
+        ])
+        // setComboChain((prev) => [
+        //   ...prev,
+        //   <div className={`gold-coin gold-streak`}>{comboChain.length + 1}X</div>,
+        // ])
+      }
+    } else {
+      setGameState("oppSuccess")
+      setComboChain([])
+    }
+    setPercentageMatch(0)
+    //if user accuracy is low it should count as a failed attack and opponent should attack successfully
   }
-
-  setScore((prev) => prev + percentageMatch)
-  setPercentageMatch(0)
-  setUserText("")
-  setComboChain([])
-  newPhrases()
-  //if user accuracy is low it should count as a failed attack and opponent should attack successfully
-  //there should also be a brief pause bttween each question for the animation success  or fail
-}
 
   useEffect(() => {
     if (percentageMatch === 100) {
-      //?what the h?
-      // setOppAttack(true)
-      //TODO Why the delay?
-      // setTimeout(() => {
-      //   setOppAttack(false)
-      // }, 500)
-
-      setScore((prev) => prev + 100)
-      //same as above in 'enter' function really
-      setPercentageMatch(0)
-      setUserText("")
-      setComboChain((prev) => [
-        ...prev,
-        <div className={`gold-coin gold-streak`}>{comboChain.length + 1}X</div>,
-      ])
-      // see this
-      newPhrases()
-      //should call this it own function
+      scoreHandler()
     }
   }, [percentageMatch])
 
@@ -332,15 +334,15 @@ const scoreHandler = () => {
     mountRunning()
     //set up 1st suggestion/opponent
     newPhrases()
-    //level reset?
-
+    //reset new high score
+    setNewHigh(false)
     //Start Attack timer
-    setSt("start")
+    setGameState("start")
   }
 
   //Function to set end game conditions
   const endGame = () => {
-    setSt("exit")
+    setGameState("exit")
     setTimerExists(false)
     setUserText("")
     setIsInputDisabled(true)
@@ -376,8 +378,8 @@ const scoreHandler = () => {
     setTimerRunning(!timerRunning)
     //pause any other timer
     setIsInputDisabled(!isInputDisabled)
-    //stop input (change z index of screen barrier? or just make input disabled)
-    gameRunning ? setSt("pause") : setSt("resume")
+    //disable text input
+    gameRunning ? setGameState("pause") : setGameState("resume")
     setGameRunning(!gameRunning)
   }
 
@@ -394,54 +396,50 @@ const scoreHandler = () => {
 
   //usEffect to set focus on input box when required
   useEffect(() => {
-    !showSettings && (st === "start" || "resume") && focusInput.current.focus()
-  }, [showSettings, st])
+    !showSettings && (gameState === "start" || "resume") && focusInput.current.focus()
+  }, [showSettings, gameState])
 
   //Main useEffect for game state synchronization
   useEffect(() => {
-    switch (st) {
+    switch (gameState) {
       case "start":
-        // setSt("start")
-
         timerId.current = setTimeout(() => {
           console.log("started opp attack?")
-          setSt("oppSuccess")
+          setGameState("oppSuccess")
           // opponentAttackPhase()e
         }, responseTime)
         setStart(Date.now())
         setRemaining(responseTime)
         break
       case "pause":
-        // setSt("pause")
         clearTimeout(timerId.current)
         setRemaining(remaining - (Date.now() - start))
         break
       case "resume":
-        // setSt("resume")
         if (oppAttackSuccess) {
           timerId.current = setTimeout(() => {
             console.log("resumed")
             setOppAttackSuccess(false)
             setIsInputDisabled(false)
             newPhrases()
-            setSt("start")
+            setGameState("start")
             //start new scroll animation
           }, remaining)
-        } 
-        else if (userAttacked) {
+        } else if (userAttacked) {
+          //    TODO can make this into a function
+          //timeout to end attack phase,set with remaining time
           timerId.current = setTimeout(() => {
             console.log("resumed")
-
             setUserAttacked(false)
             setIsInputDisabled(false)
             newPhrases()
-            setSt("start")
+            setGameState("start")
             //start new scroll animation
           }, remaining)
         } else {
           timerId.current = setTimeout(() => {
             console.log("started opp attack?")
-            setSt("oppSuccess")
+            setGameState("oppSuccess")
             // opponentAttackPhase()
           }, remaining)
         }
@@ -460,25 +458,27 @@ const scoreHandler = () => {
           setOppAttackSuccess(false)
           setIsInputDisabled(false)
           newPhrases()
-          setSt("start")
+          setGameState("start")
           //reset user text
           setUserText("")
           //start new scroll animation
         }, 2000)
         break
       case "userSuccess":
+        //TODO REFACTOR into function
         clearTimeout(timerId.current)
         //userAttck animation (pausable)
         setUserAttacked(true)
+        //opp has been attacked true
         //disable use input (pause does not effect this)
         setIsInputDisabled(true)
         setStart(Date.now())
         setRemaining(2000)
         timerId.current = setTimeout(() => {
-          setUserAttacked(true)
+          setUserAttacked(false)
           setIsInputDisabled(false)
           newPhrases()
-          setSt("start")
+          setGameState("start")
           //reset user text
           setUserText("")
           //start new scroll animation
@@ -499,12 +499,51 @@ const scoreHandler = () => {
     return () => {
       clearTimeout(timerId.current)
     }
-  }, [st])
+  }, [gameState])
 
   //debugging useEffect to keep track of st
   useEffect(() => {
-    console.log(st)
+    console.log(gameState)
   }, [gameRunning])
+
+  
+  const [esc, setEsc] = useState(null)
+  useEffect(() => {
+    !gameEnded && displaySettings()
+  }, [esc])
+  //TODO FLOUT OCCURS ON LOAD
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      e.key === "Escape" && setEsc((prev) => !prev)
+    })
+    setEsc(false)
+
+    return () => {
+      document.removeEventListener("keydown", (e) => {
+        e.key === "Escape" && setEsc((prev) => !prev)
+      })
+    }
+  }, [])
+
+  useEffect(() => {
+    const userHighScore = JSON.parse(localStorage.getItem("highScore"))
+
+    if (userHighScore) {
+      setHighScore(userHighScore)
+    } else {
+      localStorage.setItem("highScore", JSON.stringify(0))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (score > highScore) {
+      setHighScore(score)
+      localStorage.setItem("highScore", JSON.stringify(score))
+      setNewHigh(true)
+      //new high score
+      //remember to reset this on newgame
+    }
+  }, [score])
 
   //TODO try and minimise these exports
   return (
@@ -559,7 +598,7 @@ const scoreHandler = () => {
         timerId,
         start,
         remaining,
-        st,
+        gameState,
         oppAttackSuccess,
         level,
         displaySettings,
@@ -567,6 +606,11 @@ const scoreHandler = () => {
         interleave,
         wrappedIdea,
         setGameEnded,
+        scoreHandler,
+        highScore,
+        shared,
+        setShared,
+        newHigh
       }}
     >
       {children}

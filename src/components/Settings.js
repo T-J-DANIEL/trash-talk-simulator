@@ -4,14 +4,14 @@ import { useGlobalContext } from "../context"
 const Settings = () => {
   //all these timer methods and timer state values  are imported from context
   const {
-    setPlaying,
-    setTimerExists,
-    setTimerRunning,
-    setResetTimer,
-    mountPaused,
-    mountRunning,
+    // setPlaying,
+    // setTimerExists,
+    // setTimerRunning,
+    // setResetTimer,
+    // mountPaused,
+    // mountRunning,
     newPhrases,
-    startGame,
+    // startGame,
     endGame,
     displaySettings,
     setShowSettings,
