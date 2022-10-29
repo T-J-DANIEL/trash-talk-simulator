@@ -20,8 +20,6 @@ const UserInput = () => {
     isInputDisabled,
     setIsinputDisabled,
     visualMatches,
-    comboChain,
-    setComboChain,
     oppAttackSuccess,
     gameRunning,
     focusInput,
@@ -62,6 +60,7 @@ const UserInput = () => {
         onKeyPress={(e) => {
           e.key === "Enter" && scoreHandler()
         }}
+        spellcheck="false"
         onChange={(e) => {
           //TODO why are you changing both state values?
           setUserText(e.target.value)

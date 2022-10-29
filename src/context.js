@@ -10,10 +10,15 @@ import React, {
 //import the phrases both random and preset
 import { shakesPhrases, randoShake } from "./data"
 import useSound from "use-sound"
-// import boopSfx from "../../sounds/boop.mp3"
 
-// import reducer from "./reducer"?
+import user_success from "./sounds/user_success.mp3"
+import opp_attack_success from "./sounds/opp_attack_success.mp3"
+import end_game from "./sounds/end_game.mp3"
+import streak_sound from "./sounds/streak_sound.mp3"
+import threeSec_countdown from "./sounds/3s_countdown.mp3"
+
 const AppContext = React.createContext()
+
 //global context custom hook
 const useGlobalContext = () => {
   return useContext(AppContext)
@@ -25,28 +30,33 @@ const AppContextProvider = ({ children }) => {
   // const ogGamerVid = "https://www.youtube.com/watch?v=sVYyjr84ZXI"
   const yeOldeVid = "#"
   const ogGamerVid = "#"
-
+  const [successSound] = useSound(user_success)
+  const [failSound] = useSound(opp_attack_success)
+  const [streakSound] = useSound(streak_sound)
+  const [countdownSound] = useSound(threeSec_countdown)
   //<><><><><><><> //RESPONSE TIME STATE VALUES\\ <><><><><><><>
   //difficulty level
   const [responseTime, setResponseTime] = useState(10000)
   const [level, setLevel] = useState("normal")
+  //these values for response time are used in pausing/resuming timers for the gameState below
+  //these value correspond to classes in css "easy","hard" etc
   const changeDifficulty = (difficulty = "normal") => {
     switch (difficulty) {
       case "easy":
-        setResponseTime(15000)
+        setResponseTime(18000)
         setLevel("easy")
         break
       case "normal":
-        setResponseTime(10000)
+        setResponseTime(13000)
         setLevel("normal")
         break
       case "hard":
-        setResponseTime(7000)
+        setResponseTime(10000)
         setLevel("hard")
         break
       //TODO Change the response time for extreme
       case "extreme":
-        setResponseTime(7000)
+        setResponseTime(13000)
         setLevel("extreme")
         break
       default:
@@ -66,7 +76,7 @@ const AppContextProvider = ({ children }) => {
   const [gameEnded, setGameEnded] = useState(false)
   const [gameState, setGameState] = useState("loading")
   //TODO whats this?
-  const [shared,setShared] = useState(false)
+  const [shared, setShared] = useState(false)
   //current available list of phrases
   const getPhrases = () => {
     //FUNCTION TO OPTIONALLY RENDER PHRASES DEPENDING ON THEME
@@ -102,9 +112,9 @@ const AppContextProvider = ({ children }) => {
   //average accuracy
   const [avgAcc, setAvgAcc] = useState(0)
   //counts how many answers at 100% a user has achieved
-  const [comboChain, setComboChain] = useState([])
-  //array for holding streak gold coins //TODO COULD USE THE VALUE OF STREAK ABOVE AND RENDER BASED ON THIS
   const [streakArray, setStreakArray] = useState([])
+  //array for holding streak gold coins //TODO COULD USE THE VALUE OF STREAK ABOVE AND RENDER BASED ON THIS
+  const [streak, setStreak] = useState(0)
   //the percentage that userText matches the currentPhrase
   const [percentageMatch, setPercentageMatch] = useState(0)
   //visual representation of correct or incorrect letter typed (green/red background letters)
@@ -242,16 +252,6 @@ const AppContextProvider = ({ children }) => {
     compareValues("")
   }, [currentPhrase])
 
-  //Function for streak,possibly deprecated
-  //TODO(is this used? has it been replaced by combochain?)highest streak
-  const streak = () => {
-    if (comboChain > 0) {
-      for (let i = 1; i <= comboChain; i++) {
-        setStreakArray((prev) => [...prev, <div className="gold-coin" />])
-      }
-    }
-  }
-
   //Function to check to see percentage match is 100% we can move to next phrase automatically
   //TODO CAN REPLACE THIS WITH A SCORING FUNCTION
   const scoreHandler = () => {
@@ -267,22 +267,30 @@ const AppContextProvider = ({ children }) => {
       setGameState("userSuccess")
       setScore((prev) => prev + percentageMatch)
       if (percentageMatch === 100) {
-        setComboChain((prev) => [
-          ...prev,
-          <div className={`gold-coin gold-streak`} />,
-        ])
-        // setComboChain((prev) => [
-        //   ...prev,
-        //   <div className={`gold-coin gold-streak`}>{comboChain.length + 1}X</div>,
-        // ])
+        setStreak((prev) => prev + 1)
+        streakSound()
+      }
+      if (percentageMatch < 100) {
+        setStreak(0)
+        successSound()
       }
     } else {
       setGameState("oppSuccess")
-      setComboChain([])
+      setStreak(0)
+      failSound()
     }
     setPercentageMatch(0)
     //if user accuracy is low it should count as a failed attack and opponent should attack successfully
   }
+  useEffect(() => {
+    setStreakArray("")
+    if (streak) {
+      setStreakArray(<div className="gold-coin gold-streak">{streak}X</div>)
+      setTimeout(() => {
+        setStreakArray(<div className="gold-coin">{streak}X</div>)
+      }, 1000)
+    }
+  }, [streak])
 
   useEffect(() => {
     if (percentageMatch === 100) {
@@ -329,7 +337,7 @@ const AppContextProvider = ({ children }) => {
     //clear score
     setScore(0)
     //clear multiplier chain
-    setComboChain([])
+    setStreak(0)
     // start a game timer 30s?
     mountRunning()
     //set up 1st suggestion/opponent
@@ -396,7 +404,9 @@ const AppContextProvider = ({ children }) => {
 
   //usEffect to set focus on input box when required
   useEffect(() => {
-    !showSettings && (gameState === "start" || "resume") && focusInput.current.focus()
+    !showSettings &&
+      (gameState === "start" || "resume") &&
+      focusInput.current.focus()
   }, [showSettings, gameState])
 
   //Main useEffect for game state synchronization
@@ -417,6 +427,7 @@ const AppContextProvider = ({ children }) => {
         break
       case "resume":
         if (oppAttackSuccess) {
+          
           timerId.current = setTimeout(() => {
             console.log("resumed")
             setOppAttackSuccess(false)
@@ -453,7 +464,7 @@ const AppContextProvider = ({ children }) => {
         setIsInputDisabled(true)
         setStart(Date.now())
         setRemaining(2000)
-
+        failSound()
         timerId.current = setTimeout(() => {
           setOppAttackSuccess(false)
           setIsInputDisabled(false)
@@ -489,7 +500,6 @@ const AppContextProvider = ({ children }) => {
         setStart(0)
         setRemaining(0)
         clearTimeout(timerId.current)
-        //TODO added timer values
         //TODOwhen the game is ended at pause screen the animation is not reset
         break
       default:
@@ -506,7 +516,6 @@ const AppContextProvider = ({ children }) => {
     console.log(gameState)
   }, [gameRunning])
 
-  
   const [esc, setEsc] = useState(null)
   useEffect(() => {
     !gameEnded && displaySettings()
@@ -583,8 +592,7 @@ const AppContextProvider = ({ children }) => {
         yeOldeVid,
         ogGamerVid,
         visualMatches,
-        comboChain,
-        setComboChain,
+        streak,
         streakArray,
         isNewGame,
         setIsNewGame,
@@ -610,7 +618,7 @@ const AppContextProvider = ({ children }) => {
         highScore,
         shared,
         setShared,
-        newHigh
+        newHigh,
       }}
     >
       {children}

@@ -6,7 +6,6 @@ const Opponent = () => {
   const {
     opponentPhrase,
     oppAttack,
-    responseTime,
     currentPhrase,
     userAttacked,
     setUserAttacked,

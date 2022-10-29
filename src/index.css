@@ -199,15 +199,17 @@ input::first-letter {
   max-width: min-content;
 }
 .easy {
-  animation-duration: 15s;
+  animation-duration: 18s;
 }
 .normal {
-  animation-duration: 10s;
+  animation-duration: 13s;
 }
 .hard {
-  animation-duration: 7s;
+  animation-duration: 10s;
 }
-
+.extreme {
+  animation-duration: 10s;
+}
 @keyframes type {
   0% {
     width:0%;
@@ -215,12 +217,9 @@ input::first-letter {
   80% {
     background: none;
   }  
-  99.9% {
-    /* border-right: 0.15em solid white; */
-  }
   100% {
     width: 100%;
-    background: red;
+    background: rgb(246, 75, 75);
     border: none;
   }
 }
@@ -360,49 +359,38 @@ input::first-letter {
 }
 
 .score-streak-container {
-  min-width: 40vw;
-  min-height: 30vh;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -10%;
-  background-image: url(../public/assets/woodTable.svg);
-  background-position: center;
+  /* background-position: center;
   background-repeat: no-repeat;
-  background-size: contain;
-  z-index: 99;
-  font-size: 150%;
+  background-size: contain; */
+  /* font-size: 150%; */
+
+  outline:2px solid red;
   display: flex;
   justify-content: space-around;
-  padding: 0 3em;
+  /* padding: 0 3em; */
+  min-width: fit-content;
+  width: 25%;
 }
 .score-streak-container div::first-letter {
   color: rgb(64, 64, 233);
   text-transform: capitalize;
-  font-size: 2rem;
+  font-size: 120%;
   font-weight: bold;
 }
 .flex {
   display: flex;
-  min-width: 50%;
-  align-items: baseline;
-}
-.streak-container {
-  display: flex;
-  justify-self: start;
+  justify-content: space-around;
 }
 @media (max-width: 600px) {
-  .score-streak-container {
-    min-height: 5vh;
-    top: 30%;
-    width: 100%;
-    height: 2em !important ;
-    padding: 0;
-    background: none;
-    overflow: none;
-    color: blue;
-    outline: 2px solid red;
-  }
+  * {
+  font-size:90%;
+}
+}
+/* .streak-container {
+  display: flex;
+  justify-self: start;
+} */
+/* 
   .score-streak-container::before {
     content: "";
     width: 100%;
@@ -412,7 +400,7 @@ input::first-letter {
     z-index: -2;
     opacity: 0.7;
   }
-}
+} */
 .gold-coin {
   border-radius: 50%;
   width: 2em;
@@ -434,12 +422,12 @@ input::first-letter {
     transform: translate(0, 15px);
   }
   100% {
-    transform: translate(0, -0px);
+    transform: translate(0, 0px);
   }
 }
 .gold-streak {
   animation-name: streakMax;
-  animation-duration: 3s;
+  animation-duration: 1s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
 }

@@ -86,7 +86,7 @@ const MainPage = () => {
 
         {/* pause button and show settings */}
       </div>
-      {/* <ScoreStreak /> */}
+
     </>
   )
 }

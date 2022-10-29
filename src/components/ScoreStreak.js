@@ -1,7 +1,7 @@
 import { useGlobalContext } from "../context"
 //component that shows user score and gold coin streak
 const ScoreStreak = () => {
-  const { score, streakArray ,comboChain} = useGlobalContext()
+  const { score, streak ,streakArray} = useGlobalContext()
   return (
     //score
     //streak
@@ -11,7 +11,10 @@ const ScoreStreak = () => {
       <div className="outline">Score: {score}</div>
       <div className="flex">
         <div>Streak:</div>
-        <div className="streak-container">{comboChain}</div>
+        <div className="streak-container">
+         {streakArray}
+          {/* {streak?<div className="gold-coin gold-streak">{streak}X</div>:""} */}
+        </div>
       </div>
     </div>
   )
