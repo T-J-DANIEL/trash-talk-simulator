@@ -16,6 +16,8 @@ import opp_attack_success from "./sounds/opp_attack_success.mp3"
 import end_game from "./sounds/end_game.mp3"
 import streak_sound from "./sounds/streak_sound.mp3"
 import threeSec_countdown from "./sounds/3s_countdown.mp3"
+import button_pop_up from "./sounds/button_pop_up.mp3"
+import button_push_down from "./sounds/button_push_down.mp3"
 
 const AppContext = React.createContext()
 
@@ -33,7 +35,9 @@ const AppContextProvider = ({ children }) => {
   const [successSound] = useSound(user_success)
   const [failSound] = useSound(opp_attack_success)
   const [streakSound] = useSound(streak_sound)
-  const [countdownSound] = useSound(threeSec_countdown)
+  const [countDownSound] = useSound(threeSec_countdown)
+  const [button_pop] = useSound(button_pop_up)
+  const [button_push] = useSound(button_push_down)
   //<><><><><><><> //RESPONSE TIME STATE VALUES\\ <><><><><><><>
   //difficulty level
   const [responseTime, setResponseTime] = useState(10000)
@@ -619,6 +623,8 @@ const AppContextProvider = ({ children }) => {
         shared,
         setShared,
         newHigh,
+        button_push,
+        button_pop
       }}
     >
       {children}

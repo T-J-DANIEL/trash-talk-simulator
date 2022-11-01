@@ -30,6 +30,8 @@ const MainPage = () => {
     remaining,
     gameState,
     displaySettings,
+    button_pop,
+    button_push,
   } = useGlobalContext()
   //imported state properties
 
@@ -45,7 +47,7 @@ const MainPage = () => {
 
   return (
     <>
-    <div className="background-image"></div>
+      <div className="background-image"></div>
       {isNewGame && <StartGame />}
       {/* optionally render startgame or endgame screen depending on state values */}
       {gameEnded && <EndGame />}
@@ -82,11 +84,16 @@ const MainPage = () => {
           <p>remaining time : {parseInt(remaining, 10)}</p>
         </div>
 
-        <button onClick={displaySettings}>Pause</button>
+        <button
+          onClick={displaySettings}
+          onMouseDown={button_pop}
+          onMouseUp={button_push}
+        >
+          Pause
+        </button>
 
         {/* pause button and show settings */}
       </div>
-
     </>
   )
 }

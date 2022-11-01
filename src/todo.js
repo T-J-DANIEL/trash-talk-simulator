@@ -1,6 +1,7 @@
 //TODO TASKS and features to add no styling:
 //COOL picture frame above message? with plack on mobile picture is to the left or on both, attack animations on the picture
 //button clicking sounds and timer ending  sounds
+//writing noises?
 //animations on score number when you score put ib heading bar light up animation on streak
 //animation to show if high score has been bested on end screen (newHigh score state already exists) use state value 
 //show average accuracy  (avgAcc state already exists)
@@ -23,7 +24,7 @@
 
 //TODO KNOWN BUGS
 //game continues after end screen
-//if game is left at end screen it continues by itself (maybe timeouts are being cleared and must be putin local memory)
+//if game is left at end screen it continues by itself (maybe timeouts are being cleared and must be put in local memory)
 // If  game is left at pause screen for extended time the timers no longer work (mayb ebecause browser is clearing timeouts fro performance)
 //when resuming after extended time it just goes to end game screen
 // >>>> SOLUTION?: maybe place timer variables lin local memory

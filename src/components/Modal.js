@@ -38,7 +38,7 @@ const Modal = ({ children }) => {
     yeOldeVid,
     ogGamerVid,
     visualMatches,
-  streakArray,
+    streakArray,
     isNewGame,
     setIsNewGame,
     gameEnded,
@@ -59,6 +59,8 @@ const Modal = ({ children }) => {
     setGameEnded,
     scoreHandler,
     highScore,
+    button_pop,
+    button_push,
   } = useGlobalContext()
   return ReactDOM.createPortal(
     <div className="overlay-container">
