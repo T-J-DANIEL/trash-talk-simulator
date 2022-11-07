@@ -13,11 +13,12 @@ import useSound from "use-sound"
 
 import user_success from "./sounds/user_success.mp3"
 import opp_attack_success from "./sounds/opp_attack_success.mp3"
-import end_game from "./sounds/end_game.mp3"
+import end_game_sound from "./sounds/end_game_sound.mp3"
 import streak_sound from "./sounds/streak_sound.mp3"
 import threeSec_countdown from "./sounds/3s_countdown.mp3"
 import button_pop_up from "./sounds/button_pop_up.mp3"
 import button_push_down from "./sounds/button_push_down.mp3"
+import user_type_sound from "./sounds/user_type_sound_ver2.mp3"
 
 const AppContext = React.createContext()
 
@@ -32,12 +33,15 @@ const AppContextProvider = ({ children }) => {
   // const ogGamerVid = "https://www.youtube.com/watch?v=sVYyjr84ZXI"
   const yeOldeVid = "#"
   const ogGamerVid = "#"
+  //sounds
+  const [isSoundOn,setIsSoundOn] = useState(true)
   const [successSound] = useSound(user_success)
   const [failSound] = useSound(opp_attack_success)
   const [streakSound] = useSound(streak_sound)
   const [countDownSound] = useSound(threeSec_countdown)
   const [button_pop] = useSound(button_pop_up)
   const [button_push] = useSound(button_push_down)
+  const [playTypingSound] = useSound(user_type_sound,{interrupt:true,volume:0.5})
   //<><><><><><><> //RESPONSE TIME STATE VALUES\\ <><><><><><><>
   //difficulty level
   const [responseTime, setResponseTime] = useState(10000)
@@ -272,16 +276,16 @@ const AppContextProvider = ({ children }) => {
       setScore((prev) => prev + percentageMatch)
       if (percentageMatch === 100) {
         setStreak((prev) => prev + 1)
-        streakSound()
+        isSoundOn&&streakSound()
       }
       if (percentageMatch < 100) {
         setStreak(0)
-        successSound()
+        isSoundOn && successSound()
       }
     } else {
       setGameState("oppSuccess")
       setStreak(0)
-      failSound()
+      isSoundOn && failSound()
     }
     setPercentageMatch(0)
     //if user accuracy is low it should count as a failed attack and opponent should attack successfully
@@ -468,7 +472,7 @@ const AppContextProvider = ({ children }) => {
         setIsInputDisabled(true)
         setStart(Date.now())
         setRemaining(2000)
-        failSound()
+        isSoundOn && failSound()
         timerId.current = setTimeout(() => {
           setOppAttackSuccess(false)
           setIsInputDisabled(false)
@@ -522,6 +526,8 @@ const AppContextProvider = ({ children }) => {
 
   const [esc, setEsc] = useState(null)
   useEffect(() => {
+      button_pop()
+      button_push()
     !gameEnded && displaySettings()
   }, [esc])
   //TODO FLOUT OCCURS ON LOAD
@@ -624,7 +630,11 @@ const AppContextProvider = ({ children }) => {
         setShared,
         newHigh,
         button_push,
-        button_pop
+        button_pop,
+        isSoundOn,
+        setIsSoundOn,
+        playTypingSound,
+     
       }}
     >
       {children}

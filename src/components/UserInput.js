@@ -28,7 +28,10 @@ const UserInput = () => {
     setIsNewGame,
     scoreHandler,
     userAttacked,
-    displaySettings
+    displaySettings,
+    playTypingSound,
+    isSoundOn,
+    stopTypingSound,
   } = useGlobalContext()
 
   // successfulAttack
@@ -57,12 +60,22 @@ const UserInput = () => {
         placeholder={currentPhrase}
         value={userText}
         ref={focusInput}
+        // onKeyDown={() => {
+        //   playTypingSound()
+        // }}
+        // onKeyUp={
+        //   stopTypingSound
+        // }
         onKeyPress={(e) => {
-          e.key === "Enter" && scoreHandler()
+          
+          
+          e.key === "Enter"? scoreHandler():playTypingSound()
+          // e.key === "Enter" && scoreHandler()
         }}
         spellcheck="false"
         onChange={(e) => {
           //TODO why are you changing both state values?
+
           setUserText(e.target.value)
 
           compareValues(e.target.value)

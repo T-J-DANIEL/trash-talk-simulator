@@ -17,6 +17,8 @@ const Settings = () => {
     setShowSettings,
     button_pop,
     button_push,
+    isSoundOn,
+    setIsSoundOn,
   } = useGlobalContext()
   return ReactDOM.createPortal(
     <div className="overlay-container">
@@ -24,8 +26,8 @@ const Settings = () => {
         {/* TODO need to sort these buttons out and standardize all popups design */}
         <button
           onClick={displaySettings}
-          onMouseDown={button_pop}
-          onMouseUp={button_push}
+          onMouseDown={isSoundOn && button_pop}
+          onMouseUp={isSoundOn && button_push}
         >
           RESUME
         </button>
@@ -41,8 +43,8 @@ const Settings = () => {
           <button onClick={() => setResetTimer(true)}>Reset</button> */}
           <button
             onClick={newPhrases}
-            onMouseDown={button_pop}
-            onMouseUp={button_push}
+            onMouseDown={isSoundOn && button_pop}
+            onMouseUp={isSoundOn && button_push}
           >
             newPhrases
           </button>
@@ -60,19 +62,27 @@ const Settings = () => {
                 setShowSettings(false)
               }
             }}
-            onMouseDown={button_pop}
-            onMouseUp={button_push}
+            onMouseDown={isSoundOn && button_pop}
+            onMouseUp={isSoundOn && button_push}
           >
             End Game
           </button>
-          <button
-          // onMouseDown={playActive}
-          // onMouseUp={() => {
-          //   isChecked ? playOff() : playOn()
-          // }}
+          {/* <input
+            type="radio"
+            // // onMouseDown={isSoundOn && button_pop}
+            // // onMouseUp={() => {
+            onMouseDown={isSoundOn && button_pop}
+            onMouseUp={isSoundOn && button_push}
+            checked={isSoundOn}
+            onChange={() => {
+              setIsSoundOn(!isSoundOn)
+            }}
+            //   isChecked ? playOff() : playOn()
+            // }}
+            // ()=>setIsSoundOn(!isSoundOn)
           >
-            Sound{" "}
-          </button>
+            Sound
+          </input> */}
         </div>
       </div>
     </div>,

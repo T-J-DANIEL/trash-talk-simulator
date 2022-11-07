@@ -32,6 +32,7 @@ const MainPage = () => {
     displaySettings,
     button_pop,
     button_push,
+    isSoundOn
   } = useGlobalContext()
   //imported state properties
 
@@ -86,8 +87,8 @@ const MainPage = () => {
 
         <button
           onClick={displaySettings}
-          onMouseDown={button_pop}
-          onMouseUp={button_push}
+          onMouseDown={isSoundOn && button_pop}
+          onMouseUp={isSoundOn && button_push}
         >
           Pause
         </button>
