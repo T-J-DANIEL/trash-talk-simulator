@@ -9,7 +9,6 @@ const EndGame = () => {
     newHigh,
     shared,
     setShared,
-    
   } = useGlobalContext()
   return (
     <div className="overlay-container">
@@ -28,7 +27,9 @@ const EndGame = () => {
             onClick={() => {
               setShared(true)
               navigator.clipboard.writeText(
-                `Shakespearean roast battle high score: ${highScore}`
+                `Shakespearean wit high score!: ${highScore} points
+                Play at: ${document.location.href}
+                `
               )
               //timeout to reset share button visual
               setTimeout(() => {
