@@ -19,6 +19,8 @@ const Settings = () => {
     button_push,
     isSoundOn,
     setIsSoundOn,
+    isMusicOn,
+    setIsMusicOn,
   } = useGlobalContext()
   return ReactDOM.createPortal(
     <div className="overlay-container">
@@ -67,22 +69,42 @@ const Settings = () => {
           >
             End Game
           </button>
-          {/* <input
-            type="radio"
-            // // onMouseDown={isSoundOn && button_pop}
-            // // onMouseUp={() => {
-            onMouseDown={isSoundOn && button_pop}
-            onMouseUp={isSoundOn && button_push}
-            checked={isSoundOn}
-            onChange={() => {
-              setIsSoundOn(!isSoundOn)
-            }}
-            //   isChecked ? playOff() : playOn()
-            // }}
-            // ()=>setIsSoundOn(!isSoundOn)
-          >
+          <label htmlFor="soundOnOff">
             Sound
-          </input> */}
+            <input
+              type="checkBox"
+              id="soundOnOff"
+              // onMouseDown={isSoundOn && button_pop}
+              // onMouseUp={() => {
+              onMouseDown={!isSoundOn && button_pop}
+              onMouseUp={!isSoundOn && button_push}
+              checked={isSoundOn}
+              onChange={() => {
+                setIsSoundOn(!isSoundOn)
+              }}
+              //   isChecked ? playOff() : playOn()
+              // }}
+              // ()=>setIsSoundOn(!isSoundOn)
+            />
+          </label>
+          <label htmlFor="musicOnOff">
+            Music
+            <input
+              type="checkBox"
+              id="musicOnOff"
+              // onMouseDown={isSoundOn && button_pop}
+              // onMouseUp={() => {
+              onMouseDown={!isMusicOn && button_pop}
+              onMouseUp={!isMusicOn && button_push}
+              checked={isMusicOn}
+              onChange={() => {
+                setIsMusicOn(!isMusicOn)
+              }}
+              //   isChecked ? playOff() : playOn()
+              // }}
+              // ()=>setIsSoundOn(!isSoundOn)
+            />
+          </label>
         </div>
       </div>
     </div>,

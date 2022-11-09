@@ -8,7 +8,7 @@ const Header = () => {
     <div className="header">
       {/* <div> Percentage Match :{0}</div> */}
       <div>
-        {timerExists ? <GameTimer /> : <h1>Shakespearean Roast Battle</h1>}
+        {timerExists ? <GameTimer /> : <h1>Shakespearean Wit</h1>}
         {/* {gameState===!"paused"&&<Settings} */}
       </div>
       <div className="score-streak-container">

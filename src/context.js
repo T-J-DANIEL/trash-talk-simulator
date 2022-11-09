@@ -21,7 +21,8 @@ import user_type_sound from "./sounds/user_type_sound_ver2.mp3"
 import incorrect_sound from "./sounds/incorrect_sound.mp3"
 import end_game_sound from "./sounds/end_game_sound.mp3"
 import high_score_end_sound from "./sounds/high_score_end_sound.mp3"
-
+import opp_writing_sound from "./sounds/opp_writing_sound.mp3"
+import music from "./sounds/music.mp3"
 const AppContext = React.createContext()
 
 //global context custom hook
@@ -31,14 +32,15 @@ const useGlobalContext = () => {
 //context provider
 const AppContextProvider = ({ children }) => {
   //<><><><><><><> //VIDEO BACKGROUND STATE VALUES\\ <><><><><><><>
-  // const yeOldeVid = "https://www.youtube.com/watch?v=5L-4xVyUKqo"
+  const yeOldeVid = "https://www.youtube.com/watch?v=5L-4xVyUKqo"
   // const ogGamerVid = "https://www.youtube.com/watch?v=sVYyjr84ZXI"
-  const yeOldeVid = "#"
+  // const yeOldeVid = "#"
   const ogGamerVid = "#"
   //sounds
   const [isSoundOn, setIsSoundOn] = useState(true)
+  const [isMusicOn, setIsMusicOn] = useState(true)
   const [successSound] = useSound(user_success)
-  const [failSound] = useSound(opp_attack_success)
+  const [failSound] = useSound(opp_attack_success, { volume: 0.7 })
   const [incorrect] = useSound(incorrect_sound)
   const [streakSound] = useSound(streak_sound)
   const [countDownSound] = useSound(threeSec_countdown)
@@ -46,6 +48,10 @@ const AppContextProvider = ({ children }) => {
   const [button_push] = useSound(button_push_down)
   const [endSound] = useSound(end_game_sound)
   const [highScoreEndSound] = useSound(high_score_end_sound)
+  const [playOppWritingSound, exposedData] = useSound(opp_writing_sound)
+  //use exposedData.pause and exposedData.stop
+  const [playMusic, musicFunctions] = useSound(music)
+  //use musicFunctions.pause and musicFunctions.stop
   const [playTypingSound] = useSound(user_type_sound, {
     interrupt: true,
     volume: 0.5,
@@ -202,11 +208,14 @@ const AppContextProvider = ({ children }) => {
     const testArray = currentPhrase.split("")
     //user typing split in to individual letters
     const userArray = userTyping.trim().split("")
+
     const userTypedChars = userTyping.trimStart().replace(/  +/g, " ")
 
     //make a sound if last character is incorrect
-    userTypedChars[userTypedChars.length - 1] !==
-      testArray[userTypedChars.length - 1] && incorrect()
+    // userTypedChars[userTypedChars.length - 1] !==
+    //   testArray[userTypedChars.length - 1] &&
+    //   isSoundOn &&
+    //   incorrect()
 
     // test phrase split into words
     // const testArrayWords = currentPhrase.split(" ")
@@ -247,6 +256,19 @@ const AppContextProvider = ({ children }) => {
             return { char: item, isCorrect: false }
           })
     })
+    const lastLetter =
+      userArrayWordsLetters[userArrayWordsLetters.length - 1][
+        userArrayWordsLetters[userArrayWordsLetters.length - 1].length - 1
+      ]
+
+    const currentPhraseLetter =
+      testArrayWordsLetters[userArrayWordsLetters.length - 1][
+        userArrayWordsLetters[userArrayWordsLetters.length - 1].length - 1
+      ]
+
+    isSoundOn &&
+      (currentPhraseLetter === lastLetter ? button_pop() : incorrect())
+    console.log(lastLetter, currentPhraseLetter)
     //TODO  Maybe it would be better to have seperate fnuction for visual matches or een pull everything into this function
     //no of matches when comparing the letters of the test phase and user typed phrase (used only as raw data for percentage match)
     const matches = testArray.filter(
@@ -320,7 +342,7 @@ const AppContextProvider = ({ children }) => {
   }, [percentageMatch])
 
   //<><><><><><><> //Visual progress indicator functions\\ <><><><><><><>
-  //REMEMBER visualMatches is an array pf arrays for each word which hold objects for each letter in the word that have char and isCorrect values
+  //REMEMBER visualMatches is an array of arrays for each word which hold objects for each letter in the word that have char and isCorrect values
   //Used to add something between each item, we use a non breaking space in userInput to make the spans display next to each other
   const interleave = (arr, thing) =>
     [].concat(...arr.map((n) => [n, thing])).slice(0, -1)
@@ -367,6 +389,7 @@ const AppContextProvider = ({ children }) => {
     setNewHigh(false)
     //Start Attack timer
     setGameState("start")
+    isMusicOn && playMusic()
   }
 
   //Function to set end game conditions
@@ -382,13 +405,10 @@ const AppContextProvider = ({ children }) => {
     timerId.current = null
     // oppAttackTimer("exit")
     setUserText("")
-    newHigh?highScoreEndSound():endSound()
-
-
+    if (isSoundOn) {
+      newHigh ? highScoreEndSound() : endSound()
+    }
     //TODO should ask are you sure and close settings
-    //TODO manage scoring and maybe high score local memory
-
-
   }
 
   //new timer is loaded in a paused state, awaiting 'play' command
@@ -446,12 +466,17 @@ const AppContextProvider = ({ children }) => {
         }, responseTime)
         setStart(Date.now())
         setRemaining(responseTime)
+        isSoundOn && playOppWritingSound()
+
         break
       case "pause":
         clearTimeout(timerId.current)
         setRemaining(remaining - (Date.now() - start))
+        exposedData.pause()
+        musicFunctions.pause()
         break
       case "resume":
+        isMusicOn && playMusic()
         if (oppAttackSuccess) {
           timerId.current = setTimeout(() => {
             console.log("resumed")
@@ -473,6 +498,7 @@ const AppContextProvider = ({ children }) => {
             //start new scroll animation
           }, remaining)
         } else {
+          isSoundOn && playOppWritingSound()
           timerId.current = setTimeout(() => {
             console.log("started opp attack?")
             setGameState("oppSuccess")
@@ -482,6 +508,7 @@ const AppContextProvider = ({ children }) => {
         setStart(Date.now())
         break
       case "oppSuccess":
+        exposedData.stop()
         clearTimeout(timerId.current)
         //oppattack animation (pausable)
         setOppAttackSuccess(true)
@@ -501,6 +528,7 @@ const AppContextProvider = ({ children }) => {
         }, 2000)
         break
       case "userSuccess":
+        exposedData.stop()
         //TODO REFACTOR into function
         clearTimeout(timerId.current)
         //userAttck animation (pausable)
@@ -522,6 +550,8 @@ const AppContextProvider = ({ children }) => {
         break
       case "exit":
         // setSt("exit")
+        exposedData.stop()
+        musicFunctions.stop()
         setStart(0)
         setRemaining(0)
         clearTimeout(timerId.current)
@@ -651,6 +681,8 @@ const AppContextProvider = ({ children }) => {
         isSoundOn,
         setIsSoundOn,
         playTypingSound,
+        isMusicOn,
+        setIsMusicOn,
       }}
     >
       {children}

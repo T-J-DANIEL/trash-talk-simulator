@@ -20,6 +20,7 @@
 //full ui checkcup finalise cohesive style and colors
 //finalise timing and scoring
 //incorrect sound
+//maybe no text box?
 
 //TODO REFACTORING:
 //confirm close use conditional rendering
@@ -31,6 +32,7 @@
 //use an insult generator fo modern day mode?
 
 //TODO KNOWN BUGS
+//issue with incorrect sound keeps sounding when last letter is correct
 //solve timer issue ! Clear timer and set timer running at the time we left off when paused the timer is the issue
 //when newgame is started sometimes the opp attaacks too soon (maybe a timer from previous game is still is going ) maybe after pausing? NEWGAME should stop and reset all timers
 //red indiacator only works on easy mode

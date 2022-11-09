@@ -285,3 +285,15 @@
           //     //if user accuracy is low it should count as a failed attack and opponent should attack successfully
           //     //there should also be a brief pause bttween each question for the animation success  or fail
           //   }
+            // grab ref of the video
+  
+ 
+   // vid logic
+  // const vidRef = useRef(null)
+            // useEffect(
+  //   ()=>{
+  //     vidRef.current.seekTo(300, 'seconds')
+  //   setPlaying(true)
+  //   },[]
+  // )
+  //when page loads auto seek to 300 seconds

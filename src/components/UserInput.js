@@ -69,8 +69,9 @@ const UserInput = () => {
         onKeyPress={(e) => {
           
           
-          e.key === "Enter"? scoreHandler():playTypingSound()
-          // e.key === "Enter" && scoreHandler()
+          // e.key === "Enter"? scoreHandler():playTypingSound()
+        
+          e.key === "Enter" && scoreHandler()
         }}
         spellcheck="false"
         onChange={(e) => {
