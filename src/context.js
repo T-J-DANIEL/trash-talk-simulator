@@ -610,13 +610,19 @@ const AppContextProvider = ({ children }) => {
       //remember to reset this on newgame
     }
   }, [score])
-
+const clickSound = (e) =>{
+  if(isSoundOn){
+    e.mouseDown&&button_pop()
+    e.mouseUp&&button_push()
+  }
+}
   //TODO try and minimise these exports
   return (
     <AppContext.Provider
       value={{
         isYeOlde,
         setIsYeOlde,
+        clickSound,
         userText,
         setUserText,
         currentPhraseList,

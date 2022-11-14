@@ -82,6 +82,7 @@ const MainPage = () => {
         </div>
 
         <button
+          className="button"
           onClick={displaySettings}
           onMouseDown={isSoundOn && button_pop}
           onMouseUp={isSoundOn && button_push}

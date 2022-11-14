@@ -23,7 +23,7 @@ const EndGame = () => {
         <p>
           Share score:
           <button
-            className={`btn ${shared && "shared-success"}`}
+            className={`button btn ${shared && "shared-success"}`}
             onClick={() => {
               setShared(true)
               navigator.clipboard.writeText(
@@ -40,7 +40,7 @@ const EndGame = () => {
             {shared ? "Copied" : "Share"}
           </button>
         </p>
-        <button onClick={startGame}>Start New Game</button>
+        <button className="button" onClick={startGame}>Start New Game</button>
       </div>
     </div>
   )
