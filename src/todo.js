@@ -1,11 +1,12 @@
 //TODO TASKS and features to add no styling:
-
+//portraiots of each at ends creen with idele animation
 //add percentage completion to user
 //dinalise header
 // Idle animations 3d animations 
 // ::After lastin array quill cursor
 // Jackpot sound if you get high score at end 
 //disable pause screen when in start game mode
+//pause hand animation
 //display "sound off" on mainpage?
 // need to make loss animation more in oyour face with opp message
 //COOL picture frame above message? with plack on mobile picture is to the left or on both, attack animations on the picture
@@ -38,7 +39,7 @@
 //issue with incorrect sound keeps sounding when last letter is correct
 //solve timer issue ! Clear timer and set timer running at the time we left off when paused the timer is the issue
 //when newgame is started sometimes the opp attaacks too soon (maybe a timer from previous game is still is going ) maybe after pausing? NEWGAME should stop and reset all timers
-//red indiacator only works on easy mode
+//red indiacator only works on easy mode and hard?
 //game continues after end screen
 //if game is left at end screen it continues by itself (maybe timeouts are being cleared and must be put in local memory)
 // If  game is left at pause screen for extended time the timers no longer work (mayb ebecause browser is clearing timeouts fro performance)

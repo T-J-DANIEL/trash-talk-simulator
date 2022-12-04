@@ -52,97 +52,97 @@ const randoShake = [
     "yeasty",
   ],
   [
-    "base-court",
-    "bat-fowling",
-    "beef-witted",
-    "beetle-headed",
-    "boil-brained",
-    "clapper-clawed",
-    "clay-brained",
-    "common-kissing",
-    "crook-pated",
-    "dismal-dreaming",
-    "dizzy-eyed",
-    "doghearted",
-    "dread-bolted",
-    "earth-vexing",
-    "elf-skinned",
-    "fat-kidneyed",
-    "fen-sucked",
-    "flap-mouthed",
-    "fly-bitten",
-    "folly-fallen",
-    "fool-born",
-    "full-gorged",
-    "guts-griping",
-    "half-faced",
-    "hasty-witted",
-    "hedge-born",
-    "hell-hated",
-    "idle-headed",
-    "ill-breeding",
-    "ill-nurtured",
-    "knotty-pated",
-    "milk-livered",
-    "motley-minded",
-    "onion-eyed",
-    "plume-plucked",
-    "pottle-deep",
-    "pox-marked",
-    "reeling-ripe",
-    "rough-hewn",
-    "rude-growing",
-    "rump-fed",
-    "shard-borne",
-    "sheep-biting",
-    "spur-galled",
-    "swag-bellied",
-    "tardy-gaited",
-    "tickle-brained",
-    "toad-spotted",
-    "urchin-snouted",
-    "weather-bitten",
+    `base‑court`,
+    `bat‑fowling`,
+    `beef‑witted`,
+    `beetle‑headed`,
+    `boil‑brained`,
+    `clapper‑clawed`,
+    `clay‑brained`,
+    `common‑kissing`,
+    `crook‑pated`,
+    `dismal‑dreaming`,
+    `dizzy‑eyed`,
+    `dog‑hearted`,
+    `dread‑bolted`,
+    `earth‑vexing`,
+    `elf‑skinned`,
+    `fat‑kidneyed`,
+    `fen‑sucked`,
+    `flap‑mouthed`,
+    `fly‑bitten`,
+    `folly‑fallen`,
+    `fool‑born`,
+    `full‑gorged`,
+    `guts‑griping`,
+    `half‑faced`,
+    `hasty‑witted`,
+    `hedge‑born`,
+    `hell‑hated`,
+    `idle‑headed`,
+    `ill‑breeding`,
+    `ill‑nurtured`,
+    `knotty‑pated`,
+    `milk‑livered`,
+    `motley‑minded`,
+    `onion‑eyed`,
+    `plume‑plucked`,
+    `pottle‑deep`,
+    `pox‑marked`,
+    `reeling‑ripe`,
+    `rough‑hewn`,
+    `rude‑growing`,
+    `rump‑fed`,
+    `shard‑borne`,
+    `sheep‑biting`,
+    `spur‑galled`,
+    `swag‑bellied`,
+    `tardy‑gaited`,
+    `tickle‑brained`,
+    `toad‑spotted`,
+    `urchin‑snouted`,
+    `weather‑bitten`,
   ],
   [
-    "apple-john",
+    "apple‑john",
     "baggage",
     "barnacle",
     "bladder",
-    "boar-pig",
+    "boar‑pig",
     "bugbear",
-    "bum-bailey",
-    "canker-blossom",
-    "clack-dish",
+    "bum‑bailey",
+    "canker‑blossom",
+    "clack‑dish",
     "clotpole",
     "coxcomb",
     "codpiece",
-    "death-token",
+    "death‑token",
     "dewberry",
-    "flap-dragon",
-    "flax-wench",
-    "flirt-gill",
-    "foot-licker",
+    "flap‑dragon",
+    "flax‑wench",
+    "flirt‑gill",
+    "foot‑licker",
     "fustilarian",
     "giglet",
     "gudgeon",
     "haggard",
     "harpy",
-    "hedge-pig",
-    "horn-beast",
-    "hugger-mugger",
+    "hedge‑pig",
+    "horn‑beast",
+    "hugger‑mugger",
     "joithead",
     "lewdster",
     "lout",
-    "maggot-pie",
-    "malt-worm",
+    "maggot‑pie",
+    "malt‑worm",
     "mammet",
     "measle",
     "minnow",
     "miscreant",
     "moldwarp",
-    "mumble-news",
-    "nut-hook",
-    "pigeon-egg",
+    "mumble‑news",
+    "nut‑hook",
+    "pigeon‑egg",
     "pignut",
     "puttock",
     "pumpion",
@@ -152,7 +152,7 @@ const randoShake = [
     "strumpet",
     "varlot",
     "vassal",
-    "whey-face",
+    "whey‑face",
     "wagtail",
   ],
 ]
@@ -160,26 +160,26 @@ const randoShake = [
 const shakesPhrases = [
   {
     insult:
-      "I scorn you, scurvy companion. What, you poor, base, rascally, cheating, lack-linen mate! Away, you moldy rogue, away!",
+      "I scorn you, scurvy companion. What, you poor, base, rascally, cheating, lack‑linen mate! Away, you moldy rogue, away!",
   },
   {
-    insult: "What, you poor, base, rascally, cheating, lack-linen mate!",
+    insult: "What, you poor, base, rascally, cheating, lack‑linen mate!",
   },
   {
     insult: "Away, you moldy rogue, away!",
   },
   {
-    insult: "Thou mewling toad-spotted miscreant!",
+    insult: "Thou mewling toad‑spotted miscreant!",
   },
   {
     insult:
       "Thou art a most notable coward, an infinite and endless liar, an hourly promise breaker, the owner of no one good quality",
   },
   {
-    insult: "Thou puking rump-fed ratsbane!",
+    insult: "Thou puking rump‑fed ratsbane!",
   },
   {
-    insult: "Thou jarring beef-witted flap-dragon!",
+    insult: "Thou jarring beef‑witted flap‑dragon!",
   },
   {
     insult:
@@ -189,14 +189,14 @@ const shakesPhrases = [
     insult: "Thou wit's as thick as a Tewkesbury mustard",
   },
   {
-    insult: "Your abilities are too infant-like for doing much alone",
+    insult: "Your abilities are too infant‑like for doing much alone",
   },
   {
     insult: "More of your conversation would infect my brain",
   },
   {
     insult:
-      "Thou sodden-witted lord! Thou hast no more brain than I have in mine elbows!",
+      "Thou sodden‑witted lord! Thou hast no more brain than I have in mine elbows!",
   },
   {
     insult: "Your brain is as dry as the remainder biscuit after voyage",
@@ -206,7 +206,7 @@ const shakesPhrases = [
       "If you spend word for word with me, I shall make your wit bankrupt",
   },
   {
-    insult: "Thou has not so much brain as ear-wax",
+    insult: "Thou has not so much brain as ear‑wax",
   },
   {
     insult: "Thou art the cap of all the fools",
@@ -219,7 +219,7 @@ const shakesPhrases = [
       "Foul spoken coward, that thund'rest with thy tongue, and with thy weapon nothing dares perform",
   },
   {
-    insult: "Go, prick thy face, and over-red thy fear, Thou lily-liver'd boy",
+    insult: "Go, prick thy face, and over‑red thy fear, Thou lily‑liver'd boy",
   },
   {
     insult: "You, minion, are too saucy",
@@ -275,10 +275,10 @@ const shakesPhrases = [
     insult: "I do wish thou were a dog, that I might love thee something",
   },
   {
-    insult: "What a thrice-double ass!What an ass!",
+    insult: "What a thrice‑double ass!What an ass!",
   },
   {
-    insult: "Poisonous bunch-backed toad!",
+    insult: "Poisonous bunch‑backed toad!",
   },
   {
     insult: "Here is the babe, as loathsome as a toad",
@@ -293,13 +293,13 @@ const shakesPhrases = [
     insult: "Bottled spider!",
   },
   {
-    insult: "Thou art a rare parrot-teacher!",
+    insult: "Thou art a rare parrot‑teacher!",
   },
   {
     insult: "A weasel hath not such a deal of spleen as you are toss'd with",
   },
   {
-    insult: "Thou art Pigeon-liver'd and lack gall",
+    insult: "Thou art Pigeon‑liver'd and lack gall",
   },
   {
     insult:
@@ -340,11 +340,11 @@ const shakesPhrases = [
   },
   {
     insult:
-      "O you beast! I'll so maul you and your toasting-iron, That you shall think the devil is come from hell",
+      "O you beast! I'll so maul you and your toasting‑iron, That you shall think the devil is come from hell",
   },
   {
     insult:
-      "O you beast! I'll so maul you and your toasting-iron, That you shall think the devil is come from hell",
+      "O you beast! I'll so maul you and your toasting‑iron, That you shall think the devil is come from hell",
   },
   {
     insult: "By mine honour, if I were but two hours younger, I'd beat thee.",
@@ -359,7 +359,7 @@ const shakesPhrases = [
     insult: "Thou hateful wither'd hag!",
   },
   {
-    insult: "Whoreson caterpillars, bacon-fed knaves!",
+    insult: "Whoreson caterpillars, bacon‑fed knaves!",
   },
   {
     insult: "Your virginity breeds mites, much like a cheese",
@@ -371,10 +371,10 @@ const shakesPhrases = [
     insult: "Villain, I have done thy mother",
   },
   {
-    insult: "Away, you three-inch fool!",
+    insult: "Away, you three‑inch fool!",
   },
   {
-    insult: "Thou bolting-hutch of beastliness",
+    insult: "Thou bolting‑hutch of beastliness",
   },
   {
     insult: "Thou swollen parcel of dropsies",
@@ -383,32 +383,32 @@ const shakesPhrases = [
     insult: "Thou huge bombard of sack",
   },
   {
-    insult: "Thou stuffed cloak-bag of guts",
+    insult: "Thou stuffed cloak‑bag of guts",
   },
   {
     insult: "Thou roasted manningtree ox with pudding in his belly",
   },
   {
-    insult: "Thou flea, thou nit, thou winter-cricket thou!",
+    insult: "Thou flea, thou nit, thou winter‑cricket thou!",
   },
   {
     insult: "Thou art unfit for any place but hell",
   },
   {
-    insult: "Thou whoreson obscene greasy tallow-catch!",
+    insult: "Thou whoreson obscene greasy tallow‑catch!",
   },
   {
-    insult: "Thou clay-brained guts, thou knotty-pated fool",
+    insult: "Thou clay‑brained guts, thou knotty‑pated fool",
   },
   {
     insult: "Thou damned and luxurious mountain goat",
   },
   {
-    insult: "Thou elvish-mark'd, abortive, rooting hog!",
+    insult: "Thou elvish‑mark'd, abortive, rooting hog!",
   },
   {
     insult:
-      "Thou leathern-jerkin, crystal-button, knot-pated, agatering, puke-stocking, caddis-garter, smooth-tongue, Spanish pouch!",
+      "Thou leathern‑jerkin, crystal‑button, knot‑pated, agatering, puke‑stocking, caddis‑garter, smooth‑tongue, Spanish pouch!",
   },
   {
     insult:
@@ -425,11 +425,11 @@ const shakesPhrases = [
       "If thou wilt needs marry, marry a fool; for wise men know well enough what monsters you make of them",
   },
   {
-    insult: "Thou surly flap-mouthed mammet!",
+    insult: "Thou surly flap‑mouthed mammet!",
   },
   {
     insult:
-      "Most shallow man! Thou worms-meat in respect of a good piece of flesh indeed!",
+      "Most shallow man! Thou worms‑meat in respect of a good piece of flesh indeed!",
   },
   {
     insult: "I shall live to knock thy brains out",
@@ -445,13 +445,13 @@ const shakesPhrases = [
       "I will most humbly take my leave of you. You cannot, sir, take from me anything that I will not more willingly part withal",
   },
   {
-    insult: "Thou caluminous swag-bellied puttock!",
+    insult: "Thou caluminous swag‑bellied puttock!",
   },
   {
-    insult: "Idol of idiot-worshippers!",
+    insult: "Idol of idiot‑worshippers!",
   },
   {
-    insult: "Thou burly-boned reeling-ripe vassal!",
+    insult: "Thou burly‑boned reeling‑ripe vassal!",
   },
   {
     insult: "Thou art open to incontinency",
@@ -460,7 +460,7 @@ const shakesPhrases = [
     insult: "In civility thou seem'st so empty",
   },
   {
-    insult: "Thou currish rough-hewn scullian!",
+    insult: "Thou currish rough‑hewn scullian!",
   },
   {
     insult: "Thou map of woe!",
@@ -472,10 +472,10 @@ const shakesPhrases = [
     insult: "Thou live scandaliz'd and foully spoken of",
   },
   {
-    insult: "Truly thou art damned, like an ill-roasted egg, all on one side",
+    insult: "Truly thou art damned, like an ill‑roasted egg, all on one side",
   },
   {
-    insult: "Thou villainous beetle-headed bum-bailey!",
+    insult: "Thou villainous beetle‑headed bum‑bailey!",
   },
   {
     insult:
@@ -485,13 +485,13 @@ const shakesPhrases = [
     insult: "Thou appeareth nothing to me but a foul and pestilent",
   },
   {
-    insult: "Thou roguish idle-headed harpy!",
+    insult: "Thou roguish idle‑headed harpy!",
   },
   {
-    insult: "Thou rump-fed ronyon!",
+    insult: "Thou rump‑fed ronyon!",
   },
   {
-    insult: "Thou art wither'd like an old apple-john",
+    insult: "Thou art wither'd like an old apple‑john",
   },
 ]
 

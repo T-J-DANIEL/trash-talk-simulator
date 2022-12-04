@@ -27,7 +27,7 @@ const Settings = () => {
       <div className="modal-container ">
         {/* TODO need to sort these buttons out and standardize all popups design */}
         <div className="modal-section">
-        <h1 className="modal-heading">Paused</h1>
+          <h1 className="modal-heading">Paused</h1>
           <div className="button-container">
             <button
               className="button"
@@ -58,8 +58,8 @@ const Settings = () => {
             </button>
           </div>
         </div>
-        <div className="modal-section" >
-        <h2 className="modal-sub-heading">Settings</h2>
+        <div className="modal-section">
+          <h2 className="modal-sub-heading">Settings</h2>
           <div className="button-container">
             {/* <button onClick={() => mountRunning()}>
               Load New Timer (running)
@@ -77,7 +77,7 @@ const Settings = () => {
               newPhrases
             </button> */}
             {/* <button onClick={startGame}>Start Game</button> */}
-            <label className="button-container" htmlFor="soundOnOff">
+            <label className="button-container label" htmlFor="soundOnOff">
               Sounds
               <input
                 type="checkBox"
@@ -95,7 +95,7 @@ const Settings = () => {
                 // ()=>setIsSoundOn(!isSoundOn)
               />
             </label>
-            <label className="button-container" htmlFor="musicOnOff">
+            <label className="button-container label" htmlFor="musicOnOff">
               Music
               <input
                 type="checkBox"
@@ -114,8 +114,8 @@ const Settings = () => {
               />
             </label>
           </div>
-                </div>
         </div>
+      </div>
     </div>,
     document.body
   )

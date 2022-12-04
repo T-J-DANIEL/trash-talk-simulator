@@ -201,92 +201,132 @@ const AppContextProvider = ({ children }) => {
     //clear users text box, ready for new input
     setUserText("")
   }
-
+const [userArray, setUserArray] = useState([])
+const [testArray, setTestArray] = useState([])
+const [spaces,setSpaces] = useState("0")
+  const lastLetterRef = useRef(null)
   // Function to compare values of user text typed text with the current phrase
   const compareValues = (userTyping) => {
     //current testing phrase split in to individual letters
-    const testArray = currentPhrase.split("")
-    //user typing split in to individual letters
-    const userArray = userTyping.trim().split("")
+    const testArray = currentPhrase
+      .replace(/ +/g, `_`)
+      .replace("-", "‑")
+      .split("")
 
-    const userTypedChars = userTyping.trimStart().replace(/  +/g, " ")
-
-    //make a sound if last character is incorrect
-    // userTypedChars[userTypedChars.length - 1] !==
-    //   testArray[userTypedChars.length - 1] &&
-    //   isSoundOn &&
-    //   incorrect()
-
-    // test phrase split into words
-    // const testArrayWords = currentPhrase.split(" ")
-    // user typing split into words
-    // const userArrayWords = userTyping.trim().split(" ")
-
-    //test phrase words split into individual letters in each word (tawl)
-    const testArrayWordsLetters = currentPhrase
-      .split(" ")
-      .map((item) => item.split(""))
-    //user typing words split into individual letters in each word
-    // const userArrayWordsLetters = userTyping
-    //   .split(" ")
-    //   .map((item) => item.split(""))
-    //take word and compare all values in each word, each space signifies moving on to next word
-    //so display words with letters?, get input select first word of current phrase compare values to the first word when a space is detected we are ontto next one
-
-    const userArrayWordsLetters = userTyping
+    //user typing split in to individual letters)
+    const userArray = userTyping
       .trim()
-      .replace(/ +/g, " ")
-      .split(" ")
-      .map((item) => item.split(""))
-    //EXPLANATION take the tawl(testArrayWordsLetters) and create a similar array for userTyping and check if within this array there is a "word" at the same index as the one in tawl. If there is then check this words letters against the word in tawl and if it matches then add an object with the letter and true or false for isccorrect. If the word is not present then add an array of objects for the words containing the letter and iscorrect:false
-    const newMatches = testArrayWordsLetters.map((item, currentIndex) => {
-      return userArrayWordsLetters[currentIndex]
-        ? item.map((item, index) => {
-            return userArrayWordsLetters[currentIndex][index] === item
-              ? {
-                  char: testArrayWordsLetters[currentIndex][index],
-                  isCorrect: true,
-                }
-              : {
-                  char: testArrayWordsLetters[currentIndex][index],
-                  isCorrect: false,
-                }
-          })
-        : testArrayWordsLetters[currentIndex].map((item) => {
-            return { char: item, isCorrect: false }
-          })
-    })
-    const lastLetter =
-      userArrayWordsLetters[userArrayWordsLetters.length - 1][
-        userArrayWordsLetters[userArrayWordsLetters.length - 1].length - 1
-      ]
+      .replace(/ +/g, `_`)
+      .replace("-", "‑")
+      .split("")
 
-    const currentPhraseLetter =
-      testArrayWordsLetters[userArrayWordsLetters.length - 1][
-        userArrayWordsLetters[userArrayWordsLetters.length - 1].length - 1
-      ]
-
-    isSoundOn &&
-      (currentPhraseLetter === lastLetter ? button_pop() : incorrect())
-    console.log(lastLetter, currentPhraseLetter)
-    //TODO  Maybe it would be better to have seperate fnuction for visual matches or een pull everything into this function
-    //no of matches when comparing the letters of the test phase and user typed phrase (used only as raw data for percentage match)
-    const matches = testArray.filter(
-      (item, index) => item === userArray[index]
-    ).length
-
-    //checking for each value of test array if userTyping char matches or not and we return true or false
-    const calcVisualMatches = testArray.map((item, index) =>
-      item === userTyping.split("")[index]
-        ? { char: currentPhrase.split("")[index], isCorrect: true }
-        : { char: currentPhrase.split("")[index], isCorrect: false }
+    //caluclate percantage match
+    setPercentageMatch(
+      Math.ceil(
+        (testArray.filter((item, index) => item === userArray[index]).length /
+          testArray.length) *
+          100
+      )
     )
-    //updating visual matches
-    // setVisualMatches(calcVisualMatches)
-    //so visual mataches is sent an arary of arrays for each word containing an object for each letter with its value and isCorrect boolean value
+    const newMatches = testArray.reduce(
+      (total, item, currentIndex) => {
+        if (userArray[currentIndex]) {
+          if (userArray[currentIndex] === item) {
+            if (item !== `_` && testArray[currentIndex + 1] !== `_`) {
+              total[total.length - 1].push(
+                <span className={`green`}>{item}</span>
+              )
+            }
+            if (item !== `_` && testArray[currentIndex + 1] === `_`) {
+              total[total.length - 1].push(
+                <span className={`green`}>{item}</span>
+              )
+              total.push([])
+            }
+            if (item === `_`)
+              total[total.length - 1].push(
+                <span className={`green space`}>{item}</span>
+              )
+            total.push([])
+          } else {
+            if (item !== `_` && testArray[currentIndex + 1] !== `_`) {
+              total[total.length - 1].push(
+                <span className={`red`}>{item}</span>
+              )
+            }
+            if (item !== `_` && testArray[currentIndex + 1] === `_`) {
+              total[total.length - 1].push(
+                <span className={`red`}>{item}</span>
+              )
+              total.push([])
+            }
+            if (item === `_`) {
+              total[total.length - 1].push(
+                <span className={`red space`}>{item}</span>
+              )
+              total.push([])
+            }
+          }
+        } else {
+          if (item !== `_` && testArray[currentIndex + 1] !== `_`) {
+            total[total.length - 1].push(
+              <span
+                ref={currentIndex === userArray.length+1 ? lastLetterRef : null}
+                className={`${
+                  currentIndex === userArray.length ? "yellow" : "gray"
+                }`}
+              >
+                {item}
+              </span>
+            )
+          }
+          if (item !== `_` && testArray[currentIndex + 1] === `_`) {
+            total[total.length - 1].push(
+              <span
+                ref={currentIndex === userArray.length+1 ? lastLetterRef : null}
+                className={`${
+                  currentIndex === userArray.length ? `yellow` : "gray"
+                }`}
+              >
+                {item}
+              </span>
+            )
+            total.push([])
+          }
+          if (item === `_`) {
+            total[total.length - 1].push(
+              <span
+                ref={currentIndex === userArray.length+1 ? lastLetterRef : null}
+                className={`${
+                  currentIndex === userArray.length
+                    ? `yellow space`
+                    : `gray space`
+                }`}
+              >
+                {item}
+              </span>
+            )
+            total.push([])
+          }
+        }
+        if (currentIndex === testArray.length - 1) {
+          return total.map((item) => <span>{item}</span>)
+        }
+        return total
+      },
+      [[]]
+    )
     setVisualMatches(newMatches)
+      console.log(lastLetterRef.current)
+    isSoundOn &&
+      (userArray[userArray.length - 1] === testArray[userArray.length - 1]
+        ? button_pop()
+        : incorrect())
 
-    setPercentageMatch(Math.ceil((matches / testArray.length) * 100))
+    console.log(
+      userArray[userArray.length - 1],
+      testArray[userArray.length - 1]
+    )
   }
 
   // useEffect to run compareValues function as soon as currentPhrase changes
@@ -344,24 +384,36 @@ const AppContextProvider = ({ children }) => {
   //<><><><><><><> //Visual progress indicator functions\\ <><><><><><><>
   //REMEMBER visualMatches is an array of arrays for each word which hold objects for each letter in the word that have char and isCorrect values
   //Used to add something between each item, we use a non breaking space in userInput to make the spans display next to each other
-  const interleave = (arr, thing) =>
-    [].concat(...arr.map((n) => [n, thing])).slice(0, -1)
+  // const interleave = (arr, thing) =>
+  //   [].concat(...arr.map((n) => [n, thing])).slice(0, -1)
 
-  const idea = visualMatches.map((item, currentIndex) =>
-    item.map((item, index) =>
-      item.isCorrect ? (
-        <span key={index} className="green">
-          {item.char}
-        </span>
-      ) : (
-        <span key={index} className="red">
-          {item.char}
-        </span>
-      )
-    )
-  )
+  //converts the second dimension char objects to spans
+  // const wrappedIdea = visualMatches
+  //   .map((item, currentIndex) =>
+  //     item.map((item, index) =>
+  //       item.isCorrect ? (
+  //         <span key={index} className={item.ref ? "yellow" : `green`}>
+  //           {item.char}
+  //         </span>
+  //       ) : (
+  //         <span key={index} className={item.ref ? "yellow" : `red`}>
+  //           {item.char}
+  //         </span>
+  //       )
+  //     )
+  //   )
+  //   .reduce((total, input,index) => {
+  //     total.push(<span>{input}</span>)
+  //     total.push(<span key={index}
+  //     className={testArray[userArray.length]===`_`&&spaces===index?"yellow":"red"}
+  //     >&nbsp;</span>)
+  //     return total
+    // }, [])
+  // .map((item) => <span>{item}</span>)
+  // interleave(wrappedIdea, <span>&nbsp;</span>)
+  //add a ref here if the index is the same as user typed last one
   //wrap all in span
-  const wrappedIdea = idea.map((item) => <span>{item}</span>)
+  // const wrappedIdea = idea.map(item => <span>{item}</span>)
 
   //<><><><><><><> //GAMESTATE FUNCTIONS\\ <><><><><><><>
   //Function to set new game conditions
@@ -439,13 +491,16 @@ const AppContextProvider = ({ children }) => {
 
   //Function to show and hide pause/settings menu
   const displaySettings = () => {
-    if (gameEnded) {
-      setShowSettings(false)
-      setGameRunning(false)
-    } else {
-      pauseResume()
-      setShowSettings(!showSettings)
-    }
+    // if (gameEnded) {
+    //   setShowSettings(false)
+    //   setGameRunning(false)
+    // } else {
+    //   pauseResume()
+    //   setShowSettings(!showSettings)
+    // }
+    // if (gameRunning && !gameEnded) {)
+    pauseResume()
+    setShowSettings(!showSettings)
   }
 
   //usEffect to set focus on input box when required
@@ -573,9 +628,17 @@ const AppContextProvider = ({ children }) => {
 
   const [esc, setEsc] = useState(null)
   useEffect(() => {
-    button_pop()
-    button_push()
-    !gameEnded && displaySettings()
+    if (gameRunning && !gameEnded) {
+      if (isSoundOn) {
+        button_pop()
+        button_push()
+      }
+      displaySettings()
+    }
+    if (!gameRunning && showSettings && !gameEnded) {
+      displaySettings()
+    }
+    // displaySettings()
   }, [esc])
   //TODO FLOUT OCCURS ON LOAD
   useEffect(() => {
@@ -610,12 +673,12 @@ const AppContextProvider = ({ children }) => {
       //remember to reset this on newgame
     }
   }, [score])
-const clickSound = (e) =>{
-  if(isSoundOn){
-    e.mouseDown&&button_pop()
-    e.mouseUp&&button_push()
+  const clickSound = (e) => {
+    if (isSoundOn) {
+      e.mouseDown && button_pop()
+      e.mouseUp && button_push()
+    }
   }
-}
   //TODO try and minimise these exports
   return (
     <AppContext.Provider
@@ -674,8 +737,8 @@ const clickSound = (e) =>{
         level,
         displaySettings,
         focusInput,
-        interleave,
-        wrappedIdea,
+        // interleave,
+        // wrappedIdea,
         setGameEnded,
         scoreHandler,
         highScore,

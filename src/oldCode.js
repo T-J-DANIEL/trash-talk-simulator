@@ -297,3 +297,141 @@
   //   },[]
   // )
   //when page loads auto seek to 300 seconds
+
+  //comparevalues
+  // const userTypedChars = userTyping.trimStart().replace(/  +/g, " ")
+
+
+    //make a sound if last character is incorrect
+    // userTypedChars[userTypedChars.length - 1] !==
+    //   testArray[userTypedChars.length - 1] &&
+    //   isSoundOn &&
+    //   incorrect()
+
+    // test phrase split into words
+    // const testArrayWords = currentPhrase.split(" ")
+    // user typing split into words
+    // const userArrayWords = userTyping.trim().split(" ")
+
+    //  const compareValues = (userTyping) => {
+    //    userArray && setSpaces(userArray.filter((x) => x === " ").length)
+
+    //    //current testing phrase split in to individual letters
+    //    setTestArray(currentPhrase.split(""))
+
+    //    //user typing split in to individual letters
+    //    // const userArray = userTyping.trim().split("")
+    //    setUserArray(userTyping.trim().split(""))
+    //    //test phrase words split into individual letters in each word (tawl)
+    //    const testArrayWordsLetters = currentPhrase
+    //      .split(" ")
+    //      .map((item) => item.split(""))
+
+       //user typing words split into individual letters in each word
+       //take word and compare all values in each word, each space signifies moving on to next word
+       //so display words with letters?, get input select first word of current phrase compare values to the first word when a space is detected we are ontto next one
+    //    const userArrayWordsLetters = userTyping
+    //      .trim()
+    //      .replace(/ +/g, " ")
+    //      .split(" ")
+    //      .map((item) => item.split(""))
+
+    //    //EXPLANATION take the tawl(testArrayWordsLetters) and create a similar array for userTyping and check if within this array there is a "word" at the same index as the one in tawl. If there is then check this words letters against the word in tawl and if it matches then add an object with the letter and true or false for isccorrect. If the word is not present then add an array of objects for the words containing the letter and iscorrect:false
+    //    //if the lettter is last letter then add ref of currentLetter
+    //    //basicaly have to mathc to usertped length last one
+    //    const newMatches = testArrayWordsLetters.map((item, currentIndex) => {
+    //      return userArrayWordsLetters[currentIndex]
+    //        ? item.map((item, index) => {
+    //            return userArrayWordsLetters[currentIndex][index] === item
+    //              ? {
+    //                  char: testArrayWordsLetters[currentIndex][index],
+    //                  isCorrect: true,
+    //                }
+    //              : {
+    //                  char: testArrayWordsLetters[currentIndex][index],
+    //                  isCorrect: false,
+    //                }
+    //          })
+    //        : testArrayWordsLetters[currentIndex].map((item) => {
+    //            return {
+    //              char: item,
+    //              isCorrect: false,
+    //            }
+    //          })
+    //    })
+    //    newMatches[userArrayWordsLetters.length - 1][
+    //      userArrayWordsLetters[userArrayWordsLetters.length - 1].length
+    //    ] = {
+    //      ...newMatches[userArrayWordsLetters.length - 1][
+    //        userArrayWordsLetters[userArrayWordsLetters.length - 1].length
+    //      ],
+    //      ref: lastLetterRef,
+    //    }
+    //    console.log(
+    //      "last user letter?",
+    //      newMatches[userArrayWordsLetters.length - 1][
+    //        userArrayWordsLetters[userArrayWordsLetters.length - 1].length - 1
+    //      ]
+    //    )
+    //    const lastLetter =
+    //      userArrayWordsLetters[userArrayWordsLetters.length - 1][
+    //        userArrayWordsLetters[userArrayWordsLetters.length - 1].length - 1
+    //      ]
+
+    //    const currentPhraseLetter =
+    //      testArrayWordsLetters[userArrayWordsLetters.length - 1][
+    //        userArrayWordsLetters[userArrayWordsLetters.length - 1].length - 1
+    //      ]
+    //    // lastUserLetter = currentPhraseLetter
+
+    //    isSoundOn &&
+    //      (currentPhraseLetter === lastLetter ? button_pop() : incorrect())
+    //    console.log(
+    //      lastLetter,
+    //      currentPhraseLetter
+    //      // lastUserLetter
+    //    )
+    //    //TODO  Maybe it would be better to have seperate fnuction for visual matches or een pull everything into this function
+    //    //no of matches when comparing the letters of the test phase and user typed phrase (used only as raw data for percentage match)
+    //    const matches = testArray.filter(
+    //      (item, index) => item === userArray[index]
+    //    ).length
+
+    //    //checking for each value of test array if userTyping char matches or not and we return true or false
+    //    // const calcVisualMatches = testArray.map((item, index) =>
+    //    //   item === userTyping.split("")[index]
+    //    //     ? { char: currentPhrase.split("")[index], isCorrect: true }
+    //    //     : { char: currentPhrase.split("")[index], isCorrect: false }
+    //    // )
+    //    //updating visual matches
+    //    // setVisualMatches(calcVisualMatches)
+    //    //so visual mataches is sent an arary of arrays for each word containing an object for each letter with its value and isCorrect boolean value
+    //    setVisualMatches(newMatches)
+
+    //    setPercentageMatch(Math.ceil((matches / testArray.length) * 100))
+    //  }
+
+
+    // const newMatches = testArray.reduce((total, item, currentIndex, array) => {
+    //   if (userArray[currentIndex]) {
+    //     if (userArray[currentIndex] === item) {
+    //       total.push(
+    //         <span className={`green`}>
+    //           {`${item === " " ? "&nbsp;" : item}`}
+    //         </span>
+    //       )
+    //     } else {
+    //       total.push(
+    //         <span className={`red`}>{`${item === " " ? "&nbsp;" : item}`}</span>
+    //       )
+    //     }
+    //   } else {
+    //     total.push(
+    //       <span
+    //         className={`red ${[currentIndex === userArray.length] && "yellow"}`}
+    //       >
+    //         {`${item === " " ? "&nbsp;" : item}`}
+    //       </span>
+    //     )
+    //   }
+    // }, [])

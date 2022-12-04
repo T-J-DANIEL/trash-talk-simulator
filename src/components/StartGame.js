@@ -16,26 +16,38 @@ const StartGame = () => {
   } = useGlobalContext()
   return (
     <div className="overlay-container">
-      <div className="modal-container">
-        <h1 className="modal-heading">Shakespearean Wit: </h1>
-        <h3 className="">A typing game</h3>
+      <div className="modal-container mobile-view">
+        <div className="title-container">
+          <h1 className="modal-heading title">Shakespearean Wit </h1>
+          <h3 className="tagline">A typing game</h3>
+        </div>
         <div className="modal-section">
-        <h2 className="modal-sub-heading ">Rules:</h2>
-          <ul>
-            <li>Geteth poiunts</li>
-            <li>Geteth poiunts</li>
-            <li>Geteth poiunts</li>
-            <li>Geteth poiunts</li>
+          <h2 className="modal-sub-heading ">Rules:</h2>
+          <ul className="ruleset">
+            <li>
+             Be the first with your insult
+            </li>
+            <li>
+              Press enter if your insult is mostly correct (85%) press esc to pause/unpause
+            </li>
+            <li>
+              If you are 100% correct you will auto submit
+            </li>
+            <li>
+              build up your streak of 100 correct to gain more points
+            </li>
+            
           </ul>
         </div>
         <div className="modal-section">
-          <h2 className="modal-sub-heading">Select Difficulty:</h2>
+          <h2 className="modal-sub-heading">Select Difficulty</h2>
           <div className="button-container">
             <button
-              className="button"
+              className={`button ${
+                level === "easy" ? "selected-button" : "unselected-button"
+              }`}
               onMouseDown={!isSoundOn && button_pop}
               onMouseUp={!isSoundOn && button_push}
-              style={level === "easy" ? { backgroundColor: "green" } : {}}
               onClick={(e) => {
                 changeDifficulty("easy")
               }}
@@ -43,10 +55,11 @@ const StartGame = () => {
               Easy
             </button>
             <button
-              className="button"
+              className={`button ${
+                level === "normal" ? "selected-button" : "unselected-button"
+              }`}
               onMouseDown={!isSoundOn && button_pop}
               onMouseUp={!isSoundOn && button_push}
-              style={level === "normal" ? { backgroundColor: "green" } : {}}
               onClick={(e) => {
                 changeDifficulty("normal")
               }}
@@ -54,10 +67,11 @@ const StartGame = () => {
               Normal
             </button>
             <button
-              className="button"
+              className={`button ${
+                level === "hard" ? "selected-button" : "unselected-button"
+              }`}
               onMouseDown={!isSoundOn && button_pop}
               onMouseUp={!isSoundOn && button_push}
-              style={level === "hard" ? { backgroundColor: "green" } : {}}
               onClick={(e) => {
                 changeDifficulty("hard")
               }}
@@ -68,8 +82,9 @@ const StartGame = () => {
               onMouseDown={!isSoundOn && button_pop}
               onMouseUp={!isSoundOn && button_push}
               //TODO hide when mobile
-              className="button mobile-hidden"
-              style={level === "extreme" ? { backgroundColor: "green" } : {}}
+              className={`button mobile-hidden ${
+                level === "extreme" ? "selected-button" : "unselected-button"
+              }`}
               onClick={(e) => {
                 changeDifficulty("extreme")
               }}
@@ -79,7 +94,7 @@ const StartGame = () => {
           </div>
         </div>
         <button
-          className="button"
+          className="button start-button"
           onMouseDown={!isSoundOn && button_pop}
           onMouseUp={!isSoundOn && button_push}
           onClick={() => {
@@ -87,7 +102,7 @@ const StartGame = () => {
             startGame()
           }}
         >
-          Start Game
+          Start
         </button>
       </div>
     </div>
