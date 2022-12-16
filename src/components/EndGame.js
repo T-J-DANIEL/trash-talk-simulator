@@ -9,6 +9,10 @@ const EndGame = () => {
     newHigh,
     shared,
     setShared,
+    lives,
+    score,
+    setIsNewGame,
+    setGameEnded
   } = useGlobalContext()
   return (
     <div className="overlay-container">
@@ -17,9 +21,11 @@ const EndGame = () => {
             <h1 className="modal-header"><span>G</span>ame <span>O</span>ver!</h1>
           </div>
         <div className="modal-section end-game-text">
-          <h3>Thou hast vanquished this poor quiveling fool.</h3>
+          <h3>{`${lives?"The fool was vanquished!":"You were bested by the fool!"}`}</h3>
           <p>
             {/* TODO special styling for new high score here and in header */}
+            Score: <span className="new-high-score">{!newHigh && `${score}`}</span>
+            <br />
             <span className="new-high-score">{newHigh && `New `}</span>High Score:{highScore}
           </p>
           
@@ -42,7 +48,12 @@ const EndGame = () => {
               {shared ? "Copied" : "Share"}
             </button>
         
-        <button className="button" onClick={startGame}>Start New Game</button>
+        <button className="button" onClick={()=>{
+          setIsNewGame(true)
+          setGameEnded(false)
+        }
+        // startGame
+        }>Start New Game</button>
         </div>
       </div>
     </div>

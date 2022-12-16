@@ -23,6 +23,7 @@ import end_game_sound from "./sounds/end_game_sound.mp3"
 import high_score_end_sound from "./sounds/high_score_end_sound.mp3"
 import opp_writing_sound from "./sounds/opp_writing_sound.mp3"
 import music from "./sounds/music.mp3"
+import correct_sound from "./sounds/correct_sound.mp3"
 const AppContext = React.createContext()
 
 //global context custom hook
@@ -38,23 +39,29 @@ const AppContextProvider = ({ children }) => {
   const ogGamerVid = "#"
   //sounds
   const [isSoundOn, setIsSoundOn] = useState(true)
-  const [isMusicOn, setIsMusicOn] = useState(true)
+  const [isMusicOn, setIsMusicOn] = useState(false)
   const [successSound] = useSound(user_success)
-  const [failSound] = useSound(opp_attack_success, { volume: 0.7 })
-  const [incorrect] = useSound(incorrect_sound)
-  const [streakSound] = useSound(streak_sound)
+  const [failSound] = useSound(opp_attack_success, { volume: 0.4 })
+  const [incorrect] = useSound(incorrect_sound, { volume: 0.4 })
+  const [streakSound] = useSound(streak_sound, { volume: 0.3 })
   const [countDownSound] = useSound(threeSec_countdown)
-  const [button_pop] = useSound(button_pop_up)
-  const [button_push] = useSound(button_push_down)
-  const [endSound] = useSound(end_game_sound)
+  const [button_pop] = useSound(button_pop_up, { volume: 0.2 })
+  const [button_push] = useSound(button_push_down, { volume: 0.2 })
+  const [endSound] = useSound(end_game_sound, { volume: 0.3 })
   const [highScoreEndSound] = useSound(high_score_end_sound)
-  const [playOppWritingSound, exposedData] = useSound(opp_writing_sound)
+  const [playOppWritingSound, exposedData] = useSound(opp_writing_sound,{
+    volume:0
+  })
   //use exposedData.pause and exposedData.stop
   const [playMusic, musicFunctions] = useSound(music)
+  const [correctSound] = useSound(correct_sound, {
+    // Th
+    volume: 0.3,
+  })
   //use musicFunctions.pause and musicFunctions.stop
   const [playTypingSound] = useSound(user_type_sound, {
     interrupt: true,
-    volume: 0.5,
+    volume: 0.2,
   })
   //<><><><><><><> //RESPONSE TIME STATE VALUES\\ <><><><><><><>
   //difficulty level
@@ -90,8 +97,11 @@ const AppContextProvider = ({ children }) => {
   //<><><><><><><> //GAME STATE VALUES\\ <><><><><><><>
   //'yeolde' mode
   const [isYeOlde, setIsYeOlde] = useState(true)
-  //has game run before or not?
   const [isNewGame, setIsNewGame] = useState(true)
+  //has game run before or not?
+  const [isFirstGame, setIsFirstGame] = useState(true)
+  const [showHowTo, setShowHowTo] = useState(false)
+  //
   //is game in progress?
   const [gameRunning, setGameRunning] = useState(false)
   //has game ended?
@@ -112,7 +122,7 @@ const AppContextProvider = ({ children }) => {
   const [currentPhraseList, setCurrentPhraseList] = useState(getPhrases)
   //SETTINGS menu showing?
   const [showSettings, setShowSettings] = useState(false)
-
+  const [confirmClose, setConfirmClose] = useState(false)
   //<><><><><><><> //TIME SYNCHRO VALUES\\ <><><><><><><>
   const timerId = useRef()
   // TODO let timerId = null?
@@ -147,7 +157,8 @@ const AppContextProvider = ({ children }) => {
   const [isInputDisabled, setIsInputDisabled] = useState(false)
   //User input focus ref
   const focusInput = useRef(null)
-
+  // How many lives left
+  const [lives, setLives] = useState(3)
   //<><><><><><><> //OPPONENT STATE VALUES\\ <><><><><><><>
   //opponent has succesfully attacked
   const [oppAttacked, setOppAttacked] = useState(false)
@@ -320,7 +331,7 @@ const [spaces,setSpaces] = useState("0")
       console.log(lastLetterRef.current)
     isSoundOn &&
       (userArray[userArray.length - 1] === testArray[userArray.length - 1]
-        ? button_pop()
+        ? correctSound()
         : incorrect())
 
     console.log(
@@ -442,6 +453,8 @@ const [spaces,setSpaces] = useState("0")
     //Start Attack timer
     setGameState("start")
     isMusicOn && playMusic()
+    setLives(3)
+    console.log(gameState)
   }
 
   //Function to set end game conditions
@@ -563,6 +576,10 @@ const [spaces,setSpaces] = useState("0")
         setStart(Date.now())
         break
       case "oppSuccess":
+        setLives(lives-1)
+        if(lives===1){
+          endGame()
+        }
         exposedData.stop()
         clearTimeout(timerId.current)
         //oppattack animation (pausable)
@@ -752,6 +769,13 @@ const [spaces,setSpaces] = useState("0")
         playTypingSound,
         isMusicOn,
         setIsMusicOn,
+        lives,
+        confirmClose,
+        setConfirmClose,
+        isFirstGame,
+        setIsFirstGame,
+        showHowTo,
+        setShowHowTo,
       }}
     >
       {children}

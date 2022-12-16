@@ -6,7 +6,7 @@ import Settings from "./Settings"
 import ScoreStreak from "./ScoreStreak"
 import StartGame from "./StartGame"
 import EndGame from "./EndGame"
-
+import PortraitOnly from "./PortraitOnly"
 import { GameTimer } from "./GameTimer"
 
 //components imported
@@ -44,6 +44,8 @@ const MainPage = () => {
       {isNewGame && <StartGame />}
       {gameEnded && <EndGame />}
       {showSettings && <Settings />}
+
+      <PortraitOnly/>
       <Header />
       <div className="secondary-container">
         <Opponent />

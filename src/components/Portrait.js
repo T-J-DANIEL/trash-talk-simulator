@@ -2,7 +2,7 @@ import React from "react"
 
 const Portrait = () => {
   return (
-    <div className="portrttait">
+    <div className="portrait">
       <img
         src="https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/frederick-the-great-wilhelm-camphausen.jpg"
         alt="user avatar"

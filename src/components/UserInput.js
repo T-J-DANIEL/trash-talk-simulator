@@ -45,7 +45,7 @@ const UserInput = () => {
           !gameRunning && "paused"
         }`}
       >
-        {/* <Portrait /> */}
+        <Portrait />
       </div>
       <div
         className={`user-scroll-container ${
@@ -64,56 +64,30 @@ const UserInput = () => {
             {/* {console.log(wrappedIdea)} */}
           </div>
           {/* </div> */}
-          <div className="input-size-container">
-            {/* <span className="input-size-span">
-              {userText
-                .trimStart()
-                .replace(/  +/g, " ")
-                .replace(/ /g, "|")
-                .split("")
-                .map((item, index, array) => (
-                  <span
-                    className={`phantom-span ${
-                      item === "" && "phantom-space"
-                    }  ${index === array.length - 1 && "phantom-end"}`}
-                  >
-                    {item}
-                  </span>
-                ))}
-            </span> */}
-            <input
-              type={"text"}
-              // placeholder={currentPhrase}
+        
 
-              value={userText}
-              ref={focusInput}
-              className="user-text-input"
-              onKeyPress={(e) => {
-                e.key === "Enter" && scoreHandler()
-              }}
-              spellcheck="false"
-              onChange={(e) => {
-                //TODO why change both state values?
-                // setUserText(e.target.value.replace(" ", "_").replace("-", "‑"))
-                // compareValues(
-                //   e.target.value.replace(" ", "_").replace("-", "‑")
-                // )
-                setUserText(e.target.value.replace(" ", "_").replace("-", "‑"))
-                compareValues(
-                  e.target.value.replace(" ", "_").replace("-", "‑")
-                )
-                // setUserText(e.target.value.replace(" ", "_"))
-                // compareValues(e.target.value.replace(" ", "_"))
-                //if 100% or timer reaches 0 then next question
-                // if score is higher than 80% then hitmarker and bonus points
-              }}
-              disabled={isInputDisabled}
-            ></input>
-          </div>
+          <input
+            type={"text"}
+            // placeholder={currentPhrase}
+
+            value={userText}
+            ref={focusInput}
+            className="user-text-input"
+            onKeyPress={(e) => {
+              e.key === "Enter" && scoreHandler()
+            }}
+            spellcheck="false"
+            onChange={(e) => {
+              setUserText(e.target.value.replace(" ", "_").replace("-", "‑"))
+              compareValues(e.target.value.replace(" ", "_").replace("-", "‑"))
+            }}
+            disabled={isInputDisabled}
+          ></input>
+          
         </div>
-        <div className="feather-position-user">
+        {/* <div className="feather-position-user">
           <Feather />
-        </div>
+        </div> */}
         {/* <div className="extras">
           <span>perc match{percentageMatch}</span>
           <span>score:{score}</span>

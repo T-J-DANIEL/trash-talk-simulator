@@ -21,12 +21,37 @@ const Settings = () => {
     setIsSoundOn,
     isMusicOn,
     setIsMusicOn,
+    confirmClose,
+    setConfirmClose,
   } = useGlobalContext()
   return ReactDOM.createPortal(
     <div className="overlay-container">
       <div className="modal-container ">
-        {/* TODO need to sort these buttons out and standardize all popups design */}
-        <div className="modal-section">
+        {confirmClose && (
+          <><div className="modal-section">
+            <h1 className="modal-heading">End Game?</h1>
+            <div className="button-container">
+              <button
+                className="button"
+                onClick={() => {
+                  setConfirmClose(false)
+                  endGame()
+                  setShowSettings(false)
+                }}
+              >
+                Yes
+              </button>
+              <button className="button" onClick={()=>{
+                setConfirmClose(false)
+                // displaySettings()
+              }}>
+                No
+              </button>
+            </div>
+          </div></>
+        )}
+        {!confirmClose && (
+        <><div className="modal-section">
           <h1 className="modal-heading">Paused</h1>
           <div className="button-container">
             <button
@@ -46,10 +71,12 @@ const Settings = () => {
               // }}
               className="button"
               onClick={() => {
-                if (window.confirm("are you sure?")) {
-                  endGame()
-                  setShowSettings(false)
-                }
+                // if (window.confirm("are you sure?")) {
+                //   endGame()
+                //   setShowSettings(false)
+                // }
+                setConfirmClose(true)
+                console.log(confirmClose)
               }}
               onMouseDown={isSoundOn && button_pop}
               onMouseUp={isSoundOn && button_push}
@@ -114,7 +141,7 @@ const Settings = () => {
               />
             </label>
           </div>
-        </div>
+        </div></>)}
       </div>
     </div>,
     document.body

@@ -1,28 +1,52 @@
 //TODO TASKS and features to add no styling:
-//portraiots of each at ends creen with idele animation
-//add percentage completion to user
-//dinalise header
-// Idle animations 3d animations 
-// ::After lastin array quill cursor
-// Jackpot sound if you get high score at end 
-//disable pause screen when in start game mode
-//pause hand animation
+//Add svgs for lives
+//conditionals AND START MENU SYSTERNMM
+//game is not paused on confirm screen?maybe?
+
+//timer
+//time running out fn
+//bug fixes
+
+//sub components for menu conditional rendering (cleaner)
+
+//finalise text input and feather
+//ADD BACKGORUND
+//diff font for fool
+//finalise header
+//losing focus when clicking around
+//game messes up wehn starting new game sort it out
+//CORRECT LETTER NOISE
+//add percentage completion to user (color of text box)
+//thought cloud differnt sepereate trail cloud then becomes speech bubble
+//finalise poortraits and pagelayout
+        //PICTURE FRAME ANIMATIONS?
+        //COOL picture frame above message? with plack on mobile picture is to the left or on both, attack animations on the picture
+//portraits  of each at start/ends screen 
 //display "sound off" on mainpage?
-// need to make loss animation more in oyour face with opp message
-//COOL picture frame above message? with plack on mobile picture is to the left or on both, attack animations on the picture
-//button clicking sounds and timer ending  sounds
-//writing noises?
+//fix timer
+//startgame page
+//timer ending urgent sound
 //animations on score number when you score put ib heading bar light up animation on streak
-//animation to show if high score has been bested on end screen (newHigh score state already exists) use state value 
-//show average accuracy  (avgAcc state already exists)
-//when combo reaches higher then 5 just change color and number
-//display pic and name selector seperate componnet for user avatar
+//combo animation
 //add countdown when starting ? conditional rendering
+//Use speech bubbles instead attributions flaticon
+//Frosted effect modals
+//confirm close use conditional rendering
+// need to make win/loss animation more in oyour face with opp message
+//TEXT TO AUDIO ON WIN OR LOSS
+//ANIMATIONS FOR BOTH
+//remmeber blinking
+    //Idle is thinking anim?
+    //ATTACKED
+    //WIN
+    //Title anim is happy/ angry
+    //opp message start speechbubble animation? 
+//color outline is progress for full game timeer and opp textbox
+
 //local memopry remmebers name hioghscore pic and difficluty
 //full ui checkcup finalise cohesive style and colors
 //finalise timing and scoring
-//maybe no text box?
-//confirm close use conditional rendering
+//Light mode?
 
 //TODO REFACTORING:
 //button click noise function (reusability)
@@ -36,7 +60,6 @@
 
 
 //TODO KNOWN BUGS
-//issue with incorrect sound keeps sounding when last letter is correct
 //solve timer issue ! Clear timer and set timer running at the time we left off when paused the timer is the issue
 //when newgame is started sometimes the opp attaacks too soon (maybe a timer from previous game is still is going ) maybe after pausing? NEWGAME should stop and reset all timers
 //red indiacator only works on easy mode and hard?

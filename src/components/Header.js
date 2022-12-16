@@ -14,6 +14,7 @@ const Header = () => {
     button_pop,
     button_push,
     showSettings,
+    lives,
     timerRunning,
     setTimerRunning,
     resetTimer,
@@ -27,10 +28,7 @@ const Header = () => {
 
         {/* {gameState===!"paused"&&<Settings} */}
 
-        <div className="header-component">
-          <h2 className="modal-sub-heading">Score</h2>
-          <div>{score}</div>
-        </div>
+        {/* <div className="header-component"></div> */}
         <div className="header-component gameTimer">
           <GameTimer />
           <button
@@ -39,12 +37,22 @@ const Header = () => {
             onMouseDown={isSoundOn ? button_pop : undefined}
             onMouseUp={isSoundOn ? button_push : undefined}
           >
-            {!showSettings ? "Pause" : "Game Paused"}
+            {!showSettings ? `| |` : "Paused"}
           </button>
         </div>
         <div className="header-component">
           <h2 className="modal-sub-heading">Streak</h2>
           {<div className="">{streakArray ? streakArray : "-"}</div>}
+          <h2 className="modal-sub-heading">Score</h2>
+          <div>{score}</div>
+          <div className="button-container">
+            {Array.from({ length: [lives] }).map((_) => (
+              <div className="lives-left"></div>
+            ))}
+            {Array.from({ length: [3 - lives] }).map((_) => (
+              <div className="lives-left lives-lost"></div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
