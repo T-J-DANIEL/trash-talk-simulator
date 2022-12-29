@@ -49,8 +49,8 @@ const AppContextProvider = ({ children }) => {
   const [button_push] = useSound(button_push_down, { volume: 0.2 })
   const [endSound] = useSound(end_game_sound, { volume: 0.3 })
   const [highScoreEndSound] = useSound(high_score_end_sound)
-  const [playOppWritingSound, exposedData] = useSound(opp_writing_sound,{
-    volume:0
+  const [playOppWritingSound, exposedData] = useSound(opp_writing_sound, {
+    volume: 0,
   })
   //use exposedData.pause and exposedData.stop
   const [playMusic, musicFunctions] = useSound(music)
@@ -135,6 +135,12 @@ const AppContextProvider = ({ children }) => {
   const [currentPhrase, setCurrentPhrase] = useState("...")
   //users typed text (controlled form)
   const [userText, setUserText] = useState("")
+  //capslock status
+  const [isCapsLockOn, setIsCapsLockOn] = useState(false)
+  const capsRef = useRef(null)
+  const [displayText, setDisplayText] = useState(false)
+  // useEffect(() => {
+  //   if(isCapsLockOn){capsRef.current.innerHTML = "caps Lock on"}}, [isCapsLockOn])
   //user score
   const [score, setScore] = useState(0)
   //user highscore
@@ -212,9 +218,9 @@ const AppContextProvider = ({ children }) => {
     //clear users text box, ready for new input
     setUserText("")
   }
-const [userArray, setUserArray] = useState([])
-const [testArray, setTestArray] = useState([])
-const [spaces,setSpaces] = useState("0")
+  const [userArray, setUserArray] = useState([])
+  const [testArray, setTestArray] = useState([])
+  const [spaces, setSpaces] = useState("0")
   const lastLetterRef = useRef(null)
   // Function to compare values of user text typed text with the current phrase
   const compareValues = (userTyping) => {
@@ -282,7 +288,9 @@ const [spaces,setSpaces] = useState("0")
           if (item !== `_` && testArray[currentIndex + 1] !== `_`) {
             total[total.length - 1].push(
               <span
-                ref={currentIndex === userArray.length+1 ? lastLetterRef : null}
+                ref={
+                  currentIndex === userArray.length + 1 ? lastLetterRef : null
+                }
                 className={`${
                   currentIndex === userArray.length ? "yellow" : "gray"
                 }`}
@@ -294,7 +302,9 @@ const [spaces,setSpaces] = useState("0")
           if (item !== `_` && testArray[currentIndex + 1] === `_`) {
             total[total.length - 1].push(
               <span
-                ref={currentIndex === userArray.length+1 ? lastLetterRef : null}
+                ref={
+                  currentIndex === userArray.length + 1 ? lastLetterRef : null
+                }
                 className={`${
                   currentIndex === userArray.length ? `yellow` : "gray"
                 }`}
@@ -307,7 +317,9 @@ const [spaces,setSpaces] = useState("0")
           if (item === `_`) {
             total[total.length - 1].push(
               <span
-                ref={currentIndex === userArray.length+1 ? lastLetterRef : null}
+                ref={
+                  currentIndex === userArray.length + 1 ? lastLetterRef : null
+                }
                 className={`${
                   currentIndex === userArray.length
                     ? `yellow space`
@@ -328,7 +340,7 @@ const [spaces,setSpaces] = useState("0")
       [[]]
     )
     setVisualMatches(newMatches)
-      console.log(lastLetterRef.current)
+    console.log(lastLetterRef.current)
     isSoundOn &&
       (userArray[userArray.length - 1] === testArray[userArray.length - 1]
         ? correctSound()
@@ -419,7 +431,7 @@ const [spaces,setSpaces] = useState("0")
   //     className={testArray[userArray.length]===`_`&&spaces===index?"yellow":"red"}
   //     >&nbsp;</span>)
   //     return total
-    // }, [])
+  // }, [])
   // .map((item) => <span>{item}</span>)
   // interleave(wrappedIdea, <span>&nbsp;</span>)
   //add a ref here if the index is the same as user typed last one
@@ -576,8 +588,8 @@ const [spaces,setSpaces] = useState("0")
         setStart(Date.now())
         break
       case "oppSuccess":
-        setLives(lives-1)
-        if(lives===1){
+        setLives(lives - 1)
+        if (lives === 1) {
           endGame()
         }
         exposedData.stop()
@@ -657,17 +669,38 @@ const [spaces,setSpaces] = useState("0")
     }
     // displaySettings()
   }, [esc])
-  //TODO FLOUT OCCURS ON LOAD
+
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
+      e.getModifierState("CapsLock")
+        ? setIsCapsLockOn(true)
+        : setIsCapsLockOn(false)
+      // console.log("caps lock is on on?", e.getModifierState("CapsLock"))
       e.key === "Escape" && setEsc((prev) => !prev)
     })
     setEsc(false)
 
+    //  document.addEventListener("keyup", (e) => {
+    //       e.getModifierState("CapsLock")
+    //         ? setIsCapsLockOn(true)
+    //         : setIsCapsLockOn(false)
+    //    console.log("caps lock is on on?", e.getModifierState("CapsLock"))
+    //  })
+
     return () => {
       document.removeEventListener("keydown", (e) => {
+        e.getModifierState("CapsLock")
+          ? setIsCapsLockOn(true)
+          : setIsCapsLockOn(false)
+        // console.log("caps lock is on on?", e.getModifierState("CapsLock"))
         e.key === "Escape" && setEsc((prev) => !prev)
       })
+      // document.removeEventListener("keyup", (e) => {
+      //   e.getModifierState("CapsLock")
+      //     ? setIsCapsLockOn(true)
+      //     : setIsCapsLockOn(false)
+      //   console.log("caps lock is on on?", e.getModifierState("CapsLock"))
+      // })
     }
   }, [])
 
@@ -696,6 +729,12 @@ const [spaces,setSpaces] = useState("0")
       e.mouseUp && button_push()
     }
   }
+  // document.querySelector("inputBox").addEventListener("focus", function (e) {
+  //     if (e.getModifierState("CapsLock")) {
+  //       console.log("its on")
+  //     }
+  //   })
+
   //TODO try and minimise these exports
   return (
     <AppContext.Provider
@@ -776,6 +815,10 @@ const [spaces,setSpaces] = useState("0")
         setIsFirstGame,
         showHowTo,
         setShowHowTo,
+        isCapsLockOn,
+        setIsCapsLockOn,
+        displayText,
+        capsRef,
       }}
     >
       {children}

@@ -33,6 +33,10 @@ const UserInput = () => {
     playTypingSound,
     isSoundOn,
     stopTypingSound,
+    isCapsLockOn,
+    setIsCapsLockOn,
+    displayText,
+    capsRef,
   } = useGlobalContext()
 
   // successfulAttack
@@ -62,14 +66,16 @@ const UserInput = () => {
             {/* {wrappedIdea} */}
             {visualMatches}
             {/* {console.log(wrappedIdea)} */}
+            <span >
+              {isCapsLockOn&&"capsLockOn"}
+              </span>
           </div>
           {/* </div> */}
-        
 
           <input
+            id="inputBox"
             type={"text"}
             // placeholder={currentPhrase}
-
             value={userText}
             ref={focusInput}
             className="user-text-input"
@@ -83,7 +89,6 @@ const UserInput = () => {
             }}
             disabled={isInputDisabled}
           ></input>
-          
         </div>
         {/* <div className="feather-position-user">
           <Feather />

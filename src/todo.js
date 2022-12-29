@@ -5,9 +5,9 @@
 
 //timer
 //time running out fn
-//bug fixes
-
-//sub components for menu conditional rendering (cleaner)
+//bug fixes 
+//Need to use setShowHowTo and finish off start meu need to use sub componeents
+    //sub components for menu conditional rendering (cleaner)
 
 //finalise text input and feather
 //ADD BACKGORUND

@@ -32,7 +32,7 @@ const Settings = () => {
             <h1 className="modal-heading">End Game?</h1>
             <div className="button-container">
               <button
-                className="button"
+                className="button nav-button"
                 onClick={() => {
                   setConfirmClose(false)
                   endGame()
@@ -41,7 +41,7 @@ const Settings = () => {
               >
                 Yes
               </button>
-              <button className="button" onClick={()=>{
+              <button className="button nav-button" onClick={()=>{
                 setConfirmClose(false)
                 // displaySettings()
               }}>
@@ -55,7 +55,7 @@ const Settings = () => {
           <h1 className="modal-heading">Paused</h1>
           <div className="button-container">
             <button
-              className="button"
+              className="button nav-button"
               onClick={displaySettings}
               onMouseDown={isSoundOn && button_pop}
               onMouseUp={isSoundOn && button_push}
@@ -63,20 +63,9 @@ const Settings = () => {
               Resume
             </button>
             <button
-              // onClick={() => {
-              //   if (window.confirm("are you sure?")) {
-              //     endGame()
-              //   }
-              //   displaySettings()
-              // }}
-              className="button"
+              className="button nav-button"
               onClick={() => {
-                // if (window.confirm("are you sure?")) {
-                //   endGame()
-                //   setShowSettings(false)
-                // }
                 setConfirmClose(true)
-                console.log(confirmClose)
               }}
               onMouseDown={isSoundOn && button_pop}
               onMouseUp={isSoundOn && button_push}
@@ -86,7 +75,7 @@ const Settings = () => {
           </div>
         </div>
         <div className="modal-section">
-          <h2 className="modal-sub-heading">Settings</h2>
+          <h2 className="modal-heading">Sound</h2>
           <div className="button-container">
             {/* <button onClick={() => mountRunning()}>
               Load New Timer (running)
@@ -105,39 +94,29 @@ const Settings = () => {
             </button> */}
             {/* <button onClick={startGame}>Start Game</button> */}
             <label className="button-container label" htmlFor="soundOnOff">
-              Sounds
+              <span className="label-text">Effects  </span>            
               <input
                 type="checkBox"
                 id="soundOnOff"
-                // onMouseDown={isSoundOn && button_pop}
-                // onMouseUp={() => {
                 onMouseDown={!isSoundOn && button_pop}
                 onMouseUp={!isSoundOn && button_push}
                 checked={isSoundOn}
                 onChange={() => {
                   setIsSoundOn(!isSoundOn)
                 }}
-                //   isChecked ? playOff() : playOn()
-                // }}
-                // ()=>setIsSoundOn(!isSoundOn)
               />
             </label>
             <label className="button-container label" htmlFor="musicOnOff">
-              Music
+              <span className="label-text">Music</span>
               <input
                 type="checkBox"
                 id="musicOnOff"
-                // onMouseDown={isSoundOn && button_pop}
-                // onMouseUp={() => {
                 onMouseDown={!isMusicOn && button_pop}
                 onMouseUp={!isMusicOn && button_push}
                 checked={isMusicOn}
                 onChange={() => {
                   setIsMusicOn(!isMusicOn)
                 }}
-                //   isChecked ? playOff() : playOn()
-                // }}
-                // ()=>setIsSoundOn(!isSoundOn)
               />
             </label>
           </div>

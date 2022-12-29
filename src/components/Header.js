@@ -20,9 +20,12 @@ const Header = () => {
     resetTimer,
     setResetTimer,
     endGame,
+    isCapsLockOn,
+    setIsCapsLockOn,
   } = useGlobalContext()
   return (
     <div className="header-container">
+      {" "}
       <div className="header">
         {/* {timerExists ? <GameTimer /> : <h1>Shakespearean Wit</h1>} */}
 
@@ -33,7 +36,12 @@ const Header = () => {
           <GameTimer />
           <button
             className="button settings-button"
-            onClick={displaySettings}
+            onClick={(e) => {
+             e.getModifierState("CapsLock")
+               ? setIsCapsLockOn(true)
+               : setIsCapsLockOn(false)
+              displaySettings()
+            }}
             onMouseDown={isSoundOn ? button_pop : undefined}
             onMouseUp={isSoundOn ? button_push : undefined}
           >
