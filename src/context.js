@@ -780,7 +780,11 @@ const AppContextProvider = ({ children }) => {
 
   //Ueseffect to handle pausing when page focus is lost
   useEffect(() => {
-    if (gameState === "start"||"pause"||"resume") {
+    if (gameState === "start") {
+      window.addEventListener("blur", pauseGame)
+      console.log("event listener added")
+    }
+    if (gameState === "resume") {
       window.addEventListener("blur", pauseGame)
       console.log("event listener added")
     }
