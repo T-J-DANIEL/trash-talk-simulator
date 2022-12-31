@@ -41,6 +41,7 @@ const Header = () => {
                ? setIsCapsLockOn(true)
                : setIsCapsLockOn(false)
               displaySettings()
+              //pauseGame()
             }}
             onMouseDown={isSoundOn ? button_pop : undefined}
             onMouseUp={isSoundOn ? button_push : undefined}

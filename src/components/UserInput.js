@@ -66,9 +66,7 @@ const UserInput = () => {
             {/* {wrappedIdea} */}
             {visualMatches}
             {/* {console.log(wrappedIdea)} */}
-            <span >
-              {isCapsLockOn&&"capsLockOn"}
-              </span>
+            <span>{isCapsLockOn && "capsLockOn"}</span>
           </div>
           {/* </div> */}
 
@@ -78,11 +76,16 @@ const UserInput = () => {
             // placeholder={currentPhrase}
             value={userText}
             ref={focusInput}
+            onBlur={() => {
+              focusInput.current.focus()
+            }}
             className="user-text-input"
             onKeyPress={(e) => {
               e.key === "Enter" && scoreHandler()
             }}
-            spellcheck="false"
+            // autoFocus
+            autoComplete="false"
+            spellCheck="false"
             onChange={(e) => {
               setUserText(e.target.value.replace(" ", "_").replace("-", "‑"))
               compareValues(e.target.value.replace(" ", "_").replace("-", "‑"))

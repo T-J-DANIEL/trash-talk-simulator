@@ -485,7 +485,10 @@ const AppContextProvider = ({ children }) => {
     if (isSoundOn) {
       newHigh ? highScoreEndSound() : endSound()
     }
-    //TODO should ask are you sure and close settings
+    // window.removeEventListener("blur", () => {
+    //   pauseGame()
+    //   console.log("removed")
+    // })
   }
 
   //new timer is loaded in a paused state, awaiting 'play' command
@@ -513,6 +516,30 @@ const AppContextProvider = ({ children }) => {
     gameRunning ? setGameState("pause") : setGameState("resume")
     setGameRunning(!gameRunning)
   }
+  const pauseGame = () => {
+    setTimerRunning(false)
+    setGameRunning(false)
+    //pause any other timer
+    setIsInputDisabled(true)
+    //disable text input
+    setGameState("pause")
+    console.log("MESSAGE:", gameState)
+    setShowSettings(true)
+  }
+  //TODO incorporate resume function where required
+  const resumeGame = () => {
+    setTimerRunning(true)
+    setGameRunning(true)
+    //pause any other timer
+    setIsInputDisabled(true)
+    //disable text input
+    setGameState("resume")
+    console.log("MESSAGE:", gameState)
+    setShowSettings(false)
+    // e === "click" || ("keydown" && e.getModifierState("CapsLock"))
+    //   ? setIsCapsLockOn(true)
+    //   : setIsCapsLockOn(false)
+  }
 
   //Function to show and hide pause/settings menu
   const displaySettings = () => {
@@ -525,6 +552,7 @@ const AppContextProvider = ({ children }) => {
     // }
     // if (gameRunning && !gameEnded) {)
     pauseResume()
+    console.log("MESSAGE:", gameState)
     setShowSettings(!showSettings)
   }
 
@@ -662,16 +690,18 @@ const AppContextProvider = ({ children }) => {
         button_pop()
         button_push()
       }
-      displaySettings()
+      // displaySettings()
+      pauseGame()
     }
     if (!gameRunning && showSettings && !gameEnded) {
-      displaySettings()
+      // displaySettings()
+      resumeGame()
     }
-    // displaySettings()
   }, [esc])
 
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
+      //TODO this is repeated so much make afunction
       e.getModifierState("CapsLock")
         ? setIsCapsLockOn(true)
         : setIsCapsLockOn(false)
@@ -734,6 +764,42 @@ const AppContextProvider = ({ children }) => {
   //       console.log("its on")
   //     }
   //   })
+  // useEffect(() => {
+  //   window.addEventListener("blur", () => {
+  //     pauseGame()
+  //     // displaySettings()
+  //   })
+  //   // Specify how to clean up after this effect:
+  //   return () => {
+  //     window.removeEventListener("blur", () => {
+  //       pauseGame()
+  //       // displaySettings()
+  //     })
+  //   }
+  // }, [startGame])
+
+  //Ueseffect to handle pausing when page focus is lost
+  useEffect(() => {
+    if (gameState === "start"||"pause"||"resume") {
+      window.addEventListener("blur", pauseGame)
+      console.log("event listener added")
+    }
+    //this repeatedly adds event listener but the duplicates are discarded.
+    if (gameState === "exit") {
+      window.removeEventListener("blur", pauseGame)
+    }
+    //NOTE removing an event listener REQUIRES a named function (an anonymous function would point to a different place in memory)
+    return () => {
+      window.removeEventListener("blur", pauseGame)
+    }
+  }, [gameState])
+
+  // useEffect(() => {
+  //   window.removeEventListener("blur", () => {
+  //     pauseGame()
+  //     // displaySettings()
+  //   })
+  // }, [endGame])
 
   //TODO try and minimise these exports
   return (

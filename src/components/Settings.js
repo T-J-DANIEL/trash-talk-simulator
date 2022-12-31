@@ -23,6 +23,7 @@ const Settings = () => {
     setIsMusicOn,
     confirmClose,
     setConfirmClose,
+    setIsCapsLockOn,
   } = useGlobalContext()
   return ReactDOM.createPortal(
     <div className="overlay-container">
@@ -56,7 +57,13 @@ const Settings = () => {
           <div className="button-container">
             <button
               className="button nav-button"
-              onClick={displaySettings}
+              onClick={e=>{
+                
+      e.getModifierState("CapsLock")
+        ? setIsCapsLockOn(true)
+        : setIsCapsLockOn(false)
+                displaySettings()
+              }}
               onMouseDown={isSoundOn && button_pop}
               onMouseUp={isSoundOn && button_push}
             >

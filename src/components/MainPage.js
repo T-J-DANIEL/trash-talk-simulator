@@ -39,21 +39,27 @@ const MainPage = () => {
   //imported state properties
 
   return (
-    <div className="main-container">
+    <div
+      className="main-container"
+      // tabIndex={0}
+      // onBlur={() => {
+      //   if (gameRunning && !gameEnded) {
+      //     displaySettings()
+      //   }
+      // }}
+    >
       {/* optionally render startgame or endgame screen depending on state values */}
       {isNewGame && <StartGame />}
       {gameEnded && <EndGame />}
       {showSettings && <Settings />}
 
-      <PortraitOnly/>
+      <PortraitOnly />
       <Header />
       <div className="secondary-container">
         <Opponent />
 
         <UserInput />
-        <div className="timer">
-          
-        </div>
+        <div className="timer"></div>
       </div>
 
       {/* <div className="vid-container">
