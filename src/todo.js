@@ -2,10 +2,11 @@
 //Add svgs for lives
 //conditionals AND START MENU SYSTERNMM
 //game is not paused on confirm screen?maybe?
-
+//displayText state value in conetx uysed for caps lock signifier?
 //timer
 //time running out fn
 //bug fixes 
+//game does not reset properly after losing three lives maybe even never at all??
 //Need to use setShowHowTo and finish off start meu need to use sub componeents
     //sub components for menu conditional rendering (cleaner)
 
@@ -18,6 +19,7 @@
 //CORRECT LETTER NOISE
 //add percentage completion to user (color of text box)
 //thought cloud differnt sepereate trail cloud then becomes speech bubble
+//can replace all conts wih one const for declarations
 //finalise poortraits and pagelayout
         //PICTURE FRAME ANIMATIONS?
         //COOL picture frame above message? with plack on mobile picture is to the left or on both, attack animations on the picture

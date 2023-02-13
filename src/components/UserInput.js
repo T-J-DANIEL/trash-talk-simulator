@@ -80,7 +80,8 @@ const UserInput = () => {
               focusInput.current.focus()
             }}
             className="user-text-input"
-            onKeyPress={(e) => {
+            // onkey up waw deprecated replaced with onkeydown
+            onKeyDown={(e) => {
               e.key === "Enter" && scoreHandler()
             }}
             // autoFocus

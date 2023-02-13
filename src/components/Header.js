@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { GameTimer } from "./GameTimer"
+import TestGameTimer from "./header/TestGameTimer"
 import { useGlobalContext } from "../context"
 import Timer from "simple-circle-timer"
 const Header = () => {
@@ -22,6 +23,7 @@ const Header = () => {
     endGame,
     isCapsLockOn,
     setIsCapsLockOn,
+    testGameTimer,
   } = useGlobalContext()
   return (
     <div className="header-container">
@@ -33,13 +35,14 @@ const Header = () => {
 
         {/* <div className="header-component"></div> */}
         <div className="header-component gameTimer">
-          <GameTimer />
+          <TestGameTimer/>
+          {/* <GameTimer /> */}
           <button
             className="button settings-button"
             onClick={(e) => {
-             e.getModifierState("CapsLock")
-               ? setIsCapsLockOn(true)
-               : setIsCapsLockOn(false)
+              e.getModifierState("CapsLock")
+                ? setIsCapsLockOn(true)
+                : setIsCapsLockOn(false)
               displaySettings()
               //pauseGame()
             }}

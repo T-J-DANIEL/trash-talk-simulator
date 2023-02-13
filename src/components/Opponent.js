@@ -22,7 +22,7 @@ const Opponent = () => {
   const textClasses = ` ${gameRunning ? `${level} play` : `${level} pause`}`
   // TODO need to add opp attacked animation based on userAttacked
   // diff classes for each level
-
+  //TODO can make this hitmarker into its own component
   return (
     <div className={attackClasses}>
       {userAttacked && (

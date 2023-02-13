@@ -24,6 +24,7 @@ import high_score_end_sound from "./sounds/high_score_end_sound.mp3"
 import opp_writing_sound from "./sounds/opp_writing_sound.mp3"
 import music from "./sounds/music.mp3"
 import correct_sound from "./sounds/correct_sound.mp3"
+import { clear } from "@testing-library/user-event/dist/clear"
 const AppContext = React.createContext()
 
 //global context custom hook
@@ -37,7 +38,8 @@ const AppContextProvider = ({ children }) => {
   // const ogGamerVid = "https://www.youtube.com/watch?v=sVYyjr84ZXI"
   // const yeOldeVid = "#"
   const ogGamerVid = "#"
-  //sounds
+
+  //<><><><><><><> //SOUNDS FUNCTIONS/STATE VALUES\\ <><><><><><><>
   const [isSoundOn, setIsSoundOn] = useState(true)
   const [isMusicOn, setIsMusicOn] = useState(false)
   const [successSound] = useSound(user_success)
@@ -63,6 +65,7 @@ const AppContextProvider = ({ children }) => {
     interrupt: true,
     volume: 0.2,
   })
+
   //<><><><><><><> //RESPONSE TIME STATE VALUES\\ <><><><><><><>
   //difficulty level
   const [responseTime, setResponseTime] = useState(10000)
@@ -94,7 +97,7 @@ const AppContextProvider = ({ children }) => {
     }
   }
 
-  //<><><><><><><> //GAME STATE VALUES\\ <><><><><><><>
+  //<><><><><><><> //GAME-PLAY STATE VALUES\\ <><><><><><><>
   //'yeolde' mode
   const [isYeOlde, setIsYeOlde] = useState(true)
   const [isNewGame, setIsNewGame] = useState(true)
@@ -120,6 +123,7 @@ const AppContextProvider = ({ children }) => {
     //else
   }
   const [currentPhraseList, setCurrentPhraseList] = useState(getPhrases)
+  //CHANGE this 
   //SETTINGS menu showing?
   const [showSettings, setShowSettings] = useState(false)
   const [confirmClose, setConfirmClose] = useState(false)
@@ -138,6 +142,7 @@ const AppContextProvider = ({ children }) => {
   //capslock status
   const [isCapsLockOn, setIsCapsLockOn] = useState(false)
   const capsRef = useRef(null)
+  
   const [displayText, setDisplayText] = useState(false)
   // useEffect(() => {
   //   if(isCapsLockOn){capsRef.current.innerHTML = "caps Lock on"}}, [isCapsLockOn])
@@ -354,7 +359,7 @@ const AppContextProvider = ({ children }) => {
 
   // useEffect to run compareValues function as soon as currentPhrase changes
   useEffect(() => {
-    //TODO can we usememo this?
+    //TODO can I usememo this?
     compareValues("")
   }, [currentPhrase])
 
@@ -441,8 +446,6 @@ const AppContextProvider = ({ children }) => {
   //<><><><><><><> //GAMESTATE FUNCTIONS\\ <><><><><><><>
   //Function to set new game conditions
   const startGame = () => {
-    //TODO start game screeen not showing when we pause and end game/end game?
-
     setGameEnded(false)
     //clear any timers
     setTimerExists(false)
@@ -467,6 +470,7 @@ const AppContextProvider = ({ children }) => {
     isMusicOn && playMusic()
     setLives(3)
     console.log(gameState)
+    // timerInterval = setInterval(decrementGameTimer, 1000)
   }
 
   //Function to set end game conditions
@@ -517,31 +521,44 @@ const AppContextProvider = ({ children }) => {
     setGameRunning(!gameRunning)
   }
   const pauseGame = () => {
-    setTimerRunning(false)
-    setGameRunning(false)
+    // setTimerRunning(false)
     //pause any other timer
     setIsInputDisabled(true)
     //disable text input
     setGameState("pause")
     console.log("MESSAGE:", gameState)
-    setShowSettings(true)
+    setGameRunning(false)
+    // setShowSettings(true)
   }
   //TODO incorporate resume function where required
   const resumeGame = () => {
-    setTimerRunning(true)
-    setGameRunning(true)
+    // setTimerRunning(true)
     //pause any other timer
     setIsInputDisabled(true)
     //disable text input
     setGameState("resume")
     console.log("MESSAGE:", gameState)
-    setShowSettings(false)
+    setGameRunning(true)
+    // setShowSettings(false)
     // e === "click" || ("keydown" && e.getModifierState("CapsLock"))
     //   ? setIsCapsLockOn(true)
     //   : setIsCapsLockOn(false)
   }
 
   //Function to show and hide pause/settings menu
+  // const displaySettings = () => {
+  //   // if (gameEnded) {
+  //   //   setShowSettings(false)
+  //   //   setGameRunning(false)
+  //   // } else {
+  //   //   pauseResume()
+  //   //   setShowSettings(!showSettings)
+  //   // }
+  //   // if (gameRunning && !gameEnded) {)
+  //   pauseResume()
+  //   console.log("MESSAGE:", gameState)
+  //   setShowSettings(!showSettings)
+  // }
   const displaySettings = () => {
     // if (gameEnded) {
     //   setShowSettings(false)
@@ -551,9 +568,22 @@ const AppContextProvider = ({ children }) => {
     //   setShowSettings(!showSettings)
     // }
     // if (gameRunning && !gameEnded) {)
-    pauseResume()
-    console.log("MESSAGE:", gameState)
-    setShowSettings(!showSettings)
+    pauseGame()
+    console.log("settings DISPLAYED gamState =", gameState)
+    setShowSettings(true)
+  }
+  const closeSettings = () => {
+    // if (gameEnded) {
+    //   setShowSettings(false)
+    //   setGameRunning(false)
+    // } else {
+    //   pauseResume()
+    //   setShowSettings(!showSettings)
+    // }
+    // if (gameRunning && !gameEnded) {)
+    resumeGame()
+    console.log("settings CLOSED gamState =", gameState)
+    setShowSettings(false)
   }
 
   //usEffect to set focus on input box when required
@@ -616,10 +646,10 @@ const AppContextProvider = ({ children }) => {
         setStart(Date.now())
         break
       case "oppSuccess":
-        setLives(lives - 1)
         if (lives === 1) {
           endGame()
         }
+        else setLives(lives - 1)
         exposedData.stop()
         clearTimeout(timerId.current)
         //oppattack animation (pausable)
@@ -667,7 +697,9 @@ const AppContextProvider = ({ children }) => {
         setStart(0)
         setRemaining(0)
         clearTimeout(timerId.current)
-        //TODOwhen the game is ended at pause screen the animation is not reset
+        setOppAttackSuccess(false)
+        setUserAttacked(false)
+        //TODO shoudl this be in startgame?
         break
       default:
         return "error no status found"
@@ -690,11 +722,11 @@ const AppContextProvider = ({ children }) => {
         button_pop()
         button_push()
       }
-      // displaySettings()
+      displaySettings()
       pauseGame()
     }
     if (!gameRunning && showSettings && !gameEnded) {
-      // displaySettings()
+      closeSettings()
       resumeGame()
     }
   }, [esc])
@@ -777,38 +809,80 @@ const AppContextProvider = ({ children }) => {
   //     })
   //   }
   // }, [startGame])
-
+  const pauseOnFocusLoss = () =>{
+    pauseGame()
+    displaySettings()
+  }
   //Ueseffect to handle pausing when page focus is lost
   useEffect(() => {
     if (gameState === "start") {
-      window.addEventListener("blur", pauseGame)
+      window.addEventListener("blur", pauseOnFocusLoss)
       console.log("event listener added")
     }
     if (gameState === "resume") {
-      window.addEventListener("blur", pauseGame)
+      window.addEventListener("blur", pauseOnFocusLoss)
       console.log("event listener added")
+      // timerInterval = setInterval(decrementGameTimer, 1000)
     }
     //this repeatedly adds event listener but the duplicates are discarded.
     if (gameState === "exit") {
-      window.removeEventListener("blur", pauseGame)
+      window.removeEventListener("blur", pauseOnFocusLoss)
+      // clearInterval(timerInterval)
     }
     //NOTE removing an event listener REQUIRES a named function (an anonymous function would point to a different place in memory)
     return () => {
-      window.removeEventListener("blur", pauseGame)
+      window.removeEventListener("blur", pauseOnFocusLoss)
+      //maybe remove all timers here?
+      // clearInterval(timerInterval)
     }
   }, [gameState])
 
+  //Timer:
+  //inital value, interval to update ewvery second,on pause we remove interval on resukme we readd interval
+  // const [internalTimer, setInternalTimer] = useState(180000)
+  // const [testGameTimer, setTestGameTimer] = useState(50)
+  // const decrementGameTimer = () => {
+  //   setTestGameTimer((prev) => prev - 1)
+  // }
+  // let interval
+  // const newInterval = () => {
+  //   interval = setInterval(() => {
+  //     setTestGameTimer((prev) => prev - 1)
+  //   }, 1000)
+  // }
+  // const stopInterval = () => {
+  //   clearInterval(interval)
+  // }
   // useEffect(() => {
-  //   window.removeEventListener("blur", () => {
-  //     pauseGame()
-  //     // displaySettings()
-  //   })
-  // }, [endGame])
 
+  //   if(gameState==="start"){
+  //     newInterval()
+  //   }
+  //   if(gameState==="resume"){
+  //     newInterval()
+  //   }
+  //   if(gameState==="pause"){
+  //     stopInterval()
+  //   }
+  //   return () => clearInterval(interval)
+  // }, [gameState])
+  // //must countdown from 3 minutes(variable)
+  //interval that updates timer every second visually.
+  //must be able to pause and resume without time loss
+  //state values for: currentTime,duration,timeLeft
+  // const startNow = useState(Date.now())
+  // const [now, setNow] = useState(startNow)
+  // const testGameTimer = now - startNow
+
+  // useEffect(() => {
+  //   const intervalID = setInterval(() => setNow(Date.now()), 1)
+  //   return () => clearInterval(intervalID)
+  // }, [])
   //TODO try and minimise these exports
   return (
     <AppContext.Provider
       value={{
+        // testGameTimer,
         isYeOlde,
         setIsYeOlde,
         clickSound,
@@ -889,6 +963,7 @@ const AppContextProvider = ({ children }) => {
         setIsCapsLockOn,
         displayText,
         capsRef,
+        closeSettings,
       }}
     >
       {children}

@@ -52,14 +52,14 @@ const MainPage = () => {
       {isNewGame && <StartGame />}
       {gameEnded && <EndGame />}
       {showSettings && <Settings />}
-
+      
+      {/* Displays message overlay if device is in portrait or height is lower than supported */}
       <PortraitOnly />
       <Header />
       <div className="secondary-container">
         <Opponent />
-
         <UserInput />
-        <div className="timer"></div>
+        {/* <div className="timer"></div> */}
       </div>
 
       {/* <div className="vid-container">
@@ -82,8 +82,7 @@ const MainPage = () => {
       {/* <div className="vid-cover"></div> */}
       {/* vid container contains the vid background user input and opponent with an  */}
       {/* <div className="settings">
-        <div className="dev-box"> */}
-      {/* 
+        <div className="dev-box"> 
           <button
             onClick={gameRunning ? oppAttackTimer("pause") : oppAttackTimer("resume")}
           >

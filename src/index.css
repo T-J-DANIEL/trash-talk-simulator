@@ -106,6 +106,7 @@ width: 10em; */
   user-select: none;
   position: relative;
   width: 100%;
+  
   /* font-size: 150%; */
   /* outline:2px solid yellow; */
   /* margin-right: 2.5em; */
@@ -147,6 +148,7 @@ width: 10em; */
   left: 0;
   outline: 2px solid red;
   opacity: 0;
+  cursor: not-allowed;
 }
 .user-text-input::placeholder {
   letter-spacing: 1.8px;
@@ -174,6 +176,7 @@ width: 10em; */
   flex-wrap: wrap;
   justify-content: flex-start;
   width: 100%;
+  
 }
 .visual-progress span {
   /* think about this */
@@ -182,7 +185,7 @@ width: 10em; */
   height: auto; */
   margin: 0;
   padding: 0;
-
+  cursor: not-allowed;
   /* display: flex;
   flex-direction: column;
   justify-content: center;
