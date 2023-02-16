@@ -7,6 +7,8 @@ import React, {
   useCallback,
 } from "react"
 
+// import useGameState from "./hooks/useGameState"
+
 //import the phrases both random and preset
 import { shakesPhrases, randoShake } from "./data"
 import useSound from "use-sound"
@@ -51,9 +53,9 @@ const AppContextProvider = ({ children }) => {
   const [button_push] = useSound(button_push_down, { volume: 0.2 })
   const [endSound] = useSound(end_game_sound, { volume: 0.3 })
   const [highScoreEndSound] = useSound(high_score_end_sound)
-  const [playOppWritingSound, exposedData] = useSound(opp_writing_sound, {
-    volume: 0,
-  })
+  // const [playOppWritingSound, exposedData] = useSound(opp_writing_sound, {
+  //   volume: 0,
+  // })
   //use exposedData.pause and exposedData.stop
   const [playMusic, musicFunctions] = useSound(music)
   const [correctSound] = useSound(correct_sound, {
@@ -128,7 +130,8 @@ const AppContextProvider = ({ children }) => {
   const [showSettings, setShowSettings] = useState(false)
   const [confirmClose, setConfirmClose] = useState(false)
   //<><><><><><><> //TIME SYNCHRO VALUES\\ <><><><><><><>
-  const timerId = useRef()
+  const timerId = useRef("helloe")
+   
   // TODO let timerId = null?
   const [start, setStart] = useState(0)
   const [remaining, setRemaining] = useState(0)
@@ -534,7 +537,7 @@ const AppContextProvider = ({ children }) => {
   const resumeGame = () => {
     // setTimerRunning(true)
     //pause any other timer
-    setIsInputDisabled(true)
+    setIsInputDisabled(false)
     //disable text input
     setGameState("resume")
     console.log("MESSAGE:", gameState)
@@ -543,6 +546,7 @@ const AppContextProvider = ({ children }) => {
     // e === "click" || ("keydown" && e.getModifierState("CapsLock"))
     //   ? setIsCapsLockOn(true)
     //   : setIsCapsLockOn(false)
+    
   }
 
   //Function to show and hide pause/settings menu
@@ -583,7 +587,8 @@ const AppContextProvider = ({ children }) => {
     // if (gameRunning && !gameEnded) {)
     resumeGame()
     console.log("settings CLOSED gamState =", gameState)
-    setShowSettings(false)
+    setShowSettings(false)   
+   
   }
 
   //usEffect to set focus on input box when required
@@ -592,123 +597,127 @@ const AppContextProvider = ({ children }) => {
       (gameState === "start" || "resume") &&
       focusInput.current.focus()
   }, [showSettings, gameState])
+  // useEffect(() => {
+  //  !isInputDisabled && focusInput.current.focus()
+  // }, [isInputDisabled])
 
-  //Main useEffect for game state synchronization
-  useEffect(() => {
-    switch (gameState) {
-      case "start":
-        timerId.current = setTimeout(() => {
-          console.log("started opp attack?")
-          setGameState("oppSuccess")
-          // opponentAttackPhase()e
-        }, responseTime)
-        setStart(Date.now())
-        setRemaining(responseTime)
-        isSoundOn && playOppWritingSound()
 
-        break
-      case "pause":
-        clearTimeout(timerId.current)
-        setRemaining(remaining - (Date.now() - start))
-        exposedData.pause()
-        musicFunctions.pause()
-        break
-      case "resume":
-        isMusicOn && playMusic()
-        if (oppAttackSuccess) {
-          timerId.current = setTimeout(() => {
-            console.log("resumed")
-            setOppAttackSuccess(false)
-            setIsInputDisabled(false)
-            newPhrases()
-            setGameState("start")
-            //start new scroll animation
-          }, remaining)
-        } else if (userAttacked) {
-          //    TODO can make this into a function
-          //timeout to end attack phase,set with remaining time
-          timerId.current = setTimeout(() => {
-            console.log("resumed")
-            setUserAttacked(false)
-            setIsInputDisabled(false)
-            newPhrases()
-            setGameState("start")
-            //start new scroll animation
-          }, remaining)
-        } else {
-          isSoundOn && playOppWritingSound()
-          timerId.current = setTimeout(() => {
-            console.log("started opp attack?")
-            setGameState("oppSuccess")
-            // opponentAttackPhase()
-          }, remaining)
-        }
-        setStart(Date.now())
-        break
-      case "oppSuccess":
-        if (lives === 1) {
-          endGame()
-        }
-        else setLives(lives - 1)
-        exposedData.stop()
-        clearTimeout(timerId.current)
-        //oppattack animation (pausable)
-        setOppAttackSuccess(true)
-        //disable use input (pause does not effect this)
-        setIsInputDisabled(true)
-        setStart(Date.now())
-        setRemaining(2000)
-        isSoundOn && failSound()
-        timerId.current = setTimeout(() => {
-          setOppAttackSuccess(false)
-          setIsInputDisabled(false)
-          newPhrases()
-          setGameState("start")
-          //reset user text
-          setUserText("")
-          //start new scroll animation
-        }, 2000)
-        break
-      case "userSuccess":
-        exposedData.stop()
-        //TODO REFACTOR into function
-        clearTimeout(timerId.current)
-        //userAttck animation (pausable)
-        setUserAttacked(true)
-        //opp has been attacked true
-        //disable use input (pause does not effect this)
-        setIsInputDisabled(true)
-        setStart(Date.now())
-        setRemaining(2000)
-        timerId.current = setTimeout(() => {
-          setUserAttacked(false)
-          setIsInputDisabled(false)
-          newPhrases()
-          setGameState("start")
-          //reset user text
-          setUserText("")
-          //start new scroll animation
-        }, 2000)
-        break
-      case "exit":
-        // setSt("exit")
-        exposedData.stop()
-        musicFunctions.stop()
-        setStart(0)
-        setRemaining(0)
-        clearTimeout(timerId.current)
-        setOppAttackSuccess(false)
-        setUserAttacked(false)
-        //TODO shoudl this be in startgame?
-        break
-      default:
-        return "error no status found"
-    }
-    //clear on unnmount
-    return () => {
-      clearTimeout(timerId.current)
-    }
-  }, [gameState])
+  // //Main useEffect for game state synchronization
+  // useEffect(() => {
+  //   switch (gameState) {
+  //     case "start":
+  //       timerId.current = setTimeout(() => {
+  //         console.log("started opp attack?")
+  //         setGameState("oppSuccess")
+  //         // opponentAttackPhase()e
+  //       }, responseTime)
+  //       setStart(Date.now())
+  //       setRemaining(responseTime)
+  //       isSoundOn && playOppWritingSound()
+
+  //       break
+  //     case "pause":
+  //       clearTimeout(timerId.current)
+  //       setRemaining(remaining - (Date.now() - start))
+  //       exposedData.pause()
+  //       musicFunctions.pause()
+  //       break
+  //     case "resume":
+  //       isMusicOn && playMusic()
+  //       if (oppAttackSuccess) {
+  //         timerId.current = setTimeout(() => {
+  //           console.log("resumed")
+  //           setOppAttackSuccess(false)
+  //           setIsInputDisabled(false)
+  //           newPhrases()
+  //           setGameState("start")
+  //           //start new scroll animation
+  //         }, remaining)
+  //       } else if (userAttacked) {
+  //         //    TODO can make this into a function
+  //         //timeout to end attack phase,set with remaining time
+  //         timerId.current = setTimeout(() => {
+  //           console.log("resumed")
+  //           setUserAttacked(false)
+  //           setIsInputDisabled(false)
+  //           newPhrases()
+  //           setGameState("start")
+  //           //start new scroll animation
+  //         }, remaining)
+  //       } else {
+  //         isSoundOn && playOppWritingSound()
+  //         timerId.current = setTimeout(() => {
+  //           console.log("started opp attack?")
+  //           setGameState("oppSuccess")
+  //           // opponentAttackPhase()
+  //         }, remaining)
+  //       }
+  //       setStart(Date.now())
+  //       break
+  //     case "oppSuccess":
+  //       if (lives === 1) {
+  //         endGame()
+  //       }
+  //       else setLives(lives - 1)
+  //       exposedData.stop()
+  //       clearTimeout(timerId.current)
+  //       //oppattack animation (pausable)
+  //       setOppAttackSuccess(true)
+  //       //disable use input (pause does not effect this)
+  //       setIsInputDisabled(true)
+  //       setStart(Date.now())
+  //       setRemaining(2000)
+  //       isSoundOn && failSound()
+  //       timerId.current = setTimeout(() => {
+  //         setOppAttackSuccess(false)
+  //         setIsInputDisabled(false)
+  //         newPhrases()
+  //         setGameState("start")
+  //         //reset user text
+  //         setUserText("")
+  //         //start new scroll animation
+  //       }, 2000)
+  //       break
+  //     case "userSuccess":
+  //       exposedData.stop()
+  //       //TODO REFACTOR into function
+  //       clearTimeout(timerId.current)
+  //       //userAttck animation (pausable)
+  //       setUserAttacked(true)
+  //       //opp has been attacked true
+  //       //disable use input (pause does not effect this)
+  //       setIsInputDisabled(true)
+  //       setStart(Date.now())
+  //       setRemaining(2000)
+  //       timerId.current = setTimeout(() => {
+  //         setUserAttacked(false)
+  //         setIsInputDisabled(false)
+  //         newPhrases()
+  //         setGameState("start")
+  //         //reset user text
+  //         setUserText("")
+  //         //start new scroll animation
+  //       }, 2000)
+  //       break
+  //     case "exit":
+  //       // setSt("exit")
+  //       exposedData.stop()
+  //       musicFunctions.stop()
+  //       setStart(0)
+  //       setRemaining(0)
+  //       clearTimeout(timerId.current)
+  //       setOppAttackSuccess(false)
+  //       setUserAttacked(false)
+  //       //TODO shoudl this be in startgame?
+  //       break
+  //     default:
+  //       return "error no status found"
+  //   }
+  //   //clear on unnmount
+  //   return () => {
+  //     clearTimeout(timerId.current)
+  //   }
+  // }, [gameState])
 
   //debugging useEffect to keep track of st
   useEffect(() => {
@@ -964,6 +973,14 @@ const AppContextProvider = ({ children }) => {
         displayText,
         capsRef,
         closeSettings,
+        setStart,
+        setRemaining,
+        setGameState,
+        setLives,
+        playMusic,
+        musicFunctions,
+        setOppAttackSuccess,
+        failSound,
       }}
     >
       {children}

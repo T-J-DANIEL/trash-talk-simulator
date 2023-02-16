@@ -3,6 +3,8 @@ import Feather from "./Feather"
 import Portrait from "./Portrait"
 //component for user's input
 //TODO too much imported all over the place take a look a this stuff everywhere
+import useGameState from "../hooks/useGameState"
+
 const UserInput = () => {
   const {
     userText,
@@ -38,7 +40,7 @@ const UserInput = () => {
     displayText,
     capsRef,
   } = useGlobalContext()
-
+  useGameState()
   // successfulAttack
   return (
     <div className="user-container">
@@ -66,7 +68,7 @@ const UserInput = () => {
             {/* {wrappedIdea} */}
             {visualMatches}
             {/* {console.log(wrappedIdea)} */}
-            <span>{isCapsLockOn && "capsLockOn"}</span>
+            {/* <span>{isCapsLockOn && "capsLockOn"}</span> */}
           </div>
           {/* </div> */}
 
@@ -80,12 +82,12 @@ const UserInput = () => {
               focusInput.current.focus()
             }}
             className="user-text-input"
-            // onkey up waw deprecated replaced with onkeydown
+            // onkey up was deprecated replaced with onkeydown
             onKeyDown={(e) => {
               e.key === "Enter" && scoreHandler()
             }}
             // autoFocus
-            autoComplete="false"
+            autoComplete="off"
             spellCheck="false"
             onChange={(e) => {
               setUserText(e.target.value.replace(" ", "_").replace("-", "‑"))
@@ -102,6 +104,16 @@ const UserInput = () => {
           <span>score:{score}</span>
           <span>high score :{highScore}</span>
         </div> */}
+      </div>
+      <div
+        className={`accuracy-indicator ${percentageMatch >= 85 && "accuracy-85plus"} ${
+          percentageMatch === 100 && "accuracy-100"
+        }`}
+      ></div>
+      <div
+        className={`accuracy-indicator`}
+      >
+        {isCapsLockOn && "CAPS LOCK"}
       </div>
     </div>
   )

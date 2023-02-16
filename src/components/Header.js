@@ -35,7 +35,7 @@ const Header = () => {
 
         {/* <div className="header-component"></div> */}
         <div className="header-component gameTimer">
-          <TestGameTimer/>
+          <TestGameTimer />
           {/* <GameTimer /> */}
           <button
             className="button settings-button"
@@ -49,7 +49,7 @@ const Header = () => {
             onMouseDown={isSoundOn ? button_pop : undefined}
             onMouseUp={isSoundOn ? button_push : undefined}
           >
-            {!showSettings ? `| |` : "Paused"}
+            {/* {!showSettings ? `| | |` : "Paused"} */}| | |
           </button>
         </div>
         <div className="header-component">

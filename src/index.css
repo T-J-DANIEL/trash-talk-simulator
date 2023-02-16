@@ -65,10 +65,11 @@ img {
   outline-offset: 2px;
 }
 .user-container {
-  outline: 2px solid red;
+  /* outline: 2px solid red; */
   position: relative;
   display: flex;
   flex-direction: column;
+  
 }
 .user-scroll-container {
   /* position: absolute; */
@@ -89,7 +90,8 @@ img {
   /* outline:2px solid red; */
   /* max-width: fit-content; */
   margin-right: -0.5em;
-  outline: 2px solid turquoise;
+  /* outline: 2px solid turquoise; */
+  
 }
 /* .user-input *{ */
 /* outline:2px solid blue; */
@@ -502,6 +504,21 @@ input::first-letter {
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
 }
+
+.accuracy-indicator{
+  width: 80%;
+  height: .3em;
+  margin: 0 auto;
+  border-radius: 5px;
+  text-align: center;
+}
+.accuracy-85plus{
+  background: rgb(191, 0, 255);
+}
+.accuracy-100{
+  background: rgb(231, 140, 228);
+}
+
 .overlay-container {
   position: fixed;
   width: 100%;

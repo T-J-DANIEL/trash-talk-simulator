@@ -14,6 +14,7 @@ import { GameTimer } from "./GameTimer"
 // //react youtube player npm package
 // import music from "../sounds/music.mp3"
 import { useGlobalContext } from "../context"
+
 const MainPage = () => {
   //change this for autoplay
   const {
