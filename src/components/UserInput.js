@@ -90,6 +90,7 @@ const UserInput = () => {
             autoComplete="off"
             spellCheck="false"
             onChange={(e) => {
+              //each letter typed is checked for "_" or "-" and replaced
               setUserText(e.target.value.replace(" ", "_").replace("-", "‑"))
               compareValues(e.target.value.replace(" ", "_").replace("-", "‑"))
             }}

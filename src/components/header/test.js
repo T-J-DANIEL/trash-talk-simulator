@@ -1,7 +1,7 @@
 import { useRef, useState, useCallback, useEffect } from "react"
 import { useGlobalContext } from "../../context"
 const useTimer = () => {
-    const { gameStarted, gameEnded, gameState, gameRunning } =
+    const { gameStarted, gameEnded, gameState, gameRunning,endGame } =
       useGlobalContext()
     const [renderedStreamDuration, setRenderedStreamDuration] =
         useState("3:00"),
@@ -10,24 +10,17 @@ const useTimer = () => {
       //the actual time elapsed??
       previousTime = useRef(0),
       //the previous time before current update, (used to find real interval duration)
-      requestAnimationFrameId = useRef(null),
-      //ref used later for the repeating update function 
-      [isStartTimer, setIsStartTimer] = useState(false),
-      //timer started or not state  
-      [isStopTimer, setIsStopTimer] = useState(false),
-      //timer stopped or not state  
-      [isPauseTimer, setIsPauseTimer] = useState(false),
-      //timer paused or not state 
-      [isResumeTimer, setIsResumeTimer] = useState(false),
+      requestAnimationFrameId = useRef(null)
+      // ,
+      // //ref used later for the repeating update function 
+      // [isStartTimer, setIsStartTimer] = useState(false),
+      // //timer started or not state  
+      // [isStopTimer, setIsStopTimer] = useState(false),
+      // //timer stopped or not state  
+      // [isPauseTimer, setIsPauseTimer] = useState(false),
+      // //timer paused or not state 
+      // [isResumeTimer, setIsResumeTimer] = useState(false)
       //timer resumed or not state  
-      isStartBtnDisabled = isPauseTimer || isResumeTimer || isStartTimer,
-      //is start button disabled? (true if timer is paused/resumed/started)
-      isStopBtnDisabled = !(isPauseTimer || isResumeTimer || isStartTimer),
-      //is stop button disabled? (true if timer is NOT paused/resumed/started)
-      isPauseBtnDisabled = !(isStartTimer || (!isStartTimer && isResumeTimer)),
-      //is pause button disabled? (true if timer is NOT started/ timer is started and timer has not been resumed(i.e paused))
-      isResumeBtnDisabled = !isPauseTimer
-    //resume button is disabled if paused
 
     const updateTimer = useCallback(() => {
       //useCallback hook basically caches the function so it does not need to be created each time, note it returns function not the value, the dependancy array dictates what changes cause it do be redefined between renders. So in this case it only defines the function once on mount and then never again??
@@ -54,7 +47,14 @@ const useTimer = () => {
         previousTime.current = now
         //overwrite previous time with the current time
       }
+      
       requestAnimationFrameId.current = requestAnimationFrame(updateTimer)
+      if (!streamDuration.current) {
+        // cancelAnimationFrame(requestAnimationFrameId.current)
+        // setRenderedStreamDuration("3:00")
+        // endGame()
+        stopHandler()
+      }
       //request animation frame runs the given callback function repeatedly only when the screen is ready to accept a new repaint,similar to setinterval but synced to monitor refresh
       //the assignment to a ref here means I can address it later to cancel it!!
     }, [])
@@ -73,14 +73,14 @@ const useTimer = () => {
       if (gameState === "start" && gameRunning) {
         streamDuration.current = 180
         startTimer()
-        startHandler()
+        // startHandler()
       }
       //if timer has been set to start and not to stop then start timer function
       if (gameState === "exit") {
         streamDuration.current = 0
         cancelAnimationFrame(requestAnimationFrameId.current)
         setRenderedStreamDuration("3:00")
-        stopHandler()
+        // stopHandler()
       }
       //if timer set to stop not start and set duration to 0 and cancel update and set display to 00.00...
       if (gameState === "pause" && !gameRunning) {
@@ -89,45 +89,41 @@ const useTimer = () => {
       if (gameState === "resume" && gameRunning) {
         resumeHandler()
       }
-    }, [gameStarted, gameEnded, gameRunning])
+     
+    }, [gameStarted, gameEnded, gameRunning,streamDuration])
     //checks the states of start stop and if timer function has fired
 
-    const startHandler = () => {
-      setIsStartTimer(true)
-      setIsStopTimer(false)
-    }
+    // const startHandler = () => {
+    //   setIsStartTimer(true)
+    //   setIsStopTimer(false)
+    // }
     //handler to set start to yes and stop to no
     const stopHandler = () => {
-      setIsStopTimer(true)
-      setIsStartTimer(false)
-      setIsPauseTimer(false)
-      setIsResumeTimer(false)
+      // setIsStopTimer(true)
+      // setIsStartTimer(false)
+      // setIsPauseTimer(false)
+      // setIsResumeTimer(false)
+     cancelAnimationFrame(requestAnimationFrameId.current)
+     setRenderedStreamDuration("3:00")
+     endGame()
     }
     //handler to set start to no and stop to yes as well as pause and resume to no
     const pauseHandler = () => {
-      setIsPauseTimer(true)
-      setIsStartTimer(false)
-      setIsResumeTimer(false)
+      // setIsPauseTimer(true)
+      // setIsStartTimer(false)
+      // setIsResumeTimer(false)
       cancelAnimationFrame(requestAnimationFrameId.current)
     }
     //handler to set pause to yes as well as start and resume to no
     //stops the update by cancelling the requestAnimationFrameId
     const resumeHandler = () => {
-      setIsResumeTimer(true)
-      setIsPauseTimer(false)
+      // setIsResumeTimer(true)
+      // setIsPauseTimer(false)
       startTimer()
     }
     //sets resume to yes and pause to no and starts timer function again
     return {
-      renderedStreamDuration,
-      // isStartBtnDisabled,
-      // isStopBtnDisabled,
-      // isPauseBtnDisabled,
-      // isResumeBtnDisabled,
-      // startHandler,
-      // stopHandler,
-      // pauseHandler,
-      // resumeHandler,
+      renderedStreamDuration
     }
   }
 export default useTimer

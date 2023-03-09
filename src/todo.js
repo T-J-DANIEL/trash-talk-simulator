@@ -1,7 +1,7 @@
 //TODO TASKS and features to add no styling:
 //Add svgs for lives
 //conditionals AND START MENU SYSTERNMM
-//game is not paused on confirm screen?maybe?
+
 //displayText state value in conetx uysed for caps lock signifier?
 //timer
 //time running out fn

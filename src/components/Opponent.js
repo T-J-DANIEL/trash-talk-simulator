@@ -14,7 +14,8 @@ const Opponent = () => {
     oppAttackSuccess,
     gameEnded,
     level,
-    remaining
+    remaining,
+    panicMode
   } = useGlobalContext()
 
   //if a successful attack is initiated then we add the animate class to opponent (shake and color red)
@@ -47,7 +48,7 @@ const Opponent = () => {
         <div>user{level}: </div>
       </div> */}
       <div
-      //TODO ADDED a div here around p tag is this better?
+        //TODO ADDED a div here around p tag is this better?
         className={
           !gameEnded &&
           `${
@@ -61,7 +62,7 @@ const Opponent = () => {
       >
         <p>{opponentPhrase}</p>
       </div>
-      <Feather/>
+      <Feather />
       {/* <img src="quill2 copy.svg" alt="quill"  /> */}
       <span>
         {/* {oppAttackSuccess===true
@@ -70,6 +71,7 @@ const Opponent = () => {
         {/* {`${gameRunning} ${level}`}
         {`${oppAttackSuccess}`} */}
       </span>
+      {/* <h1>{panicMode?"PANIC!!!!!!!!!!!!!!!":""}</h1> */}
     </div>
   )
 }

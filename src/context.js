@@ -125,13 +125,13 @@ const AppContextProvider = ({ children }) => {
     //else
   }
   const [currentPhraseList, setCurrentPhraseList] = useState(getPhrases)
-  //CHANGE this 
+  //CHANGE this
   //SETTINGS menu showing?
   const [showSettings, setShowSettings] = useState(false)
   const [confirmClose, setConfirmClose] = useState(false)
   //<><><><><><><> //TIME SYNCHRO VALUES\\ <><><><><><><>
   const timerId = useRef("helloe")
-   
+
   // TODO let timerId = null?
   const [start, setStart] = useState(0)
   const [remaining, setRemaining] = useState(0)
@@ -145,7 +145,7 @@ const AppContextProvider = ({ children }) => {
   //capslock status
   const [isCapsLockOn, setIsCapsLockOn] = useState(false)
   const capsRef = useRef(null)
-  
+
   const [displayText, setDisplayText] = useState(false)
   // useEffect(() => {
   //   if(isCapsLockOn){capsRef.current.innerHTML = "caps Lock on"}}, [isCapsLockOn])
@@ -165,6 +165,8 @@ const AppContextProvider = ({ children }) => {
   const [percentageMatch, setPercentageMatch] = useState(0)
   //visual representation of correct or incorrect letter typed (green/red background letters)
   const [visualMatches, setVisualMatches] = useState([])
+  //is panic mode started
+  const [panicMode, setPanicMode] = useState(false)
   //user has attacked
   const [userAttacked, setUserAttacked] = useState(false)
   //is user input disabled?
@@ -546,7 +548,6 @@ const AppContextProvider = ({ children }) => {
     // e === "click" || ("keydown" && e.getModifierState("CapsLock"))
     //   ? setIsCapsLockOn(true)
     //   : setIsCapsLockOn(false)
-    
   }
 
   //Function to show and hide pause/settings menu
@@ -587,8 +588,7 @@ const AppContextProvider = ({ children }) => {
     // if (gameRunning && !gameEnded) {)
     resumeGame()
     console.log("settings CLOSED gamState =", gameState)
-    setShowSettings(false)   
-   
+    setShowSettings(false)
   }
 
   //usEffect to set focus on input box when required
@@ -600,7 +600,6 @@ const AppContextProvider = ({ children }) => {
   // useEffect(() => {
   //  !isInputDisabled && focusInput.current.focus()
   // }, [isInputDisabled])
-
 
   // //Main useEffect for game state synchronization
   // useEffect(() => {
@@ -818,7 +817,7 @@ const AppContextProvider = ({ children }) => {
   //     })
   //   }
   // }, [startGame])
-  const pauseOnFocusLoss = () =>{
+  const pauseOnFocusLoss = () => {
     pauseGame()
     displaySettings()
   }
@@ -981,6 +980,8 @@ const AppContextProvider = ({ children }) => {
         musicFunctions,
         setOppAttackSuccess,
         failSound,
+        panicMode,
+        setPanicMode,
       }}
     >
       {children}
