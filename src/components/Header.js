@@ -35,7 +35,7 @@ const Header = () => {
 
         {/* <div className="header-component"></div> */}
         <div className="header-component gameTimer">
-          <TestGameTimer />
+          {/* <TestGameTimer /> */}
           {/* <GameTimer /> */}
           <button
             className="button settings-button"
@@ -57,6 +57,16 @@ const Header = () => {
           {<div className="">{streakArray ? streakArray : "-"}</div>}
           <h2 className="modal-sub-heading">Score</h2>
           <div>{score}</div>
+          {/* <div className="button-container">
+            {Array.from({ length: [lives] }).map((_) => (
+              <div className="lives-left"></div>
+            ))}
+            {Array.from({ length: [3 - lives] }).map((_) => (
+              <div className="lives-left lives-lost"></div>
+            ))}
+          </div> */}
+        </div>
+        <div className="header-component">
           <div className="button-container">
             {Array.from({ length: [lives] }).map((_) => (
               <div className="lives-left"></div>
@@ -65,6 +75,7 @@ const Header = () => {
               <div className="lives-left lives-lost"></div>
             ))}
           </div>
+          <TestGameTimer />
         </div>
       </div>
     </div>
