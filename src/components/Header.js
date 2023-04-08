@@ -53,8 +53,8 @@ const Header = () => {
           </button>
         </div>
         <div className="header-component">
-          <h2 className="modal-sub-heading">Streak</h2>
-          {<div className="">{streakArray ? streakArray : "-"}</div>}
+          {/* <h2 className="modal-sub-heading">Streak</h2>
+          {<div className="">{streakArray ? streakArray : "-"}</div>} */}
           <h2 className="modal-sub-heading">Score</h2>
           <div>{score}</div>
           {/* <div className="button-container">
