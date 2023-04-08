@@ -14,6 +14,7 @@ html {
 *::after {
   box-sizing: inherit;
 }
+
 body {
   margin: 0;
   padding: 0;
@@ -246,11 +247,11 @@ input::first-letter {
   font-family: "Bonbon", cursive;
   outline: 2px solid yellow;
   /* background: rgba(102, 233, 102,0.5); */
-  background-image: url(../public/assets/parchmentBackgroundMirrored.svg);
+  /* background-image: url(../public/assets/parchmentBackgroundMirrored.svg); */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  color: white;
+  color: rgb(14, 85, 172);
   font-size: 1rem;
   display: flex;
   justify-content: flex-start;
@@ -258,6 +259,8 @@ input::first-letter {
   /* margin-right: 1rem; */
   padding: 2em;
   /* transition: all 1s ease; */
+  background: #fdfdf8;
+  border-radius: 50px;
 }
 
 .opponent p::first-letter {
@@ -670,17 +673,11 @@ input::first-letter {
   color: rgb(95, 95, 95);
   margin: .4em;
 }
-.settings-button {
-  padding: 0.2em 3em;
-  margin-top: 1em;
-  text-decoration: none;
-  font-weight: bold;
-}
-.settings-button::first-letter {
+/* .settings-button::first-letter {
   font-size: 100%;
   font-weight: bold;
-  /* color: rgb(34, 32, 32) */
-}
+  
+} */
 .label {
   font-size: 1rem;
   display: flex;
@@ -731,15 +728,34 @@ input[type="checkbox"]:checked {
 }
 .header {
   display: flex;
-  justify-content: center;
+  flex-direction:column;
+  /* justify-content: space-between;
+  align-items: center; */
+  padding: 1em;
+  /* background: rgba(111, 106, 106, 0.367);
+  border-radius: 0px 0px 60px 60px;
+  border: 3px double rgba(255, 255, 255, 0.512); */
+  /* border-top: none; */
+  width: 100%;
+  max-width: 1000px;
+}
+.header-upper-section{
+display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 1em;
-  background: rgba(111, 106, 106, 0.367);
-  border-radius: 0px 0px 60px 60px;
-  border: 3px double rgba(255, 255, 255, 0.512);
-  border-top: none;
+}
+.header-lower-section{
   width: 100%;
-  max-width: 800px;
+  display: flex;
+  align-items: center;
+  
+}
+.header-lower-section hr{
+  width: 40%;
+  background: #fff;
+  border-radius: 2px;
+  height: 2px;
 }
 .header-component {
   /* outline:2px solid red; */
@@ -747,19 +763,38 @@ input[type="checkbox"]:checked {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
-  background: linear-gradient(rgba(34, 34, 34, 0.219), rgb(34, 34, 34)),
+  /* margin: 0 auto; */
+  /* background: linear-gradient(rgba(34, 34, 34, 0.219), rgb(34, 34, 34)),
   linear-gradient(to right, rgba(231, 231, 231, 0), rgba(19, 16, 19, 0.077));
-  
-  border: 5px double rgb(255, 255, 255);
+   */
+  /* border: 5px double rgb(255, 255, 255); */
   border-radius: 20px;
   border-top: none;
   border-bottom: none;
-  padding: 0 1em 0.5em;
+  /* padding: 0 1em 0.5em; */
   font-size: 0.5rem;
 }
-.gameTimer {
+/* .gameTimer {
   margin: 0 1em;
+} */
+.settings-button{
+width: 5em;
+  height: 5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+ 
+}
+.settings-button-bar{
+  width: 100%;
+    height: 20%;
+    background: rgb(230, 157, 241);
+    border-radius: 3px;
+}
+button {
+  background: unset;
+  border: none;
 }
 .title-container {
   font-size: 63%;
@@ -781,8 +816,8 @@ input[type="checkbox"]:checked {
   /* background-image: url(../public/assets/parchmentBackground.svg); */
   background-position: center;
   background-size: contain;
-  background-color: red;
-  color: red;
+  background-color: rgb(240, 168, 250);
+  /* color: red; */
   width: 3em;
   height: 3em;
   /* outline:2px solid blue; */
@@ -838,7 +873,8 @@ li {
 }
 
 .main-container {
-  background-image: url(./sounds/page-background.jpg);
+  /* background-image: url(./sounds/page-background.jpg); */
+  background: #22298d;
   height: 100%;
   width: 100%;
   position: absolute;
