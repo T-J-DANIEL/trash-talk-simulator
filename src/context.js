@@ -127,8 +127,8 @@ const AppContextProvider = ({ children }) => {
   const [currentPhraseList, setCurrentPhraseList] = useState(getPhrases)
   //CHANGE this
   //SETTINGS menu showing?
-  const [showSettings, setShowSettings] = useState(false)
-  const [confirmClose, setConfirmClose] = useState(false)
+  const [showPauseScreen, setShowPauseScreen] = useState(false)
+  const [confirmEndGame, setConfirmEndGame] = useState(false)
   //<><><><><><><> //TIME SYNCHRO VALUES\\ <><><><><><><>
   const timerId = useRef("helloe")
 
@@ -175,6 +175,8 @@ const AppContextProvider = ({ children }) => {
   const focusInput = useRef(null)
   // How many lives left
   const [lives, setLives] = useState(3)
+  // is mobile tab button engaged
+  const [isMobileShift,setIsMobileShift] = useState(false)
   //<><><><><><><> //OPPONENT STATE VALUES\\ <><><><><><><>
   //opponent has succesfully attacked
   const [oppAttacked, setOppAttacked] = useState(false)
@@ -516,7 +518,7 @@ const AppContextProvider = ({ children }) => {
   //TODO  maybe a separate pause function?
   const pauseResume = () => {
     //show settings/pause menu
-    // setShowSettings(true)
+    // setShowPauseScreen(true)
     //pause main game timer
     setTimerRunning(!timerRunning)
     //pause any other timer
@@ -533,7 +535,7 @@ const AppContextProvider = ({ children }) => {
     setGameState("pause")
     console.log("MESSAGE:", gameState)
     setGameRunning(false)
-    // setShowSettings(true)
+    // setShowPauseScreen(true)
   }
   //TODO incorporate resume function where required
   const resumeGame = () => {
@@ -544,7 +546,7 @@ const AppContextProvider = ({ children }) => {
     setGameState("resume")
     console.log("MESSAGE:", gameState)
     setGameRunning(true)
-    // setShowSettings(false)
+    // setShowPauseScreen(false)
     // e === "click" || ("keydown" && e.getModifierState("CapsLock"))
     //   ? setIsCapsLockOn(true)
     //   : setIsCapsLockOn(false)
@@ -553,50 +555,50 @@ const AppContextProvider = ({ children }) => {
   //Function to show and hide pause/settings menu
   // const displaySettings = () => {
   //   // if (gameEnded) {
-  //   //   setShowSettings(false)
+  //   //   setShowPauseScreen(false)
   //   //   setGameRunning(false)
   //   // } else {
   //   //   pauseResume()
-  //   //   setShowSettings(!showSettings)
+  //   //   setShowPauseScreen(!showPauseScreen)
   //   // }
   //   // if (gameRunning && !gameEnded) {)
   //   pauseResume()
   //   console.log("MESSAGE:", gameState)
-  //   setShowSettings(!showSettings)
+  //   setShowPauseScreen(!showPauseScreen)
   // }
   const displaySettings = () => {
     // if (gameEnded) {
-    //   setShowSettings(false)
+    //   setShowPauseScreen(false)
     //   setGameRunning(false)
     // } else {
     //   pauseResume()
-    //   setShowSettings(!showSettings)
+    //   setShowPauseScreen(!showPauseScreen)
     // }
     // if (gameRunning && !gameEnded) {)
     pauseGame()
     console.log("settings DISPLAYED gamState =", gameState)
-    setShowSettings(true)
+    setShowPauseScreen(true)
   }
   const closeSettings = () => {
     // if (gameEnded) {
-    //   setShowSettings(false)
+    //   setShowPauseScreen(false)
     //   setGameRunning(false)
     // } else {
     //   pauseResume()
-    //   setShowSettings(!showSettings)
+    //   setShowPauseScreen(!showPauseScreen)
     // }
     // if (gameRunning && !gameEnded) {)
     resumeGame()
     console.log("settings CLOSED gamState =", gameState)
-    setShowSettings(false)
+    setShowPauseScreen(false)
   }
 
   //usEffect to set focus on input box when required
   useEffect(() => {
-    !showSettings &&
+    !showPauseScreen &&
       (gameState === "start" || "resume") &&
       focusInput.current.focus()
-  }, [showSettings, gameState])
+  }, [showPauseScreen, gameState])
   // useEffect(() => {
   //  !isInputDisabled && focusInput.current.focus()
   // }, [isInputDisabled])
@@ -733,7 +735,7 @@ const AppContextProvider = ({ children }) => {
       displaySettings()
       pauseGame()
     }
-    if (!gameRunning && showSettings && !gameEnded) {
+    if (!gameRunning && showPauseScreen && !gameEnded) {
       closeSettings()
       resumeGame()
     }
@@ -913,8 +915,8 @@ const AppContextProvider = ({ children }) => {
         setResetTimer,
         mountPaused,
         mountRunning,
-        showSettings,
-        setShowSettings,
+        showPauseScreen,
+        setShowPauseScreen,
         newPhrases,
         score,
         setScore,
@@ -961,8 +963,8 @@ const AppContextProvider = ({ children }) => {
         isMusicOn,
         setIsMusicOn,
         lives,
-        confirmClose,
-        setConfirmClose,
+        confirmEndGame,
+        setConfirmEndGame,
         isFirstGame,
         setIsFirstGame,
         showHowTo,
@@ -982,6 +984,8 @@ const AppContextProvider = ({ children }) => {
         failSound,
         panicMode,
         setPanicMode,
+        isMobileShift,
+        setIsMobileShift,
       }}
     >
       {children}

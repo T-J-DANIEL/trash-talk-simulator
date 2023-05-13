@@ -1,0 +1,246 @@
+
+
+
+/* .portrait {
+  width: 4em;
+  position: absolute;
+  bottom: 80%;
+  left: 50%;
+}
+.portrait img { */
+  /* border-radius: 15px; */
+  /* outline: 4px ridge brown;
+  outline-offset: 2px;
+} */
+.user-container {
+  /* outline: 2px solid red; */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* outline:2px solid red; */
+  align-items: center;
+  width: 100%;
+  z-index: 0;
+  /* outline:2px solid red; */
+}
+.user-thought-bubble-tail{
+  width: 2.2em;
+
+  margin-top: -1.2em;
+  margin-right: -.4em;
+}
+.user-thought-bubble{
+  position: absolute;
+  width: calc(100% + 3em);
+  height:calc(100% + 4em);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+   z-index: -1;
+   /* min-width: 20em; */
+}
+/* .user-container > *{
+  outline:2px solid red;
+} */
+.user-avatar-container {
+    position: absolute;
+  top: calc(100% + .7em);
+  left: 0;
+  display: flex;
+}
+.user-avatar{
+  transform: scaleX(-1);
+}
+.user-speech-bubble-tail{
+  transform: scaleX(-1);
+  width: 4em;
+  /* height: 3.5em; */
+  /* background-color: #fff; */
+  /* margin-top: -1.8em; */
+  margin-top: -7em;
+  margin-left: -.8em;
+  /* outline:2px solid red; */
+
+  /* outline:2px solid red; */
+}
+/* .user-scroll-container { */
+  /* position: absolute; */
+  /* left: 0; */
+  /* min-width: 50vw;
+ min-height: 40vh; */
+  /* margin:2em 0em .5em 2em; */
+  /* bottom: 0; */
+  /* margin-left: 0.3em;
+  padding: 3em 8% 3em 3.5%; */
+  /* background-image: url(../public/assets/parchmentBackground.svg); */
+  /* background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; */
+  /* z-index: 99; */
+  /* font-size: 1rem; */
+  /* outline:2px solid red; */
+  /* max-width: fit-content; */
+  /* margin-right: -0.5em; */
+  /* outline: 2px solid turquoise; */
+  
+/* } */
+/* .user-input *{ */
+/* outline:2px solid blue; */
+/* font-size: 1rem; */
+/* } */
+
+.user-text-container {
+  color: rgb(11, 50, 223);
+  /* display: flex; */
+  /* align-items: center; */
+  /* outline:2px solid red;
+ width: 100%;
+margin: 0;
+width: 10em; */
+  user-select: none;
+  position: relative;
+  width: fit-content;
+  margin: 0 3em;
+  /* font-size: 150%; */
+  /* outline:2px solid yellow; */
+  /* margin-right: 2.5em; */
+  /* overflow: hidden; */
+ 
+  border-radius: 20px;
+}
+.input-size-container {
+}
+.input-size-span {
+  white-space: pre;
+}
+.phantom-span {
+  /* outline:2px solid red; */
+}
+.phantom-space {
+  /* outline:2px solid red; */
+}
+.phantom-end {
+  border-right: 5px solid #fff;
+  /* outline:2px solid red; */
+}
+.user-text-input {
+  position: absolute;
+  color: #fff;
+  font-size: 1rem;
+  background: transparent;
+  font-family: "Quintessential", cursive;
+  outline: none;
+  border: none;
+  /* border-bottom: 2px solid brown; */
+  color: red;
+  letter-spacing: 1.8px;
+  /* margin-left: 0; */
+  word-spacing: 1px;
+  white-space: wrap;
+  /* outline:2px solid red; */
+  caret-color: #fff;
+  padding: 0;
+  top: 0;
+  left: 0;
+  /* outline: 2px solid red; */
+  opacity: 0;
+  cursor: not-allowed;
+}
+.user-text-input::placeholder {
+  letter-spacing: 1.8px;
+  margin-left: 0;
+  word-spacing: 1px;
+  white-space: wrap;
+  width: fit-content;
+}
+
+/* .suggestion {
+  user-select: none;
+  position: relative;
+  width: 100%; 
+  font-size: 150%; 
+  outline:2px solid yellow;
+} */
+.visual-progress {
+  /* position: absolute; */
+  /* top: 12px;
+  left: 18px; */
+  /* width: 100%;
+  height: 100%; */
+  position: relative;
+  /* outline: 2px solid green; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: fit-content;
+  /* outline:2px solid red; */
+}
+.visual-progress span {
+  /* think about this */
+  /* what about using a span? */
+  /* width: auto;
+  height: auto; */
+  margin: 0;
+  padding: 0;
+  cursor: not-allowed;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+  /* min-width: 0.45ch; */
+  /* max-width: 1ch;
+  max-height: 1.5ch;  */
+}
+.green {
+  /* background: rgba(0, 255, 85, 0.301);   */
+  /* color: rgb(131, 197, 32); */
+  background: rgb(131, 197, 32, 0.432);
+  /* display: flex;
+  align-items: center; */
+}
+.red {
+  /* background: rgba(255, 0, 0, 0.301); */
+  /* color: red; */
+  background: rgba(255, 0, 0, 0.432);
+  /* display: flex;
+  align-items: center; */
+}
+.yellow {
+  /* background: rgba(255, 0, 0, 0.301); */
+  /* color: red; */
+  background: rgba(249, 238, 17, 0.982);
+  /* display: flex;
+  align-items: center; */
+  color: #231e1eea;
+  border-bottom: 5px solid rgba(255, 255, 255, 0.912);
+  animation: glow 1s ease-in-out infinite alternate;
+}
+.gray {
+  /* background: rgba(255, 0, 0, 0.301); */
+  /* color: red; */
+  /* background: rgba(143, 143, 142, 0.11); */
+  /* display: flex;
+  align-items: center; */
+  /* outline:2px solid red; */
+}
+.space {
+  color: transparent;
+}
+.feather-position-user {
+}
+.user-profile-container {
+  display: flex;
+  width: 100%;
+  /* outline: 2px solid red; */
+}
+input::first-letter {
+  color: green;
+  /* text-transform: capitalize; */
+}
+.caps-lock-indicator{
+  position: absolute;
+  bottom: 100%;
+  font-size: .6rem;
+  color: pink;
+  left: 0;
+}

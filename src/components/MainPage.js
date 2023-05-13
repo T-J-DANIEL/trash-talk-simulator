@@ -1,26 +1,28 @@
 import { useState, useEffect, useRef } from "react"
 import UserInput from "./UserInput"
 import Opponent from "./Opponent"
-import Header from "./Header"
-import Settings from "./Settings"
+import Header from "./header/Header"
+// import Modal from "./modals/Modal"
 import ScoreStreak from "./ScoreStreak"
-import StartGame from "./StartGame"
-import EndGame from "./EndGame"
+import StartGameModal from "./modals/start/StartGameModal"
+import GameOverModal from "./modals/gameOver/GameOverModal"
 import PortraitOnly from "./PortraitOnly"
 import { GameTimer } from "./GameTimer"
-
+import MobileKeyboard from "./mobileKeyboard/MobileKeyboard"
 //components imported
 // import ReactPlayer from "react-player"
 // //react youtube player npm package
 // import music from "../sounds/music.mp3"
 import { useGlobalContext } from "../context"
 
+import PauseGameModal from "./modals/pause/PauseGameModal"
+
 const MainPage = () => {
   //change this for autoplay
   const {
     isYeOlde,
     setIsYeOlde,
-    showSettings,
+    showPauseScreen,
     pauseResume,
     yeOldeVid,
     ogGamerVid,
@@ -50,17 +52,18 @@ const MainPage = () => {
       // }}
     >
       {/* optionally render startgame or endgame screen depending on state values */}
-      {isNewGame && <StartGame />}
-      {gameEnded && <EndGame />}
-      {showSettings && <Settings />}
-      
+      {isNewGame && <StartGameModal />}
+      {gameEnded && <GameOverModal />}
+      {showPauseScreen && <PauseGameModal />}
+
       {/* Displays message overlay if device is in portrait or height is lower than supported */}
-      <PortraitOnly />
+      {/* <PortraitOnly /> */}
       <Header />
       <div className="secondary-container">
         <Opponent />
         <UserInput />
         {/* <div className="timer"></div> */}
+      <MobileKeyboard/>
       </div>
 
       {/* <div className="vid-container">

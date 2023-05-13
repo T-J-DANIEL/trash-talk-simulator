@@ -1,0 +1,124 @@
+.opponent {
+  font-family: "Bonbon", cursive;
+  outline: 2px solid yellow;
+  /* background: rgba(102, 233, 102,0.5); */
+  /* background-image: url(../public/assets/parchmentBackgroundMirrored.svg); */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: rgb(14, 85, 172);
+  font-size: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* margin-right: 1rem; */
+  padding: 2em;
+  /* transition: all 1s ease; */
+  background: #fdfdf8;
+  border-radius: 50px;
+  outline:2px solid red;
+  margin: 3em;
+}
+
+.opponent p::first-letter {
+  color: red;
+  text-transform: capitalize;
+}
+/* .opponent-text{
+  justify-self: flex-start;
+} */
+.opp-text-animation {
+  /* border-right: 0.15em solid white; */
+  white-space: nowrap;
+  overflow: hidden;
+  animation-name: type;
+  /* animation-timing-function: steps(40, end); */
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+  max-width: min-content;
+}
+.easy {
+  animation-duration: 18s;
+}
+.normal {
+  animation-duration: 13s;
+}
+.hard {
+  animation-duration: 10s;
+}
+.extreme {
+  animation-duration: 10s;
+}
+@keyframes type {
+  0% {
+    width: 0%;
+  }
+  80% {
+    background: none;
+  }
+  100% {
+    width: 100%;
+    background: rgb(246, 75, 75);
+    border: none;
+  }
+}
+.feather-svg {
+  transform: scaleX(-1);
+  position: absolute;
+  left: -3px;
+}
+.feather {
+  width: 2.5em;
+  height: 2.5em;
+  animation-name: writing;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+}
+@keyframes writing {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(0.5em);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-0.5em);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.play {
+  animation-play-state: running;
+}
+
+.og {
+  outline: 2px solid rgb(3, 255, 3);
+  background: rgba(102, 233, 102, 0.5);
+  color: white;
+  font-family: monospace;
+}
+.animate {
+  animation: shake 0.2s linear infinite;
+  /* background: red; */
+}
+.op-avatar {
+  width: 2em;
+  margin-right: 0.5em;
+}
+.op-avatar img {
+  outline: 4px groove brown;
+  outline-offset: 2px;
+}
+.opp-user-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 0.5em;
+}

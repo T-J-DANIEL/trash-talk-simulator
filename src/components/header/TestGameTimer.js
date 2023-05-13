@@ -60,7 +60,7 @@ import React, { useState, useEffect } from "react"
 import useTimer from "./test"
 const TestGameTimer = () =>{
   const {renderedStreamDuration} = useTimer()
-  return <h1>{renderedStreamDuration}</h1>
+  return <p className="timer">{renderedStreamDuration}</p>
 }
 export default TestGameTimer
 

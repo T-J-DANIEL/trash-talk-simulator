@@ -1,4 +1,15 @@
 //TODO TASKS and features to add no styling:
+// countdown pausable on start
+//finalise bubble position
+    //scoring instant points and also order of feedback (message blanks before end of phase) and streak
+//mobile keyboard or solution
+//google cloud voices api
+//svgs
+//animations
+//final touches (sounds and styles)
+
+
+
 //Add svgs for lives
 //conditionals AND START MENU SYSTERNMM
 
