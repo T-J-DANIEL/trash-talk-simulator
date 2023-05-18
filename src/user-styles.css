@@ -1,31 +1,14 @@
 
-
-
-/* .portrait {
-  width: 4em;
-  position: absolute;
-  bottom: 80%;
-  left: 50%;
-}
-.portrait img { */
-  /* border-radius: 15px; */
-  /* outline: 4px ridge brown;
-  outline-offset: 2px;
-} */
 .user-container {
-  /* outline: 2px solid red; */
   position: relative;
   display: flex;
   flex-direction: column;
-  /* outline:2px solid red; */
   align-items: center;
   width: 100%;
   z-index: 0;
-  /* outline:2px solid red; */
 }
 .user-thought-bubble-tail{
   width: 2.2em;
-
   margin-top: -1.2em;
   margin-right: -.4em;
 }
