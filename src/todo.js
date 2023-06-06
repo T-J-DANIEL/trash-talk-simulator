@@ -8,7 +8,8 @@
 //google cloud voices api
 //add excalmation pooint dfeather
 //final touches (sounds and styles)
-
+//keyboard optionakll button
+//streaks
 
 
 //Add svgs for lives

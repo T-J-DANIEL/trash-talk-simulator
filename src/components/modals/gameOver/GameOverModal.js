@@ -17,29 +17,30 @@ const GameOverModal = () => {
   return (
     <ModalContainer>
       <div className="modal-section">
-        <h1 className="modal-header">
-          <span>G</span>ame <span>O</span>ver!
-        </h1>
-      </div>
-      <div className="modal-section end-game-text">
-        <h3>{`${
+        <h1 className="modal-heading">Game Over!</h1>
+        <h2 className="modal-sub-heading end-game-text">{`${
           lives ? "The fool was vanquished!" : "You were bested by the fool!"
-        }`}</h3>
-        <p>
-          {/* TODO special styling for new high score here and in header */}
-          Score:{" "}
-          <span className="new-high-score">{!newHigh && `${score}`}</span>
+        }`}</h2>
+      </div>
+      <hr className="menu-separator" />
+      <div className="button-container score-container">
+        <h2 className="modal-sub-heading">
+          Score:
           <br />
-          <span className="new-high-score">{newHigh && `New `}</span>High Score:
-          {highScore}
-        </p>
+          <span className="new-high-score">{!newHigh && `${score}`}</span>
+        </h2>
+        <h2 className="modal-sub-heading">
+          <span className="new-high-score">{newHigh && `New `}</span>High&nbsp;Score:
+          <br />
+          {highScore||0}
+        </h2>
 
         <button
-          className={`button btn ${shared && "shared-success"}`}
+          className={`button share-button ${shared && "shared-success"}`}
           onClick={() => {
             setShared(true)
             navigator.clipboard.writeText(
-              `Shakespearean wit high score!: ${highScore} points
+              `Shakespearean Wit high score!: ${highScore} points
                     Play at: ${document.location.href}
                     `
             )
@@ -51,9 +52,11 @@ const GameOverModal = () => {
         >
           {shared ? "Copied" : "Share"}
         </button>
-
+      </div>
+      <hr className="menu-separator" />
+      <div className="modal-section">
         <button
-          className="button"
+          className="button nav-button"
           onClick={
             () => {
               setIsNewGame(true)

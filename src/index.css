@@ -1,8 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Quintessential&family=Tangerine:wght@400;700&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@400;700&display=swap');
 :root {
   --overlay-gray: rgba(0, 0, 0, 0.696);
-  --font-1: "Quintessential", cursive;
+  --font-1: "Signika Negative", sans-serif;
+  --font-2: "Quintessential", cursive;
 }
 
 html {
@@ -32,145 +33,6 @@ img {
 }
 
 /* user styles was here */
-
-.user-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.user-text-container {
-  user-select: none;
-  position: relative;
-  width: 100%;
-}
-.input-size-container {
-}
-.input-size-span {
-  white-space: pre;
-}
-.phantom-span {
-  /* outline:2px solid red; */
-}
-.phantom-space {
-  /* outline:2px solid red; */
-}
-.phantom-end {
-  border-right: 5px solid #fff;
-  /* outline:2px solid red; */
-}
-.user-text-input {
-  position: absolute;
-  color: #fff;
-  font-size: 1rem;
-  background: transparent;
-  font-family: "Quintessential", cursive;
-  outline: none;
-  border: none;
-  border-bottom: 2px solid brown;
-  color: red;
-  letter-spacing: 1.8px;
-  margin-left: 0;
-  word-spacing: 1px;
-  white-space: wrap;
-  /* outline:2px solid red; */
-  caret-color: #fff;
-  padding: 0;
-  top: 0;
-  left: 0;
-  /* outline: 2px solid red; */
-  opacity: 0;
-  cursor: not-allowed;
-}
-.user-text-input::placeholder {
-  letter-spacing: 1.8px;
-  margin-left: 0;
-  word-spacing: 1px;
-  white-space: wrap;
-  width: fit-content;
-}
-
-/* .suggestion {
-  user-select: none;
-  position: relative;
-  width: 100%; 
-  font-size: 150%; 
-  outline:2px solid yellow;
-} */
-.visual-progress {
-  /* position: absolute; */
-  /* top: 12px;
-  left: 18px; */
-  /* width: 100%;
-  height: 100%; */
-  /* outline: 2px solid green; */
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  width: 100%;
-
-}
-.visual-progress span {
-  /* think about this */
-  /* what about using a span? */
-  /* width: auto;
-  height: auto; */
-  margin: 0;
-  padding: 0;
-  cursor: not-allowed;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; */
-  /* min-width: 0.45ch; */
-  /* max-width: 1ch;
-  max-height: 1.5ch;  */
-}
-.green {
-  /* background: rgba(0, 255, 85, 0.301);   */
-  /* color: rgb(131, 197, 32); */
-  background: rgb(131, 197, 32, 0.432);
-  /* display: flex;
-  align-items: center; */
-}
-.red {
-  /* background: rgba(255, 0, 0, 0.301); */
-  /* color: red; */
-  background: rgba(255, 0, 0, 0.432);
-  /* display: flex;
-  align-items: center; */
-}
-.yellow {
-  /* background: rgba(255, 0, 0, 0.301); */
-  /* color: red; */
-  background: rgba(249, 238, 17, 0.982);
-  /* display: flex;
-  align-items: center; */
-  color: #231e1eea;
-  border-bottom: 5px solid rgba(255, 255, 255, 0.912);
-  animation: glow 1s ease-in-out infinite alternate;
-}
-.gray {
-  /* background: rgba(255, 0, 0, 0.301); */
-  /* color: red; */
-  background: rgba(82, 83, 77, 0.344);
-  /* display: flex;
-  align-items: center; */
-}
-.space {
-  color: transparent;
-}
-.feather-position-user {
-}
-.user-profile-container {
-  display: flex;
-  width: 100%;
-  /* outline: 2px solid red; */
-}
-input::first-letter {
-  color: green;
-  /* text-transform: capitalize; */
-}
 
 .speech-bubble-tail {
   width: 4.5em;
@@ -226,7 +88,7 @@ input::first-letter {
 .opponent {
   position: relative;
   /* font-family: "Bonbon", cursive; */
-  font-family: "Quintessential", cursive;
+  font-family: var(--font-2);
   /* outline: 5px solid rgb(238, 0, 255); */
   /* background: rgba(102, 233, 102,0.5); */
   /* background-image: url(../public/assets/parchmentBackgroundMirrored.svg); */
@@ -530,185 +392,7 @@ input::first-letter {
   background: rgb(231, 140, 228);
 }
 
-.overlay-container {
-  position: absolute;
-  /* fixed?*/
-  width: 100%;
-  height: 100%;
-  background-color: var(--overlay-gray);
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  top: 0;
-  left: 0;
-}
-
-.modal-container {
-  background: rgba(0, 0, 0, 0.662);
-  border: 5px double rgb(255, 255, 255);
-  border-radius: 30px 30px;
-  border-top-style: none;
-  border-bottom-style: none;
-  padding: 0.5em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  background: linear-gradient(rgb(34, 34, 34), rgba(34, 34, 34, 0.219)),
-    linear-gradient(to left, rgba(19, 16, 19, 0.077), rgba(231, 231, 231, 0));
-  /* max-width: 500px; */
-}
-
-.modal-section {
-  background: linear-gradient(rgba(34, 34, 34, 0.219), rgb(34, 34, 34)),
-    linear-gradient(to right, rgba(231, 231, 231, 0), rgba(19, 16, 19, 0.077));
-
-  border: 5px solid transparent;
-  border: 5px double rgb(255, 255, 255);
-  border-radius: 20px;
-  border-left-style: none;
-  border-right-style: none;
-  padding: 0em 0em 0.2em;
-  margin: 0.2em 0;
-  max-width: 98%;
-}
-.modal-heading {
-  text-align: center;
-  text-decoration: underline;
-  font-size: 2em;
-  margin: 0;
-  text-underline-offset: 5px;
-}
-.modal-sub-heading {
-  text-align: center;
-  text-decoration: underline;
-  font-size: 1.4rem;
-  text-underline-offset: 5px;
-  margin: 0.3em 0 0;
-  letter-spacing: 1.5px;
-  word-spacing: 1px;
-  text-underline-offset: 2.5px;
-}
-
-/* main button classes */
-.button-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 0;
-  margin-top: 0.4em;
-}
-.difficulty-buttons {
-  width: auto;
-  padding: 0.6em 0 1em;
-}
-.button {
-  font-family: inherit;
-  font-size: 0.65rem;
-  font-weight: bold;
-  letter-spacing: 0.5px;
-  border-radius: 4px 4px 10px 10px;
-  padding: 0.4em 0.6em;
-  border: 3px double rgb(163, 154, 154);
-  /* text-decoration: underline; */
-  text-decoration-thickness: 0.1px;
-  text-underline-offset: 2px;
-  transition: all 0.3s ease;
-  margin: 0.4em;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
-  cursor: pointer;
-}
-.button:hover {
-  transform: scale(1.2);
-  color: black;
-  /* margin: .4em .5em; */
-}
-.button:active {
-  background-color: rgb(179, 178, 178);
-  /* color: white; */
-  border-style: inset;
-}
-
-.button::first-letter {
-  font-size: 140%;
-  font-weight: bold;
-  /* color: rgb(34, 32, 32) */
-}
-
-.start-button {
-  transform: scale(1.1);
-  background: rgb(244, 192, 62);
-  margin: 1.3em 0 0;
-  padding: 0.5em 3em;
-  animation: glow 1s ease-in-out infinite alternate;
-
-  text-align: center;
-}
-.first {
-  margin-top: 2.5em;
-}
-.nav-button {
-  /* background-color: rgb(140, 140, 240); */
-  /* font-size: 0.rem; */
-  /* padding: .2em 3em; */
-  margin-top: 1em;
-  width: 80%;
-  letter-spacing: 1px;
-  font-size: 0.8rem;
-}
-.shakespearean {
-  /* font-size: 0.6rem; */
-  padding: 0.1em 3em;
-}
-@keyframes glow {
-  from {
-    box-shadow: 0 0 3px #fff, 0 0 6px #fff, 0 0 9px #e6ad00, 0 0 12px #e6db00,
-      0 0 15px #e2e600, 0 0 18px #f1ef74, 0 0 21px #e6e200;
-  }
-  to {
-    box-shadow: 0 0 6px #fff, 0 0 6px #ededed, 0 0 12px #f8df25,
-      0 0 15px #ecf01a, 0 0 18px #ffd34d, 0 0 21px #ecebad, 0 0 24px #fcff4d;
-  }
-}
-
-.selected-button {
-  background: rgb(53, 207, 53);
-  transform: scale(1.2);
-  margin: 0.4em 0.6em;
-}
-.unselected-button {
-  background: lightgray;
-  /* transform: scale(0.9); */
-  color: rgb(95, 95, 95);
-  margin: 0.4em;
-}
-/* .settings-button::first-letter {
-  font-size: 100%;
-  font-weight: bold;
-  
-} */
-.label {
-  font-size: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.2em 0;
-  margin: 0;
-}
-.label-text {
-  margin-right: 0.15em;
-}
-.sound-flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* outline:2px solid red;   */
-  padding: 0;
-  margin: 0 0.5em;
-  /* outline:2px solid red; */
-}
-
+/* modal styles here */
 input[type="checkbox"] {
   cursor: pointer;
   margin-left: 0.35em;
@@ -784,6 +468,15 @@ input[type="checkbox"]:checked {
 /* .gameTimer {
   margin: 0 1em;
 } */
+button {
+  background: unset;
+  border: none;
+  color: #fff;
+  user-select:none;
+}
+
+
+
 .settings-button {
   width: 2em;
   height: 2em;
@@ -814,15 +507,12 @@ input[type="checkbox"]:checked {
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
-button {
-  background: unset;
-  border: none;
-}
+
 
 .header-headings {
   color: pink;
   margin: 0;
-  font-family: arial;
+  font-family: var(--font-1);
   text-align: center;
   padding: 0;
   font-weight: 400;
@@ -913,15 +603,12 @@ li {
 /* html {
   cursor: url("https://i.stack.imgur.com/wu8CP.png"), auto;
 } */
-.btn {
+/* .btn {
   background-color: rgb(255, 255, 255);
   color: black;
   transition: all 0.7s ease;
-}
-.shared-success {
-  background-color: rgb(81, 229, 81);
-  color: rgb(0, 0, 0);
-}
+} */
+
 
 .main-container {
   /* background-image: url(./sounds/page-background.jpg); */
@@ -950,7 +637,7 @@ li {
   text-decoration-color: green;
 } */
 .timer {
-  font-family: arial;
+  font-family: var(--font-1);
   font-size: 2em;
   margin: 0;
 }
@@ -994,45 +681,10 @@ li {
     color: rgb(255, 0, 127);
   }
 }
-.end-game-text {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 1em;
-}
-.portrait-limit {
-  display: none;
-}
-@media screen and (max-height: 500px) {
-  .portrait-limit {
-    display: grid;
-    background-color: rgba(16, 15, 15, 0.825);
-  }
-}
 
-@media (min-width: 500px) {
-  .mobile-hidden {
-    display: block;
-  }
-  .modal-section {
-    width: 70%;
-  }
-  .modal-container {
-    max-width: 80%;
-  }
-  .modal-heading.title {
-    font-size: 2rem;
-  }
-  .title-container .tagline {
-    font-size: 1rem;
-    margin: -0.5em 0 0.5em;
-  }
-  .button {
-    font-size: 100%;
-  }
-}
+
+
+
 
 .mobile-keyboard {
   width: 100%;
@@ -1069,7 +721,6 @@ li {
   display: flex;
   justify-content: center;
   margin: auto 0 auto auto;
-  outline: 2px solid red;
   gap: 5px;
 }
 .mobile-key {
@@ -1079,6 +730,8 @@ li {
   font-size: 1.2rem;
   background: #fff;
   opacity: 1;
+  font-family: var(--font-1);
+  color:#22298d;
 }
 .mobile-key:active {
   background: #22298d;

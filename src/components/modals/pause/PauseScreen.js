@@ -44,8 +44,9 @@ const PauseScreen = () => {
         </div>
       </div>
       <div className="modal-section">
-        <h2 className="modal-heading">Sound</h2>
-        <div className="button-container">
+        <hr className="menu-separator" />
+        <h2 className="modal-sub-heading">Sounds</h2>
+        <div className="button-container sound-settings">
           <label className="button-container label" htmlFor="soundOnOff">
             <span className="label-text">Effects </span>
             <input
@@ -73,6 +74,7 @@ const PauseScreen = () => {
             />
           </label>
         </div>
+        <hr className="menu-separator" />
       </div>
     </>
   )

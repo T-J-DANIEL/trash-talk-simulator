@@ -28,8 +28,8 @@ const MainPage = () => {
     {isNewGame && <StartGameModal />}
     {gameEnded && <GameOverModal />}
     {showPauseScreen && <PauseGameModal />}
+    <PortraitOnly />
     {/* <div className="main-container">
-      {/* <PortraitOnly /> */}
       {/* Displays message overlay if device is in portrait or height is lower than supported */}
       <Header />
       <Opponent />

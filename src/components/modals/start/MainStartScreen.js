@@ -19,7 +19,7 @@ const MainStartScreen = () => {
     setIsCapsLockOn,
   } = useGlobalContext()
   return (
-    <ModalContainer>
+    <>
       {showHowTo && <HowToPlay />}
       {!showHowTo && (
         <>
@@ -28,6 +28,7 @@ const MainStartScreen = () => {
               <h1 className="modal-heading title">Shakespearean Wit </h1>
               <h3 className="tagline">A typing game</h3>
             </div>
+
             <div className="button-container">
               <button
                 onClick={() => {
@@ -38,9 +39,10 @@ const MainStartScreen = () => {
                 How to play?
               </button>
             </div>
+            <hr className="menu-separator" />
             <div className="modal-section">
               <div className="sound-flex">
-                <h2>Sound:</h2>
+                <h2 className="modal-sub-heading">Sounds:</h2>
                 <div>
                   <label
                     className="button-container label"
@@ -77,6 +79,7 @@ const MainStartScreen = () => {
                 </div>
               </div>
             </div>
+            <hr className="menu-separator"/>
           </div>
           <div className="modal-section difficulty-buttons">
             <h2 className="modal-sub-heading ">Select Difficulty</h2>
@@ -132,26 +135,29 @@ const MainStartScreen = () => {
               </button>
             </div>
           </div>
-          <button
-            className="button start-button"
-            onMouseDown={isSoundOn && button_pop}
-            onMouseUp={isSoundOn && button_push}
-            onClick={(e) => {
-              setIsNewGame(false)
-              // e.getModifierState("CapsLock")
-              //   ? console.log("true")
-              //   : console.log("false")
-              e.getModifierState("CapsLock")
-                ? setIsCapsLockOn(true)
-                : setIsCapsLockOn(false)
-              startGame()
-            }}
-          >
-            Start
-          </button>
+                <hr className="menu-separator"/>
+          <div className="modal-section">
+            <button
+              className="button start-button"
+              onMouseDown={isSoundOn && button_pop}
+              onMouseUp={isSoundOn && button_push}
+              onClick={(e) => {
+                setIsNewGame(false)
+                // e.getModifierState("CapsLock")
+                //   ? console.log("true")
+                //   : console.log("false")
+                e.getModifierState("CapsLock")
+                  ? setIsCapsLockOn(true)
+                  : setIsCapsLockOn(false)
+                startGame()
+              }}
+            >
+              START
+            </button>
+          </div>
         </>
       )}
-    </ModalContainer>
+    </>
   )
 }
 
