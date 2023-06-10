@@ -79,14 +79,16 @@ const MainStartScreen = () => {
                 </div>
               </div>
             </div>
-            <hr className="menu-separator"/>
+            <hr className="menu-separator" />
           </div>
           <div className="modal-section difficulty-buttons">
             <h2 className="modal-sub-heading ">Select Difficulty</h2>
-            <div className="button-container">
+            <div className="button-container difficulty-set-height">
               <button
                 className={`button ${
-                  level === "easy" ? "selected-button" : "unselected-button"
+                  level === "easy"
+                    ? "selected-button selected-easy"
+                    : "unselected-button"
                 }`}
                 onMouseDown={isSoundOn && button_pop}
                 onMouseUp={isSoundOn && button_push}
@@ -98,7 +100,9 @@ const MainStartScreen = () => {
               </button>
               <button
                 className={`button ${
-                  level === "normal" ? "selected-button" : "unselected-button"
+                  level === "normal"
+                    ? "selected-button selected-normal"
+                    : "unselected-button"
                 }`}
                 onMouseDown={isSoundOn && button_pop}
                 onMouseUp={isSoundOn && button_push}
@@ -110,7 +114,9 @@ const MainStartScreen = () => {
               </button>
               <button
                 className={`button ${
-                  level === "hard" ? "selected-button" : "unselected-button"
+                  level === "hard"
+                    ? "selected-button selected-hard"
+                    : "unselected-button"
                 }`}
                 onMouseDown={isSoundOn && button_pop}
                 onMouseUp={isSoundOn && button_push}
@@ -120,22 +126,26 @@ const MainStartScreen = () => {
               >
                 Hard
               </button>
+            </div>
+            <div className="button-container difficulty-set-height  mobile-hidden">
               <button
                 onMouseDown={isSoundOn && button_pop}
                 onMouseUp={isSoundOn && button_push}
                 //TODO hide when mobile
-                className={`button mobile-hidden ${
-                  level === "extreme" ? "selected-button" : "unselected-button"
-                } shakespearean`}
+                className={`button shakespearean ${
+                  level === "shakespearean"
+                    ? "selected-shakespearean"
+                    : "unselected-button"
+                } `}
                 onClick={(e) => {
-                  changeDifficulty("extreme")
+                  changeDifficulty("shakespearean")
                 }}
               >
                 Shakespearean
               </button>
             </div>
           </div>
-                <hr className="menu-separator"/>
+          <hr className="menu-separator" />
           <div className="modal-section">
             <button
               className="button start-button"

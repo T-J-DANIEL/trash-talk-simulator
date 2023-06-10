@@ -26,12 +26,16 @@ const Opponent = () => {
 
   return (
     <div className="opp-container">
-      <div className={`opponent ${oppAttackSuccess && "show-speech"}`}>
+      <div
+        className={`opponent ${oppAttackSuccess && "show-speech"} ${
+          oppAttackSuccess && "successfulAttack"
+        }`}
+      >
         {/* opp text box */}
 
         <div
           //TODO ADDED a div here around p tag is this better?
-          className="opp-phrase-container"
+          className={`opp-phrase-container `}
           // className={"opp-phrase-container" +
           //   !gameEnded &&
           //   `${
@@ -43,9 +47,24 @@ const Opponent = () => {
           //   } ${!gameRunning && `paused`} `
           // }
         >
-          <p className="opponent-phrase">{opponentPhrase}</p>
-          <ThoughtCloud classInfo={`thought-bubble ${oppAttackSuccess && "opp-attack-success"}`}/>
-        <OppAvatar />
+          <p
+            className={`opponent-phrase ${
+              !gameEnded && oppAttackSuccess
+                ? "successfulAttack"
+                : userAttacked
+                ? "animate"
+                : "opp-text-animation"
+            } ${level}
+             ${!gameRunning && "paused"}`}
+          >
+            {opponentPhrase}
+          </p>
+          <ThoughtCloud
+            classInfo={`thought-bubble ${
+              oppAttackSuccess && "opp-attack-success"
+            }`}
+          />
+          <OppAvatar />
         </div>
         {/* <Feather /> */}
       </div>

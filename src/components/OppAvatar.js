@@ -28,12 +28,12 @@ const OppAvatar = () => {
           !oppAttackSuccess && "opp-attack-success"
         }`}
       />
-      <PlaceHolderAvatar classInfo={"placeholder-avatar"} />
-      <ThoughtBubbleTrail
+      <PlaceHolderAvatar classInfo={"opp-avatar"} />
+      {/* <ThoughtBubbleTrail
         classInfo={`thought-bubble-tail ${
           oppAttackSuccess && "opp-attack-success"
         }`}
-      />
+      /> */}
     </div>
   )
 }

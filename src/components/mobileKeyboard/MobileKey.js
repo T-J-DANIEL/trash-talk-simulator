@@ -1,6 +1,6 @@
 import { useGlobalContext } from "../../context"
 
-const MobileKey = ({keyValue}) => {
+const MobileKey = ({keyValue,extraClass}) => {
   const {
     setUserText,
     compareValues,
@@ -11,7 +11,8 @@ const MobileKey = ({keyValue}) => {
   const key = isMobileShift ? keyValue.toUpperCase() : keyValue
   return (
     <button
-      className={`mobile-key ${keyValue===" " && "spaceBar"}`}
+      className={`mobile-key ${keyValue === " " && "spaceBar"} ${
+        extraClass}`}
       onClick={() => {
         focusInput.current.value = focusInput.current.value + key
         setUserText(

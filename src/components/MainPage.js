@@ -16,31 +16,27 @@ import { useGlobalContext } from "../context"
 import PauseGameModal from "./modals/pause/PauseGameModal"
 
 const MainPage = () => {
-  //change this for autoplay
-  const {
-    showPauseScreen,
-    isNewGame,
-    gameEnded,
-  } = useGlobalContext()
+  
+  const { showPauseScreen, isNewGame, gameEnded } = useGlobalContext()
   //imported state properties
 
-  return (<>
-    {isNewGame && <StartGameModal />}
-    {gameEnded && <GameOverModal />}
-    {showPauseScreen && <PauseGameModal />}
-    <PortraitOnly />
-    {/* <div className="main-container">
+  return (
+    <>
+      <PortraitOnly />
       {/* Displays message overlay if device is in portrait or height is lower than supported */}
-      <Header />
-      <Opponent />
-      <UserInput />
-      {/* <div className="secondary-container">
-      
-      
-      </div> */}
-      <MobileKeyboard />
-     {/* </div> */}
-  </>)
+      {isNewGame && <StartGameModal />}
+      {gameEnded && <GameOverModal />}
+      {showPauseScreen && <PauseGameModal />}
+      <div className="responsive-container">
+        <Header />
+        <div className="text-bubbles-container">
+          <Opponent />
+          <UserInput />
+        </div>
+        <MobileKeyboard />
+      </div>
+    </>
+  )
 }
 
 export default MainPage

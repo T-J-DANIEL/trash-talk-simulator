@@ -89,9 +89,9 @@ const AppContextProvider = ({ children }) => {
         setLevel("hard")
         break
       //TODO Change the response time for extreme
-      case "extreme":
+      case "shakespearean":
         setResponseTime(13000)
-        setLevel("extreme")
+        setLevel("shakespearean")
         break
       default:
         setResponseTime(10000)
@@ -106,7 +106,9 @@ const AppContextProvider = ({ children }) => {
   //has game run before or not?
   const [isFirstGame, setIsFirstGame] = useState(true)
   const [showHowTo, setShowHowTo] = useState(false)
-  //
+  const [showAttributions, setShowAttributions] = useState(false)
+  const [showMobileKeyboard, setShowMobileKeyboard] = useState(false)
+  
   //is game in progress?
   const [gameRunning, setGameRunning] = useState(false)
   //has game ended?
@@ -198,7 +200,7 @@ const AppContextProvider = ({ children }) => {
     const randomIndex = (phraseIndex) =>
       Math.floor(Math.random() * phraseIndex.length)
 
-    if (level === "extreme") {
+    if (level === "shakespearean") {
       //if level is set to extreme then choose random phrase from shakespeare phrases instead of random triplet
       //copy shakespeare phrase array as working array
       let workingArray = [...currentPhraseList]
@@ -986,6 +988,10 @@ const AppContextProvider = ({ children }) => {
         setPanicMode,
         isMobileShift,
         setIsMobileShift,
+        showAttributions,
+        setShowAttributions,
+        showMobileKeyboard,
+        setShowMobileKeyboard,
       }}
     >
       {children}

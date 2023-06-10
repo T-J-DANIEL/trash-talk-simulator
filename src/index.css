@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Quintessential&family=Tangerine:wght@400;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Signika+Negative:wght@400;700&display=swap");
 :root {
   --overlay-gray: rgba(0, 0, 0, 0.696);
   --font-1: "Signika Negative", sans-serif;
@@ -8,7 +8,6 @@
 
 html {
   box-sizing: border-box;
-  letter-spacing: 2px;
 }
 *,
 *::before,
@@ -19,13 +18,22 @@ html {
   width: 100%;
   height: 100vh;
 } */
+
+html,
+body {
+  min-height: 100vh;
+  /* border:30px solid red; */
+}
 body {
   margin: 0;
   padding: 0;
   font-family: var(--font-1);
-  background: BLUE;
+  background: rgb(25, 25, 155);
   color: white;
+  height: 100%;
 
+  letter-spacing: 2px;
+  /* outline: 2px solid red; */
 }
 img {
   width: 100%;
@@ -39,8 +47,10 @@ img {
   /* height: 3.5em; */
   /* background-color: #fff; */
   /* margin-top: -1.8em; */
-  margin-top: -7em;
-  margin-right: -0.4em;
+  /* margin-top: -7em; */
+  margin-top: -2.5em;
+  margin-right: -1em;
+  /* outline:2px solid red; */
   /* outline:2px solid red; */
 }
 .thought-bubble {
@@ -53,13 +63,13 @@ img {
   z-index: -1;
   min-width: 20em;
 }
-.thought-bubble-tail {
+/* .thought-bubble-tail {
   width: 2.5em;
   transform: scaleX(-1);
   margin-top: -0.3em;
   margin-top: -0.8em;
   margin-left: -0.2em;
-}
+} */
 .opp-container {
   position: relative;
   /* outline:7px solid purple; */
@@ -67,22 +77,29 @@ img {
   /* height:calc(fit-content); */
   /* margin: 0 0 5em; */
   /* ^^temporary margin ^^*/
-  padding-top: 1.5em;
+  /* padding-top: 1.5em; */
   z-index: 0;
   /* outline:2px solid red; */
   margin-bottom: 7em;
+  /* outline: 2px solid blue; */
 }
 .opp-phrase-container {
   /* outline:2px solid red; */
   position: relative;
-  min-width: 25ch;
+  /* min-width: 25ch; */
+  width: 40ch;
+  min-height: 5em;
   /* border:2px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .opponent-phrase {
-  font-size: 0.8rem;
+  /* font-size: 0.8rem; */
+  font-size: 180%;
   margin: 0;
   text-align: center;
-  /* border:2px solid blue; */
+  /* outline:2px solid blue; */
 }
 
 .opponent {
@@ -113,8 +130,10 @@ img {
   background: #fdfdf8;
   padding: 2em 1em;
   margin: -2.5em auto -1em;
+ 
+  /* margin: -5em; */
   /* animation here */
-  outline: 2px solid red;
+  /* outline: 2px solid red; */
 }
 
 .opponent p::first-letter {
@@ -129,15 +148,11 @@ img {
 }
 
 .opp-text-animation {
-  /* border-right: 0.15em solid white; */
-  white-space: nowrap;
-  overflow: hidden;
-  animation-name: type;
+  animation-name: fade-in;
   /* animation-timing-function: steps(40, end); */
-  animation-timing-function: ease-in-out;
+  animation-timing-function: ease;
   animation-fill-mode: forwards;
   animation-play-state: running;
-  max-width: min-content;
 }
 .easy {
   animation-duration: 18s;
@@ -148,22 +163,19 @@ img {
 .hard {
   animation-duration: 10s;
 }
-.extreme {
+.shakespearean {
   animation-duration: 10s;
 }
-@keyframes type {
+@keyframes fade-in {
   0% {
-    width: 0%;
-  }
-  80% {
-    background: none;
+    opacity: 0%;
   }
   100% {
-    width: 100%;
-    background: rgb(246, 75, 75);
-    border: none;
+   opacity:100%;
   }
 }
+
+
 .feather-svg {
   transform: scaleX(-1);
   position: absolute;
@@ -213,15 +225,20 @@ img {
 .opp-avatar-container {
   position: absolute;
   top: calc(100% + 2.5em);
-  right: -0.6em;
+  top: 100%;
+  /* right: -0.6em; */
+  right: -2em;
   display: flex;
   /* outline:2px solid red; */
 
   /* margin-right: 0.5em; */
   /* width: 40%; */
-  /* outline:2px solid red; */
+  /* outline: 2px solid red; */
 }
+.opp-avatar{
+  width: 6em;
 
+}
 .placeholder-avatar {
   width: 5em;
   /* outline:2px solid red; */
@@ -254,7 +271,7 @@ img {
 
 .successfulAttack {
   transform: scale(100%);
-  overflow: hidden;
+  /* overflow: hidden; */
   animation: enlarge 0.5s ease-in-out infinite;
   animation-direction: alternate;
   animation-play-state: running;
@@ -393,23 +410,7 @@ img {
 }
 
 /* modal styles here */
-input[type="checkbox"] {
-  cursor: pointer;
-  margin-left: 0.35em;
-  margin-top: 0.17em;
-  transform: scale(1.5);
-}
-input[type="checkbox"]:checked {
-  accent-color: rgb(109, 205, 109);
-}
-/* #soundOnOff{
-  font-weight: bold;
-} */
-/* below button container used in start game  */
 
-.sound-flex :nth-child(2) {
-  margin-left: 0.4em;
-}
 .hidden {
   display: hidden;
 }
@@ -472,10 +473,8 @@ button {
   background: unset;
   border: none;
   color: #fff;
-  user-select:none;
+  user-select: none;
 }
-
-
 
 .settings-button {
   width: 2em;
@@ -507,7 +506,6 @@ button {
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
-
 
 .header-headings {
   color: pink;
@@ -609,19 +607,44 @@ li {
   transition: all 0.7s ease;
 } */
 
-
-.main-container {
-  /* background-image: url(./sounds/page-background.jpg); */
-  background: #22298d;
-  height: 100%;
-  width: 100%;
-  /* position: absolute;
-  top: 0;
-  left: 0; */
+.responsive-container {
+  /* outline:2px solid blue; */
+  height: 100vh;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.secondary-container {
-  max-width: 800px;
-  margin: 0 auto;
+.text-bubbles-container {
+  height: 40%;
+}
+@media only screen and (min-width: 800px) {
+  .responsive-container {
+    justify-content: space-around;
+  }
+  .header-container {
+    position: fixed;
+    top: 0;
+  }
+  .text-bubbles-container {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 7em;
+    /* outline:20px solid red; */
+  }
+  /* .opponent-phrase {
+    font-size: 200%;
+  } */
+  .visual-progress {
+    font-size: 2rem;
+  }
+  .opp-avatar{
+  width: 7em;
+
+}
 }
 .new-high-score {
   animation: rainbow 2.5s linear;
@@ -682,17 +705,16 @@ li {
   }
 }
 
-
-
-
-
 .mobile-keyboard {
   width: 100%;
-  height: 35%;
+  height: 35vh;
+  /* height: 35%;
+  position-absolute; */
   /* border: 2px solid red; */
-  position: absolute;
-  bottom: 0;
-  left: 0;
+
+  position: relative;
+  /* bottom: 0;
+  left: 0; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -700,7 +722,7 @@ li {
   padding: 5px;
 
   border-radius: 10px 10px 0px 0px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.25);
 }
 .mobile-keyboard-row {
   display: flex;
@@ -728,10 +750,13 @@ li {
   border-radius: 5px;
   width: 9%;
   font-size: 1.2rem;
-  background: #fff;
+  background: #e7e5e5;
   opacity: 1;
   font-family: var(--font-1);
-  color:#22298d;
+  color: #22298d;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 .mobile-key:active {
   background: #22298d;
@@ -745,6 +770,9 @@ li {
   /* width: 100%; */
   padding: 1em;
   background-origin: content-box;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 .mobile-function-shift {
   background-image: url(../public/assets/SVG/SVG/shift.svg);
@@ -758,9 +786,12 @@ li {
 }
 .spaceBar {
   width: 60%;
-  background: #fff;
+  background: #e7e5e5;
 
   justify-self: center;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 .mobile-function-enter {
   background-image: url(../public/assets/SVG/SVG/enter.svg);
@@ -768,9 +799,34 @@ li {
   width: 25%;
 }
 
+.show-keyboard-key {
+  position: absolute;
+  bottom: 101%;
+  right: 1%;
+
+  padding: 0.6em 1em;
+
+  border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  background-image: linear-gradient(-180deg, #ff7e31, #e62c03);
+  text-align: center;
+}
+.extra-width {
+  width: 12%;
+}
+.show-keyboard-key:active {
+  background: rgb(122, 23, 23);
+}
 /* hide on big screens */
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 800px) {
   .mobile-keyboard {
     display: none;
+  }
+}
+@media only screen and (max-width: 800px) {
+  * {
+    transition: none !important;
   }
 }
