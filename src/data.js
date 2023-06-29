@@ -160,7 +160,7 @@ const randoShake = [
 const shakesPhrases = [
   {
     insult:
-      "I scorn you, scurvy companion. What, you poor, base, rascally, cheating, lack‑linen mate! Away, you moldy rogue, away!",
+      "I scorn you, scurvy companion. What, you poor, base, rascally, cheating, lack‑linen mate!",
   },
   {
     insult: "What, you poor, base, rascally, cheating, lack‑linen mate!",
@@ -173,7 +173,11 @@ const shakesPhrases = [
   },
   {
     insult:
-      "Thou art a most notable coward, an infinite and endless liar, an hourly promise breaker, the owner of no one good quality",
+      "Thou art a most notable coward, an infinite and endless liar",
+  },
+  {
+    insult:
+      "Thou art an hourly promise breaker, the owner of no one good quality",
   },
   {
     insult: "Thou puking rump‑fed ratsbane!",
@@ -261,10 +265,10 @@ const shakesPhrases = [
   {
     insult: "Thou subtle, perjur'd, false, disloyal man!",
   },
-  {
-    insult:
-      "Thine forward voice, now, is to speak well of thine friend; thine backward voice is to utter foul speeches and to detract",
-  },
+  // {
+  //   insult:
+  //     "Thine forward voice, now, is to speak well of thine friend; thine backward voice is to utter foul speeches and to detract",
+  // },
   {
     insult: "Dissembling harlot, thou art false in all",
   },
@@ -342,10 +346,10 @@ const shakesPhrases = [
     insult:
       "O you beast! I'll so maul you and your toasting‑iron, That you shall think the devil is come from hell",
   },
-  {
-    insult:
-      "O you beast! I'll so maul you and your toasting‑iron, That you shall think the devil is come from hell",
-  },
+  // {
+  //   insult:
+  //     "O you beast! I'll so maul you and your toasting‑iron, That you shall think the devil is come from hell",
+  // },
   {
     insult: "By mine honour, if I were but two hours younger, I'd beat thee.",
   },
@@ -420,10 +424,10 @@ const shakesPhrases = [
   {
     insult: "Peace, ye fat guts!",
   },
-  {
-    insult:
-      "If thou wilt needs marry, marry a fool; for wise men know well enough what monsters you make of them",
-  },
+  // {
+  //   insult:
+  //     "If thou wilt needs marry, marry a fool; for wise men know well enough what monsters you make of them",
+  // },
   {
     insult: "Thou surly flap‑mouthed mammet!",
   },
@@ -440,10 +444,10 @@ const shakesPhrases = [
   {
     insult: "Take you me for a sponge?",
   },
-  {
-    insult:
-      "I will most humbly take my leave of you. You cannot, sir, take from me anything that I will not more willingly part withal",
-  },
+  // {
+  //   insult:
+  //     "I will most humbly take my leave of you. You cannot, sir, take from me anything that I will not more willingly part withal",
+  // },
   {
     insult: "Thou caluminous swag‑bellied puttock!",
   },

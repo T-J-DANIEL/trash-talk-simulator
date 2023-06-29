@@ -57,11 +57,11 @@ img {
   position: absolute;
   width: calc(100% + 5em);
   height: calc(100% + 5em);
+  min-width: 20em;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: -1;
-  min-width: 20em;
 }
 /* .thought-bubble-tail {
   width: 2.5em;
@@ -74,29 +74,32 @@ img {
   position: relative;
   /* outline:7px solid purple; */
   width: 100%;
+  height: 40%;
   /* height:calc(fit-content); */
   /* margin: 0 0 5em; */
   /* ^^temporary margin ^^*/
   /* padding-top: 1.5em; */
   z-index: 0;
   /* outline:2px solid red; */
-  margin-bottom: 7em;
-  /* outline: 2px solid blue; */
+  /* margin-bottom: 7em; */
+  /* padding: 15em 0; */
+  outline: 2px solid blue;
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
 .opp-phrase-container {
-  /* outline:2px solid red; */
   position: relative;
-  /* min-width: 25ch; */
   width: 40ch;
   min-height: 5em;
-  /* border:2px solid red; */
   display: flex;
   flex-direction: column;
   justify-content: center;
+  outline:2px solid red;
+
 }
 .opponent-phrase {
-  /* font-size: 0.8rem; */
-  font-size: 180%;
+  font-size: .9rem;
   margin: 0;
   text-align: center;
   /* outline:2px solid blue; */
@@ -127,13 +130,27 @@ img {
   /* outline:2px solid red; */
 }
 .show-speech {
-  background: #fdfdf8;
-  padding: 2em 1em;
-  margin: -2.5em auto -1em;
- 
+  /* margin: -2.5em auto -1em; */
   /* margin: -5em; */
   /* animation here */
   /* outline: 2px solid red; */
+  /* background: #fdfdf8;
+  width:max-content;
+  margin: 0 auto;
+  font-size: .9rem; */
+  
+  /* padding: 1em 1.5em; */
+  background: #fff;
+  /* position: relative;
+  width: 40ch;
+  min-height: 5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; */
+
+  
+  min-width: 20em;
+  /* outline:2px solid red; */
 }
 
 .opponent p::first-letter {
@@ -225,9 +242,9 @@ img {
 .opp-avatar-container {
   position: absolute;
   top: calc(100% + 2.5em);
-  top: 100%;
+  top: 70%;
   /* right: -0.6em; */
-  right: -2em;
+  right: -4em;
   display: flex;
   /* outline:2px solid red; */
 
@@ -239,11 +256,7 @@ img {
   width: 6em;
 
 }
-.placeholder-avatar {
-  width: 5em;
-  /* outline:2px solid red; */
-  /* height: 2em; */
-}
+
 
 /* .op-avatar img { */
 /* outline: 4px groove brown; */
@@ -420,6 +433,8 @@ img {
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: 15%;
+    outline:2px solid red;
 }
 .header {
   display: flex;
@@ -566,6 +581,24 @@ button {
   filter: opacity(50%);
   background-color: gray;
 }
+
+.flash{
+  /* outline: 30px solid white; */
+  animation-name: flash;
+  animation-timing-function: linear;
+  animation-fill-mode:forwards;
+  animation-play-state: running;
+  animation-duration: 500ms;
+  animation-iteration-count: infinite;
+}
+@keyframes flash{
+  0%{
+   background-color: rgb(240, 168, 250);
+  }
+  100%{
+   background-color: rgb(243, 243, 243);
+  }
+}
 ul.ruleset {
   margin: 0 auto;
   max-width: 98%;
@@ -618,7 +651,8 @@ li {
   justify-content: space-between;
 }
 .text-bubbles-container {
-  height: 40%;
+  height: 50vh;
+  
 }
 @media only screen and (min-width: 800px) {
   .responsive-container {
@@ -627,6 +661,7 @@ li {
   .header-container {
     position: fixed;
     top: 0;
+    
   }
   .text-bubbles-container {
     height: auto;
@@ -634,6 +669,7 @@ li {
     flex-direction: column;
     gap: 7em;
     /* outline:20px solid red; */
+    margin-bottom: 10%;
   }
   /* .opponent-phrase {
     font-size: 200%;
@@ -707,7 +743,7 @@ li {
 
 .mobile-keyboard {
   width: 100%;
-  height: 35vh;
+  height: 35%;
   /* height: 35%;
   position-absolute; */
   /* border: 2px solid red; */

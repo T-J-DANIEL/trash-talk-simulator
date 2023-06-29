@@ -1,7 +1,7 @@
 import { useGlobalContext } from "../../../context"
 import ModalContainer from "../ModalContainer"
 import HowToPlay from "./HowToPlay"
-
+import CountDownScreen from "./CountDownScreen"
 const MainStartScreen = () => {
   const {
     setIsNewGame,
@@ -17,11 +17,14 @@ const MainStartScreen = () => {
     setIsMusicOn,
     setIsSoundOn,
     setIsCapsLockOn,
+    startCountDown,
+    countDownMode,
   } = useGlobalContext()
   return (
     <>
       {showHowTo && <HowToPlay />}
-      {!showHowTo && (
+      {countDownMode && <CountDownScreen />}
+      {!showHowTo && !countDownMode && (
         <>
           <div className="modal-section">
             <div className="title-container">
@@ -152,14 +155,15 @@ const MainStartScreen = () => {
               onMouseDown={isSoundOn && button_pop}
               onMouseUp={isSoundOn && button_push}
               onClick={(e) => {
-                setIsNewGame(false)
+                // setIsNewGame(false)
                 // e.getModifierState("CapsLock")
                 //   ? console.log("true")
                 //   : console.log("false")
                 e.getModifierState("CapsLock")
                   ? setIsCapsLockOn(true)
                   : setIsCapsLockOn(false)
-                startGame()
+                // startGame()
+                startCountDown()
               }}
             >
               START

@@ -10,6 +10,8 @@ const Header = () => {
     button_push,
     lives,
     setIsCapsLockOn,
+    oppAttackSuccess,
+    gameRunning,
   } = useGlobalContext()
   return (
     <div className="header-container">
@@ -18,13 +20,13 @@ const Header = () => {
           <button
             onClick={(e) => {
               e.getModifierState("CapsLock")
-              ? setIsCapsLockOn(true)
-              : setIsCapsLockOn(false)
+                ? setIsCapsLockOn(true)
+                : setIsCapsLockOn(false)
               displaySettings()
             }}
             onMouseDown={isSoundOn ? button_pop : undefined}
             onMouseUp={isSoundOn ? button_push : undefined}
-            >
+          >
             <div className="settings-button">
               <div className="settings-button-bar"></div>
               <div className="settings-button-bar"></div>
@@ -48,7 +50,11 @@ const Header = () => {
           <div className="header-component lives-container">
             <div className="button-container">
               {Array.from({ length: [lives] }).map((_) => (
-                <div className="lives-left"></div>
+                <div
+                  className={`lives-left ${oppAttackSuccess && "flash"} ${
+                    !gameRunning && `paused`
+                  }`}
+                ></div>
               ))}
               {Array.from({ length: [3 - lives] }).map((_) => (
                 <div className="lives-left lives-lost"></div>

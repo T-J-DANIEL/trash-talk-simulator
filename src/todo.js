@@ -1,21 +1,20 @@
 //TODO TASKS and features to add no styling:
-//mobile keyboard or solution
-//finalise bubble position
-    //scoring instant points and also order of feedback (message blanks before end of phase) and streak
-// countdown, pausable on start
-//svgs
+//mobile keyboard, focus on input open device keyboard when not needed
+//streak box styling
+//finalize bubble position (maybe use clamp) text-wrap balanced
+//add exclamation point feather
+//scoring instant points and also order of feedback (message blanks before end of phase) and streak
+//keyboard optional button
+// what happens when you pause just before running out of time?test
+//svg's
 //animations
 //google cloud voices api
-//add excalmation pooint dfeather
-//final touches (sounds and styles)
-//keyboard optionakll button
-//streaks
+//final touches (sounds and styles) and attributions
+//keyborad not fully disabled DURNG COUNTDOWEN??
 
 
-//Add svgs for lives
-//conditionals AND START MENU SYSTERNMM
 
-//displayText state value in conetx uysed for caps lock signifier?
+
 //timer
 //time running out fn
 //bug fixes 

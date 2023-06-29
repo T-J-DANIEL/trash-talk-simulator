@@ -7,12 +7,13 @@ const MobileKey = ({keyValue,extraClass}) => {
     focusInput,
     isMobileShift,
     setIsMobileShift,
+    isInputDisabled
   } = useGlobalContext()
   const key = isMobileShift ? keyValue.toUpperCase() : keyValue
   return (
     <button
-      className={`mobile-key ${keyValue === " " && "spaceBar"} ${
-        extraClass}`}
+      disabled={isInputDisabled}
+      className={`mobile-key ${keyValue === " " && "spaceBar"} ${extraClass}`}
       onClick={() => {
         focusInput.current.value = focusInput.current.value + key
         setUserText(

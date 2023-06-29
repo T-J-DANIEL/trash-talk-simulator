@@ -11,15 +11,17 @@ import MobileKeyboard from "./mobileKeyboard/MobileKeyboard"
 // import ReactPlayer from "react-player"
 // //react youtube player npm package
 // import music from "../sounds/music.mp3"
+import useGameState from "../hooks/useGameState"
 import { useGlobalContext } from "../context"
 
 import PauseGameModal from "./modals/pause/PauseGameModal"
-
+import mobileCheck from "../mobileCheck"
 const MainPage = () => {
   
   const { showPauseScreen, isNewGame, gameEnded } = useGlobalContext()
   //imported state properties
-
+  useGameState()
+  mobileCheck()
   return (
     <>
       <PortraitOnly />

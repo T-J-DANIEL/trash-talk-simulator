@@ -16,6 +16,7 @@ import useSound from "use-sound"
 import user_success from "./sounds/user_success.mp3"
 import opp_attack_success from "./sounds/opp_attack_success.mp3"
 import streak_sound from "./sounds/streak_sound.mp3"
+//remove countdown below
 import threeSec_countdown from "./sounds/3s_countdown.mp3"
 import button_pop_up from "./sounds/button_pop_up.mp3"
 import button_push_down from "./sounds/button_push_down.mp3"
@@ -35,12 +36,6 @@ const useGlobalContext = () => {
 }
 //context provider
 const AppContextProvider = ({ children }) => {
-  //<><><><><><><> //VIDEO BACKGROUND STATE VALUES\\ <><><><><><><>
-  const yeOldeVid = "https://www.youtube.com/watch?v=5L-4xVyUKqo"
-  // const ogGamerVid = "https://www.youtube.com/watch?v=sVYyjr84ZXI"
-  // const yeOldeVid = "#"
-  const ogGamerVid = "#"
-
   //<><><><><><><> //SOUNDS FUNCTIONS/STATE VALUES\\ <><><><><><><>
   const [isSoundOn, setIsSoundOn] = useState(true)
   const [isMusicOn, setIsMusicOn] = useState(false)
@@ -100,22 +95,22 @@ const AppContextProvider = ({ children }) => {
   }
 
   //<><><><><><><> //GAME-PLAY STATE VALUES\\ <><><><><><><>
-  //'yeolde' mode
-  const [isYeOlde, setIsYeOlde] = useState(true)
   const [isNewGame, setIsNewGame] = useState(true)
   //has game run before or not?
   const [isFirstGame, setIsFirstGame] = useState(true)
   const [showHowTo, setShowHowTo] = useState(false)
   const [showAttributions, setShowAttributions] = useState(false)
   const [showMobileKeyboard, setShowMobileKeyboard] = useState(false)
-  
+
   //is game in progress?
   const [gameRunning, setGameRunning] = useState(false)
   //has game ended?
   const [gameEnded, setGameEnded] = useState(false)
-  const [gameState, setGameState] = useState("loading")
-  //TODO whats this?
+  const [gameState, setGameState] = useState("splashScreen")
+  const [countDown,setCountDown] = useState("3")
+  const [countDownMode,setCountDownMode] = useState(false)
   const [shared, setShared] = useState(false)
+  //TODO do I need this?
   //current available list of phrases
   const getPhrases = () => {
     //FUNCTION TO OPTIONALLY RENDER PHRASES DEPENDING ON THEME
@@ -131,13 +126,11 @@ const AppContextProvider = ({ children }) => {
   //SETTINGS menu showing?
   const [showPauseScreen, setShowPauseScreen] = useState(false)
   const [confirmEndGame, setConfirmEndGame] = useState(false)
-  //<><><><><><><> //TIME SYNCHRO VALUES\\ <><><><><><><>
-  const timerId = useRef("helloe")
 
-  // TODO let timerId = null?
+  //<><><><><><><> //TIME SYNCHRO VALUES\\ <><><><><><><>
+  const timerId = useRef("NONE")
   const [start, setStart] = useState(0)
   const [remaining, setRemaining] = useState(0)
-  // const [st, setSt] = useState("0")
 
   //<><><><><><><> //USER STATE VALUES\\ <><><><><><><>
   //current selected phrase
@@ -172,13 +165,13 @@ const AppContextProvider = ({ children }) => {
   //user has attacked
   const [userAttacked, setUserAttacked] = useState(false)
   //is user input disabled?
-  const [isInputDisabled, setIsInputDisabled] = useState(false)
+  const [isInputDisabled, setIsInputDisabled] = useState(true)
   //User input focus ref
   const focusInput = useRef(null)
   // How many lives left
   const [lives, setLives] = useState(3)
   // is mobile tab button engaged
-  const [isMobileShift,setIsMobileShift] = useState(false)
+  const [isMobileShift, setIsMobileShift] = useState(false)
   //<><><><><><><> //OPPONENT STATE VALUES\\ <><><><><><><>
   //opponent has succesfully attacked
   const [oppAttacked, setOppAttacked] = useState(false)
@@ -232,9 +225,9 @@ const AppContextProvider = ({ children }) => {
     //clear users text box, ready for new input
     setUserText("")
   }
-  const [userArray, setUserArray] = useState([])
-  const [testArray, setTestArray] = useState([])
-  const [spaces, setSpaces] = useState("0")
+  // const [userArray, setUserArray] = useState([])
+  // const [testArray, setTestArray] = useState([])
+  // const [spaces, setSpaces] = useState("0")
   const lastLetterRef = useRef(null)
   // Function to compare values of user text typed text with the current phrase
   const compareValues = (userTyping) => {
@@ -261,6 +254,7 @@ const AppContextProvider = ({ children }) => {
     )
     const newMatches = testArray.reduce(
       (total, item, currentIndex) => {
+        console.log("initial total", total, "visualMatches", visualMatches)
         if (userArray[currentIndex]) {
           if (userArray[currentIndex] === item) {
             if (item !== `_` && testArray[currentIndex + 1] !== `_`) {
@@ -274,11 +268,12 @@ const AppContextProvider = ({ children }) => {
               )
               total.push([])
             }
-            if (item === `_`)
+            if (item === `_`) {
               total[total.length - 1].push(
                 <span className={`green space`}>{item}</span>
               )
-            total.push([])
+              total.push([])
+            }
           } else {
             if (item !== `_` && testArray[currentIndex + 1] !== `_`) {
               total[total.length - 1].push(
@@ -326,6 +321,7 @@ const AppContextProvider = ({ children }) => {
                 {item}
               </span>
             )
+            console.log("letter ref", total)
             total.push([])
           }
           if (item === `_`) {
@@ -343,12 +339,15 @@ const AppContextProvider = ({ children }) => {
                 {item}
               </span>
             )
+            console.log("letter ref2", total)
             total.push([])
           }
         }
+        // possible problem here
         if (currentIndex === testArray.length - 1) {
           return total.map((item) => <span>{item}</span>)
         }
+        console.log(total)
         return total
       },
       [[]]
@@ -454,6 +453,34 @@ const AppContextProvider = ({ children }) => {
 
   //<><><><><><><> //GAMESTATE FUNCTIONS\\ <><><><><><><>
   //Function to set new game conditions
+  const startCountDown = () => {
+    setCountDownMode(true)
+    // setGameEnded(false)
+    //clear any timers
+    // setTimerExists(false)
+    //game in progress
+    // setGameRunning(true)
+    //reset user text
+    // setUserText("")
+    //re enable text input
+    // setIsInputDisabled(false)
+    //clear score
+    setScore(0)
+    //clear multiplier chain
+    setStreak(0)
+    // start a game timer 30s?
+    // mountRunning()
+    //set up 1st suggestion/opponent
+    // newPhrases()
+    //reset new high score
+    setNewHigh(false)
+    //Start Attack timer
+    setGameState("countDown3")
+    // isMusicOn && playMusic()
+    setLives(3)
+    console.log(gameState)
+    // timerInterval = setInterval(decrementGameTimer, 1000)
+  }
   const startGame = () => {
     setGameEnded(false)
     //clear any timers
@@ -461,25 +488,26 @@ const AppContextProvider = ({ children }) => {
     //game in progress
     setGameRunning(true)
     //reset user text
-    setUserText("")
+    // setUserText("")
     //re enable text input
     setIsInputDisabled(false)
     //clear score
-    setScore(0)
+    // setScore(0)
     //clear multiplier chain
-    setStreak(0)
+    // setStreak(0)
     // start a game timer 30s?
     mountRunning()
     //set up 1st suggestion/opponent
     newPhrases()
     //reset new high score
-    setNewHigh(false)
+    // setNewHigh(false)
     //Start Attack timer
-    setGameState("start")
+    // setGameState("start")
     isMusicOn && playMusic()
-    setLives(3)
+    // setLives(3)
     console.log(gameState)
     // timerInterval = setInterval(decrementGameTimer, 1000)
+    focusInput.current.focus()
   }
 
   //Function to set end game conditions
@@ -729,10 +757,10 @@ const AppContextProvider = ({ children }) => {
 
   const [esc, setEsc] = useState(null)
   useEffect(() => {
-    if (gameRunning && !gameEnded) {
+    if ((countDownMode||gameRunning) && !gameEnded) {
       if (isSoundOn) {
         button_pop()
-        button_push()
+        // button_push()
       }
       displaySettings()
       pauseGame()
@@ -827,7 +855,7 @@ const AppContextProvider = ({ children }) => {
   }
   //Ueseffect to handle pausing when page focus is lost
   useEffect(() => {
-    if (gameState === "start") {
+    if (gameState === "start"||countDownMode) {
       window.addEventListener("blur", pauseOnFocusLoss)
       console.log("event listener added")
     }
@@ -895,8 +923,6 @@ const AppContextProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         // testGameTimer,
-        isYeOlde,
-        setIsYeOlde,
         clickSound,
         userText,
         setUserText,
@@ -927,8 +953,8 @@ const AppContextProvider = ({ children }) => {
         pauseResume,
         startGame,
         endGame,
-        yeOldeVid,
-        ogGamerVid,
+        // yeOldeVid,
+        // ogGamerVid,
         visualMatches,
         streak,
         streakArray,
@@ -992,6 +1018,12 @@ const AppContextProvider = ({ children }) => {
         setShowAttributions,
         showMobileKeyboard,
         setShowMobileKeyboard,
+        setStreak,
+        countDown,
+        setCountDown,
+        countDownMode,
+        setCountDownMode,
+        startCountDown,
       }}
     >
       {children}

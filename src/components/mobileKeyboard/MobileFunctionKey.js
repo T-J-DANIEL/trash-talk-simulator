@@ -8,10 +8,12 @@ const MobileFunctionKey = ({ keyValue}) => {
     isMobileShift,
     setIsMobileShift,
     scoreHandler,
+    isInputDisabled,
   } = useGlobalContext()
 
   return (
     <button
+      disabled={isInputDisabled}
       className={`mobile-function-key mobile-function-${keyValue}`}
       onClick={() => {
         if (keyValue === "shift") setIsMobileShift(!isMobileShift)

@@ -143,10 +143,11 @@ input[type="checkbox"]:checked {
 }
 .share-button {
   background-color: rgb(117, 240, 137);
-  margin-top: 1em;
+  /* margin-top: 1em; */
   letter-spacing: 1px;
   font-size: 1rem;
   color: #fff;
+  /* width: 4em; */
 }
 .cache-info {
   width: 60ch;
@@ -171,9 +172,11 @@ input[type="checkbox"]:checked {
 
 .shared-success {
   background-color: rgb(49, 240, 10);
-  font-size: 0.91rem;
+  font-size: 0.2rem;
   box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
-  margin: 0.7em 0;
+  /* width: max-content; */
+  /* margin: 0.7em 0; */
+  /* overflow: hidden; */
 }
 
 .shakespearean {
@@ -252,17 +255,46 @@ input[type="checkbox"]:checked {
 
 .score-container {
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   flex-wrap: nowrap;
-  width: 20em;
+  width: 100%;
+  /* gap: 1em; */
+  margin: .5em 0;
+ 
 }
-.score-container:last-child {
-  margin: 0;
+
+.score-container *{
+   font-size: .95rem;
+   margin: 0;
 }
 
 @media only screen and (min-width: 700px) {
   .mobile-hidden {
     display: block;
+  }
+}
+.count-down-container{
+  width: 7em;
+  height: 7em;
+}
+/* .paused {
+  animation-play-state: paused;
+} */
+.count-down{
+  animation-name: pulse;
+  animation-duration: 990ms;
+  /* animation-play-state: running;  */
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  transform-origin: center;
+  text-align: center;
+}
+@keyframes pulse {
+  0%{
+    transform: scale(30%);
+  }
+  100%{
+    transform: scale(150%);
   }
 }
 /* @media only screen 

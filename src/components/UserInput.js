@@ -6,7 +6,7 @@ import SpeechBubbleTail from "../SpeechBubbleTail"
 import ThoughtBubbleTrail from "./ThoughtBubbleTrail"
 //component for user's input
 //TODO too much imported all over the place take a look a this stuff everywhere
-import useGameState from "../hooks/useGameState"
+// import useGameState from "../hooks/useGameState"
 import PlaceholderAvatar from "./PlaceHolderAvatar"
 const UserInput = () => {
   const {
@@ -42,8 +42,9 @@ const UserInput = () => {
     setIsCapsLockOn,
     displayText,
     capsRef,
+    streakArray,
   } = useGlobalContext()
-  useGameState()
+  // useGameState()
   // successfulAttack
   return (
     <div className="user-container">
@@ -71,7 +72,7 @@ const UserInput = () => {
           {/* {interleave(wrappedIdea, <span>&nbsp;</span>)} */}
           {/* {wrappedIdea} */}
           {visualMatches}
-          {/* {console.log(wrappedIdea)} */}
+          {/* {console.log(visualMatches.forEach(item=>item.innerHTML))} */}
           {/* <span>{isCapsLockOn && "capsLockOn"}</span> */}
         </div>
         {/* </div> */}
@@ -82,6 +83,7 @@ const UserInput = () => {
           // placeholder={currentPhrase}
           value={userText}
           ref={focusInput}
+          maxLength={currentPhrase.length}
           onBlur={() => {
             focusInput.current.focus()
           }}
@@ -100,15 +102,17 @@ const UserInput = () => {
           }}
           disabled={isInputDisabled}
         ></input>
-        {/* <h2 className="modal-sub-heading">Streak</h2> */}
-        {/* {<div className="">{streakArray ? streakArray : "-"}</div>} */}
+       
+        <div className="streak-box">{streakArray? <div className="">{streakArray}</div>:"-"}</div>
+
+        
         <div className="user-avatar-container">
-          <ThoughtBubbleTrail
+          {/* <ThoughtBubbleTrail
             classInfo={`user-thought-bubble-tail ${
               userAttacked && "opp-attack-success"
             }`}
-          />
-          <PlaceholderAvatar classInfo={"placeholder-avatar user-avatar"} />
+          /> */}
+          <PlaceholderAvatar classInfo={"user-avatar"} />
 
           <SpeechBubbleTail
             // classInfo={`user-speech-bubble-tail`}

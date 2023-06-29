@@ -12,6 +12,7 @@ const PauseScreen = () => {
     setConfirmEndGame,
     setIsCapsLockOn,
     closeSettings,
+    gameState,
   } = useGlobalContext()
   return (
     <>
