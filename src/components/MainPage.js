@@ -15,17 +15,19 @@ import useGameState from "../hooks/useGameState"
 import { useGlobalContext } from "../context"
 
 import PauseGameModal from "./modals/pause/PauseGameModal"
-import mobileCheck from "../mobileCheck"
+import useMobileCheck from "../useMobileCheck"
 const MainPage = () => {
   
-  const { showPauseScreen, isNewGame, gameEnded } = useGlobalContext()
+  const { showPauseScreen, isNewGame, gameEnded,setShowMobileKeyboard, showMobileKeyboard } =
+    useGlobalContext()
   //imported state properties
+  
   useGameState()
-  mobileCheck()
+  // useMobileCheck()
   return (
     <>
       <PortraitOnly />
-      {/* Displays message overlay if device is in portrait or height is lower than supported */}
+      {/* Displays message overlay if device in portrait or height is lower than supported */}
       {isNewGame && <StartGameModal />}
       {gameEnded && <GameOverModal />}
       {showPauseScreen && <PauseGameModal />}
@@ -35,7 +37,18 @@ const MainPage = () => {
           <Opponent />
           <UserInput />
         </div>
-        <MobileKeyboard />
+        {/* {showMobileKeyboard ? (
+          <button
+            onClick={() => {
+              setShowMobileKeyboard(false)
+            }}
+            className="show-keyboard-key"
+          >
+            Open mobile keyboard
+          </button>
+        ):(
+          ) } */}
+          <MobileKeyboard />
       </div>
     </>
   )

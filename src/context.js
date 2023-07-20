@@ -107,8 +107,8 @@ const AppContextProvider = ({ children }) => {
   //has game ended?
   const [gameEnded, setGameEnded] = useState(false)
   const [gameState, setGameState] = useState("splashScreen")
-  const [countDown,setCountDown] = useState("3")
-  const [countDownMode,setCountDownMode] = useState(false)
+  const [countDown, setCountDown] = useState("3")
+  const [countDownMode, setCountDownMode] = useState(false)
   const [shared, setShared] = useState(false)
   //TODO do I need this?
   //current available list of phrases
@@ -134,7 +134,7 @@ const AppContextProvider = ({ children }) => {
 
   //<><><><><><><> //USER STATE VALUES\\ <><><><><><><>
   //current selected phrase
-  const [currentPhrase, setCurrentPhrase] = useState("...")
+  const [currentPhrase, setCurrentPhrase] = useState(" ... ")
   //users typed text (controlled form)
   const [userText, setUserText] = useState("")
   //capslock status
@@ -163,7 +163,7 @@ const AppContextProvider = ({ children }) => {
   //is panic mode started
   const [panicMode, setPanicMode] = useState(false)
   //user has attacked
-  const [userAttacked, setUserAttacked] = useState(false)
+  const [userAttackSuccess, setUserAttackSuccess] = useState(false)
   //is user input disabled?
   const [isInputDisabled, setIsInputDisabled] = useState(true)
   //User input focus ref
@@ -404,9 +404,14 @@ const AppContextProvider = ({ children }) => {
   useEffect(() => {
     setStreakArray("")
     if (streak) {
-      setStreakArray(<div className="gold-coin gold-streak">{streak}X</div>)
+      //   setStreakArray(<div className="gold-coin gold-streak">{streak}X</div>)
+      //   setTimeout(() => {
+      //     setStreakArray(<div className="gold-coin">{streak}X</div>)
+      //   }, 1000)
+      // }
+      setStreakArray(true)
       setTimeout(() => {
-        setStreakArray(<div className="gold-coin">{streak}X</div>)
+        setStreakArray(false)
       }, 1000)
     }
   }, [streak])
@@ -507,7 +512,7 @@ const AppContextProvider = ({ children }) => {
     // setLives(3)
     console.log(gameState)
     // timerInterval = setInterval(decrementGameTimer, 1000)
-    focusInput.current.focus()
+    !showMobileKeyboard && focusInput.current.focus()
   }
 
   //Function to set end game conditions
@@ -627,6 +632,7 @@ const AppContextProvider = ({ children }) => {
   useEffect(() => {
     !showPauseScreen &&
       (gameState === "start" || "resume") &&
+      !showMobileKeyboard &&
       focusInput.current.focus()
   }, [showPauseScreen, gameState])
   // useEffect(() => {
@@ -664,12 +670,12 @@ const AppContextProvider = ({ children }) => {
   //           setGameState("start")
   //           //start new scroll animation
   //         }, remaining)
-  //       } else if (userAttacked) {
+  //       } else if (userAttackSuccess) {
   //         //    TODO can make this into a function
   //         //timeout to end attack phase,set with remaining time
   //         timerId.current = setTimeout(() => {
   //           console.log("resumed")
-  //           setUserAttacked(false)
+  //           setUserAttackSuccess(false)
   //           setIsInputDisabled(false)
   //           newPhrases()
   //           setGameState("start")
@@ -714,14 +720,14 @@ const AppContextProvider = ({ children }) => {
   //       //TODO REFACTOR into function
   //       clearTimeout(timerId.current)
   //       //userAttck animation (pausable)
-  //       setUserAttacked(true)
+  //       setUserAttackSuccess(true)
   //       //opp has been attacked true
   //       //disable use input (pause does not effect this)
   //       setIsInputDisabled(true)
   //       setStart(Date.now())
   //       setRemaining(2000)
   //       timerId.current = setTimeout(() => {
-  //         setUserAttacked(false)
+  //         setUserAttackSuccess(false)
   //         setIsInputDisabled(false)
   //         newPhrases()
   //         setGameState("start")
@@ -738,7 +744,7 @@ const AppContextProvider = ({ children }) => {
   //       setRemaining(0)
   //       clearTimeout(timerId.current)
   //       setOppAttackSuccess(false)
-  //       setUserAttacked(false)
+  //       setUserAttackSuccess(false)
   //       //TODO shoudl this be in startgame?
   //       break
   //     default:
@@ -757,7 +763,7 @@ const AppContextProvider = ({ children }) => {
 
   const [esc, setEsc] = useState(null)
   useEffect(() => {
-    if ((countDownMode||gameRunning) && !gameEnded) {
+    if ((countDownMode || gameRunning) && !gameEnded) {
       if (isSoundOn) {
         button_pop()
         // button_push()
@@ -855,7 +861,7 @@ const AppContextProvider = ({ children }) => {
   }
   //Ueseffect to handle pausing when page focus is lost
   useEffect(() => {
-    if (gameState === "start"||countDownMode) {
+    if (gameState === "start" || countDownMode) {
       window.addEventListener("blur", pauseOnFocusLoss)
       console.log("event listener added")
     }
@@ -964,8 +970,8 @@ const AppContextProvider = ({ children }) => {
         responseTime,
         setResponseTime,
         changeDifficulty,
-        userAttacked,
-        setUserAttacked,
+        userAttackSuccess,
+        setUserAttackSuccess,
         gameRunning,
         timerId,
         start,
@@ -1024,6 +1030,7 @@ const AppContextProvider = ({ children }) => {
         countDownMode,
         setCountDownMode,
         startCountDown,
+        endSound,
       }}
     >
       {children}

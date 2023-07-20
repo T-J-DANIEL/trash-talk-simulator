@@ -21,6 +21,7 @@ const useGameState = () => {
     setStart,
     isSoundOn,
     // playOppWritingSound,
+    endSound,
     setRemaining,
     remaining,
     start,
@@ -29,7 +30,7 @@ const useGameState = () => {
     oppAttackSuccess,
     setOppAttackSuccess,
     setIsInputDisabled,
-    userAttacked,
+    userAttackSuccess,
     endGame,
     setLives,
     lives,
@@ -37,9 +38,9 @@ const useGameState = () => {
     button_push,
     newPhrases,
     setUserText,
+    setUserAttackSuccess,
     // exposedData,
     musicFunctions,
-    setUserAttacked,
     panicMode,
     setPanicMode,
     setStreak,
@@ -110,7 +111,7 @@ const useGameState = () => {
     }, 500)
     setStart(Date.now())
     setRemaining(1000)
-    isSoundOn && button_push()
+    isSoundOn && endSound()
   }
 
   const startState = () => {
@@ -168,7 +169,7 @@ const useGameState = () => {
         startGame()
         setCountDown("3")
         setIsNewGame(false)
-        isSoundOn && button_push()
+        isSoundOn && endSound()
       }, remaining)
     } else if (oppAttackSuccess) {
       isMusicOn && playMusic()
@@ -181,13 +182,13 @@ const useGameState = () => {
         setGameState("start")
         //start new scroll animation
       }, remaining)
-    } else if (userAttacked) {
+    } else if (userAttackSuccess) {
       isMusicOn && playMusic()
       //    TODO can make this into a function
       //timeout to end attack phase,set with remaining time
       timerId.current = setTimeout(() => {
         console.log("resumed")
-        setUserAttacked(false)
+        setUserAttackSuccess(false)
         setIsInputDisabled(false)
         newPhrases()
         setGameState("start")
@@ -249,14 +250,14 @@ const useGameState = () => {
     speak()
     clearTimeout(timerId.current)
     //userAttck animation (pausable)
-    setUserAttacked(true)
+    setUserAttackSuccess(true)
     //opp has been attacked true
     //disable use input (pause does not effect this)
     setIsInputDisabled(true)
     setStart(Date.now())
     setRemaining(2000)
     timerId.current = setTimeout(() => {
-      setUserAttacked(false)
+      setUserAttackSuccess(false)
       setIsInputDisabled(false)
       newPhrases()
       setGameState("start")
@@ -275,7 +276,7 @@ const useGameState = () => {
     setRemaining(0)
     clearTimeout(timerId.current)
     setOppAttackSuccess(false)
-    setUserAttacked(false)
+    setUserAttackSuccess(false)
     //TODO shoudl this be in startgame?
   }
 
@@ -362,12 +363,12 @@ export default useGameState
 //           setGameState("start")
 //           //start new scroll animation
 //         }, remaining)
-//       } else if (userAttacked) {
+//       } else if (userAttackSuccess) {
 //         //    TODO can make this into a function
 //         //timeout to end attack phase,set with remaining time
 //         timerId.current = setTimeout(() => {
 //           console.log("resumed")
-//           setUserAttacked(false)
+//           setUserAttackSuccess(false)
 //           setIsInputDisabled(false)
 //           newPhrases()
 //           setGameState("start")
@@ -411,14 +412,14 @@ export default useGameState
 //       //TODO REFACTOR into function
 //       clearTimeout(timerId.current)
 //       //userAttck animation (pausable)
-//       setUserAttacked(true)
+//       setUserAttackSuccess(true)
 //       //opp has been attacked true
 //       //disable use input (pause does not effect this)
 //       setIsInputDisabled(true)
 //       setStart(Date.now())
 //       setRemaining(2000)
 //       timerId.current = setTimeout(() => {
-//         setUserAttacked(false)
+//         setUserAttackSuccess(false)
 //         setIsInputDisabled(false)
 //         newPhrases()
 //         setGameState("start")
@@ -435,7 +436,7 @@ export default useGameState
 //       setRemaining(0)
 //       clearTimeout(timerId.current)
 //       setOppAttackSuccess(false)
-//       setUserAttacked(false)
+//       setUserAttackSuccess(false)
 //       //TODO shoudl this be in startgame?
 //       break
 //     default:

@@ -135,7 +135,7 @@ const MainStartScreen = () => {
                 onMouseDown={isSoundOn && button_pop}
                 onMouseUp={isSoundOn && button_push}
                 //TODO hide when mobile
-                className={`button shakespearean ${
+                className={`button shakespearean-button ${
                   level === "shakespearean"
                     ? "selected-shakespearean"
                     : "unselected-button"

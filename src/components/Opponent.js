@@ -8,8 +8,8 @@ const Opponent = () => {
     opponentPhrase,
     oppAttack,
     currentPhrase,
-    userAttacked,
-    setUserAttacked,
+    userAttackSuccess,
+    setUserAttackSuccess,
     gameRunning,
     // oppAttackTimer,
     oppAttackSuccess,
@@ -22,14 +22,21 @@ const Opponent = () => {
   //if a successful attack is initiated then we add the animate class to opponent (shake and color red)
   const attackClasses = `opponent ${oppAttack ? "animate" : ""}`
   // const textClasses = ` ${gameRunning ? `${level} play` : `${level} pause`}`
-  // TODO need to add opp attacked animation based on userAttacked
-
+  // TODO need to add opp attacked animation based on userAttackSuccess
   return (
     <div className="opp-container">
       <div
-        className={`opponent ${oppAttackSuccess && "show-speech"} ${
-          oppAttackSuccess && "successfulAttack"
-        }`}
+        // className={`opponent
+        // ${oppAttackSuccess && "successfulAttack"} ${userAttackSuccess?"animate":"opp-text-animation"} ${level}  ${!gameRunning && "paused"}
+        // `}
+        // className={`opponent  ${
+        //   !gameEnded && oppAttackSuccess
+        //     ? "successfulAttack"
+        //     : userAttackSuccess
+        //     ? "animate"
+        //     : "opp-text-animation"
+        // } ${level} ${!gameRunning && "paused"}`}
+        className={"opponent"}
       >
         {/* opp text box */}
 
@@ -41,28 +48,36 @@ const Opponent = () => {
           //   `${
           //     oppAttackSuccess
           //       ? "successfulAttack"
-          //       : userAttacked
+          //       : userAttackSuccess
           //       ? "animate"
           //       : `opp-text-animation ${level}`
           //   } ${!gameRunning && `paused`} `
           // }
         >
           <p
-            className={`opponent-phrase ${
-              !gameEnded && oppAttackSuccess
-                ? "successfulAttack"
-                : userAttacked
-                ? "animate"
-                : "opp-text-animation"
-            } ${level}
-             ${!gameRunning && "paused"}`}
+          // className={"opponent-phrase"}
+          className={`opponent-phrase ${
+            !gameEnded && oppAttackSuccess
+              ? "successfulAttack"
+              : userAttackSuccess
+              ? "animate"
+              : "opp-text-animation"
+          } ${level}
+           ${!gameRunning && "paused"}`}
           >
             {opponentPhrase}
           </p>
           <ThoughtCloud
             classInfo={`thought-bubble ${
-              oppAttackSuccess && "opp-attack-success"
-            }`}
+              oppAttackSuccess && "hide-on-opp-success"
+            } ${
+            !gameEnded && oppAttackSuccess
+              ? "successfulAttack"
+              : userAttackSuccess
+              ? "animate"
+              : "opp-text-animation"
+          } ${level}
+           ${!gameRunning && "paused"}`}
           />
           <OppAvatar />
         </div>

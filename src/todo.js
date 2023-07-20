@@ -1,11 +1,18 @@
 //TODO TASKS and features to add no styling:
+
+//bad good perfect under input WITH NEGATIVE ANIMATION FOR STREAK
 //mobile keyboard, focus on input open device keyboard when not needed
-//streak box styling
+
 //finalize bubble position (maybe use clamp) text-wrap balanced
 //add exclamation point feather
 //scoring instant points and also order of feedback (message blanks before end of phase) and streak
 //keyboard optional button
-// what happens when you pause just before running out of time?test
+//test
+    // what happens when you pause just before running out of time?
+    //end game during countdown seems to mess it up
+    //modal background not full screen oin mobile
+    //text is selcetable draggable in menus
+    //SIZE DOWN CLOUDS BASED ION KEYBOARD IS OPEN
 //svg's
 //animations
 //google cloud voices api

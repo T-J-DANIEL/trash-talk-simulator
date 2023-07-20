@@ -10,8 +10,8 @@ const OppAvatar = () => {
     opponentPhrase,
     oppAttack,
     currentPhrase,
-    userAttacked,
-    setUserAttacked,
+    userAttackSuccess,
+    setUserAttackSuccess,
     gameRunning,
     // oppAttackTimer,
     oppAttackSuccess,
@@ -22,16 +22,16 @@ const OppAvatar = () => {
   } = useGlobalContext()
   return (
     <div className="opp-avatar-container">
-      {/* {userAttacked && <Hitmarker />} */}
+      {/* {userAttackSuccess && <Hitmarker />} */}
       <SpeechBubbleTail
         classInfo={`speech-bubble-tail ${
-          !oppAttackSuccess && "opp-attack-success"
+          !oppAttackSuccess && "hide-on-opp-success"
         }`}
       />
       <PlaceHolderAvatar classInfo={"opp-avatar"} />
       {/* <ThoughtBubbleTrail
         classInfo={`thought-bubble-tail ${
-          oppAttackSuccess && "opp-attack-success"
+          oppAttackSuccess && "hide-on-opp-success"
         }`}
       /> */}
     </div>

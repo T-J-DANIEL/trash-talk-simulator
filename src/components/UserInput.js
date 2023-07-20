@@ -4,6 +4,7 @@ import Portrait from "./Portrait"
 import ThoughtCloud from "../ThoughtCloud"
 import SpeechBubbleTail from "../SpeechBubbleTail"
 import ThoughtBubbleTrail from "./ThoughtBubbleTrail"
+import StreakCoin from "./StreakCoin"
 //component for user's input
 //TODO too much imported all over the place take a look a this stuff everywhere
 // import useGameState from "../hooks/useGameState"
@@ -23,6 +24,8 @@ const UserInput = () => {
     score,
     setScore,
     newPhrases,
+    streak,
+    showMobileKeyboard,
     isInputDisabled,
     setIsinputDisabled,
     visualMatches,
@@ -33,7 +36,7 @@ const UserInput = () => {
     interleave,
     setIsNewGame,
     scoreHandler,
-    userAttacked,
+    userAttackSuccess,
     displaySettings,
     playTypingSound,
     isSoundOn,
@@ -51,75 +54,77 @@ const UserInput = () => {
       {/* <div
         className={`user-avatar-container ${
           oppAttackSuccess ? "animate" : ""
-        } ${userAttacked ? "successfulAttack" : ""} ${
+        } ${userAttackSuccess ? "successfulAttack" : ""} ${
           !gameRunning && "paused"
         }`}
       >
         <Portrait />
       </div> */}
-
-      <div className={`user-text-container ${userAttacked && "show-speech"}`}>
-        {/* classname above ^^^  */}
-        {/* <div className="suggestion"> */}
-        {/* <p>: {currentPhrase}</p> */}
-        <ThoughtCloud
-          classInfo={`user-thought-bubble ${
-            userAttacked && "opp-attack-success"
+      <div className="user">
+        <div
+          className={`user-text-container ${
+            userAttackSuccess && "show-speech"
           }`}
-        />
-        <div className="caps-lock-indicator">{isCapsLockOn && "CAPS"}</div>
-        <div className="visual-progress">
-          {/* {interleave(wrappedIdea, <span>&nbsp;</span>)} */}
-          {/* {wrappedIdea} */}
-          {visualMatches}
-          {/* {console.log(visualMatches.forEach(item=>item.innerHTML))} */}
-          {/* <span>{isCapsLockOn && "capsLockOn"}</span> */}
-        </div>
-        {/* </div> */}
-
-        <input
-          id="inputBox"
-          type={"text"}
-          // placeholder={currentPhrase}
-          value={userText}
-          ref={focusInput}
-          maxLength={currentPhrase.length}
-          onBlur={() => {
-            focusInput.current.focus()
-          }}
-          className="user-text-input"
-          // onkey up was deprecated replaced with onkeydown
-          onKeyDown={(e) => {
-            e.key === "Enter" && scoreHandler()
-          }}
-          // autoFocus
-          autoComplete="off"
-          spellCheck="false"
-          onChange={(e) => {
-            //each letter typed is checked for "_" or "-" and replaced
-            setUserText(e.target.value.replace(" ", "_").replace("-", "‑"))
-            compareValues(e.target.value.replace(" ", "_").replace("-", "‑"))
-          }}
-          disabled={isInputDisabled}
-        ></input>
-       
-        <div className="streak-box">{streakArray? <div className="">{streakArray}</div>:"-"}</div>
-
-        
-        <div className="user-avatar-container">
-          {/* <ThoughtBubbleTrail
-            classInfo={`user-thought-bubble-tail ${
-              userAttacked && "opp-attack-success"
-            }`}
-          /> */}
-          <PlaceholderAvatar classInfo={"user-avatar"} />
-
-          <SpeechBubbleTail
-            // classInfo={`user-speech-bubble-tail`}
-            classInfo={`user-speech-bubble-tail ${
-              !userAttacked && "opp-attack-success"
+        >
+          {/* classname above ^^^  */}
+          {/* <div className="suggestion"> */}
+          {/* <p>: {currentPhrase}</p> */}
+          <ThoughtCloud
+            classInfo={`user-thought-bubble ${
+              userAttackSuccess && "hide-on-opp-success"
             }`}
           />
+          <div className="caps-lock-indicator">
+            {isCapsLockOn && "CAPS LOCK"}
+          </div>
+          <div className="visual-progress">
+            {/* {interleave(wrappedIdea, <span>&nbsp;</span>)} */}
+            {/* {wrappedIdea} */}
+            {visualMatches}
+            {/* {console.log(visualMatches.forEach(item=>item.innerHTML))} */}
+            {/* <span>{isCapsLockOn && "capsLockOn"}</span> */}
+          </div>
+          {/* </div> */}
+          <input
+            id="inputBox"
+            type={"text"}
+            // placeholder={currentPhrase}
+            value={userText}
+            ref={focusInput}
+            maxLength={currentPhrase.length}
+            onBlur={() => {
+              !showMobileKeyboard && focusInput.current.focus()
+            }}
+            className="user-text-input"
+            // onkey up was deprecated replaced with onkeydown
+            onKeyDown={(e) => {
+              e.key === "Enter" && scoreHandler()
+            }}
+            // autoFocus
+            autoComplete="off"
+            spellCheck="false"
+            onChange={(e) => {
+              //each letter typed is checked for "_" or "-" and replaced
+              setUserText(e.target.value.replace(" ", "_").replace("-", "‑"))
+              compareValues(e.target.value.replace(" ", "_").replace("-", "‑"))
+            }}
+            disabled={isInputDisabled}
+          ></input>
+          <StreakCoin streak={streak} streakArray={streakArray} />
+          <div className="user-avatar-container">
+            {/* <ThoughtBubbleTrail
+              classInfo={`user-thought-bubble-tail ${
+                userAttackSuccess && "hide-on-opp-success"
+              }`}
+            /> */}
+            <PlaceholderAvatar classInfo={"user-avatar"} />
+            <SpeechBubbleTail
+              // classInfo={`user-speech-bubble-tail`}
+              classInfo={`user-speech-bubble-tail ${
+                !userAttackSuccess && "hide-on-opp-success"
+              }`}
+            />
+          </div>
         </div>
       </div>
       {/* <div className="feather-position-user">
@@ -145,7 +150,7 @@ export default UserInput
 //   <div
       //   className={`user-scroll-container ${
       //     oppAttackSuccess ? "animate" : ""
-      //   } ${userAttacked ? "successfulAttack" : ""} ${
+      //   } ${userAttackSuccess ? "successfulAttack" : ""} ${
       //     !gameRunning && "paused"
       //   }`}
       // >

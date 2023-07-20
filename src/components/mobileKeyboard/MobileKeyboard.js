@@ -3,12 +3,17 @@ import { useGlobalContext } from "../../context"
 import MobileKey from "./MobileKey"
 import MobileFunctionKey from "./MobileFunctionKey"
 const MobileKeyboard = () => {
-  const { showMobileKeyboard, setShowMobileKeyboard } = useGlobalContext()
+  const {showMobileKeyboard,setShowMobileKeyboard } = useGlobalContext()
   return (
-    <div className="mobile-keyboard">
-      <button onClick={()=>{
-        setShowMobileKeyboard(false)
-      }} className="show-keyboard-key">X</button>
+    <div className={`mobile-keyboard ${showMobileKeyboard && "hide" }`}>
+      <button
+        onClick={() => {
+          setShowMobileKeyboard(true)
+        }}
+        className="hide-keyboard-key"
+      >
+        X
+      </button>
       <div className="mobile-keyboard-row">
         <MobileKey keyValue={"q"} />
         <MobileKey keyValue={"w"} />

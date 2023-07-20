@@ -237,7 +237,7 @@
   //   }, 20)
   //   //change the successful user attack state to false and clear the current countdown to attack and start a new countdown to attack all in order, 10ms difference
   //   setTimeout(() => {
-  //     setUserAttacked(false)
+  //     setUserAttackSuccess(false)
   //     clearTimeout(timerRef.current)
   //   }, 30)
   //   setTimeout(
@@ -247,8 +247,8 @@
   //       //currently at end of timer if  user has succesfully attacked then we set the user is attacked state to false if the not then we set it to true however we need to clear this time out if the user has succesfully attacked not check at end.
   //       let attackTimer = setTimeout(() => {
   //         oppAttack === true
-  //           ? setUserAttacked(false)
-  //           : setUserAttacked(true)
+  //           ? setUserAttackSuccess(false)
+  //           : setUserAttackSuccess(true)
   //         console.log("attack")
   //       }, responseTime)
   //       // attach current timer to timer ref

@@ -13,8 +13,8 @@ const MobileKey = ({keyValue,extraClass}) => {
   return (
     <button
       disabled={isInputDisabled}
-      className={`mobile-key ${keyValue === " " && "spaceBar"} ${extraClass}`}
-      onClick={() => {
+      className={`mobile-key ${keyValue === " " && "spaceBar"} ${extraClass}` }
+      onTouchStart ={() => {
         focusInput.current.value = focusInput.current.value + key
         setUserText(
           focusInput.current.value.replace(" ", "_").replace("-", "‑")
