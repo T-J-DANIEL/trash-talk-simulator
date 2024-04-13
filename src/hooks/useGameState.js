@@ -232,6 +232,7 @@ const useGameState = () => {
     setStreak(0)
     setStart(Date.now())
     setRemaining(2000)
+    setPanicMode(false)
     isSoundOn && failSound()
     timerId.current = setTimeout(() => {
       setOppAttackSuccess(false)
@@ -256,6 +257,8 @@ const useGameState = () => {
     setIsInputDisabled(true)
     setStart(Date.now())
     setRemaining(2000)
+    // panic mode testing
+    setPanicMode(false)
     timerId.current = setTimeout(() => {
       setUserAttackSuccess(false)
       setIsInputDisabled(false)

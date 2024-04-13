@@ -15,7 +15,7 @@ import useGameState from "../hooks/useGameState"
 import { useGlobalContext } from "../context"
 
 import PauseGameModal from "./modals/pause/PauseGameModal"
-import useMobileCheck from "../useMobileCheck"
+// import useMobileCheck from "../useMobileCheck"
 const MainPage = () => {
   
   const { showPauseScreen, isNewGame, gameEnded,setShowMobileKeyboard, showMobileKeyboard } =
@@ -36,6 +36,14 @@ const MainPage = () => {
         <div className="text-bubbles-container">
           <Opponent />
           <UserInput />
+          <button
+            onClick={() => {
+              setShowMobileKeyboard(prev=>!prev)
+            }}
+            className="hide-keyboard-key"
+          >
+            X
+          </button>
         </div>
         {/* {showMobileKeyboard ? (
           <button
@@ -48,7 +56,8 @@ const MainPage = () => {
           </button>
         ):(
           ) } */}
-          <MobileKeyboard />
+
+        <MobileKeyboard />
       </div>
     </>
   )

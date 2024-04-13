@@ -2,7 +2,8 @@ import React from "react"
 import Attributions from "../Attributions"
 import { useGlobalContext } from "../../../context"
 const LandingScreen = () => {
-  const { setIsFirstGame, showAttributions,setShowAttributions } = useGlobalContext()
+  const { setIsFirstGame, showAttributions, setShowAttributions } =
+    useGlobalContext()
   return (
     <>
       {showAttributions && <Attributions />}
@@ -38,11 +39,24 @@ const LandingScreen = () => {
                 className="button start-button first"
                 onClick={(e) => {
                   setIsFirstGame(false)
+                  if (window.innerWidth <= 600) {
+                    document.documentElement.requestFullscreen()
+                  }
                 }}
               >
                 Play!
               </button>
             </div>
+              <button
+                className="button "
+                onClick={(e) => {
+                  
+                    document.documentElement.requestFullscreen()
+                  
+                }}
+              >
+                Full <br/>Screen
+              </button>
           </div>
         </>
       )}

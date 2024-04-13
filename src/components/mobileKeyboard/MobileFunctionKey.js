@@ -14,7 +14,7 @@ const MobileFunctionKey = ({ keyValue}) => {
   return (
     <button
       disabled={isInputDisabled}
-      className={`mobile-function-key mobile-function-${keyValue}`}
+      className={`mobile-function-key mobile-function-${keyValue} ${isInputDisabled && "key-disabled"}`}
       onClick={() => {
         if (keyValue === "shift") setIsMobileShift(!isMobileShift)
         if (keyValue === "backSpace") {

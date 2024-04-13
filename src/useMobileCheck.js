@@ -10,12 +10,12 @@ const useMobileCheck = () => {
     //Conditional script here
     //mobileKeyboard true
     // alert("This is not a mobile device.")
-    setShowMobileKeyboard(true)
+    // setShowMobileKeyboard(true)
   } else {
     //The viewport is greater than 700 pixels wide
     //mobile keyboard false
     // setShowMobileKeyboard(false)
-    setShowMobileKeyboard(false)
+    // setShowMobileKeyboard(false)
   }
 }
 

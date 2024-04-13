@@ -5,12 +5,12 @@ import PlaceHolderAvatar from "./PlaceHolderAvatar"
 import ThoughtBubbleTrail from "./ThoughtBubbleTrail"
 //component for the opponent text display
 
-const OppAvatar = () => {
+const OppAvatar = ({userAttackSuccess}) => {
   const {
     opponentPhrase,
     oppAttack,
     currentPhrase,
-    userAttackSuccess,
+    // userAttackSuccess,
     setUserAttackSuccess,
     gameRunning,
     // oppAttackTimer,
@@ -22,13 +22,17 @@ const OppAvatar = () => {
   } = useGlobalContext()
   return (
     <div className="opp-avatar-container">
-      {/* {userAttackSuccess && <Hitmarker />} */}
+      {userAttackSuccess && <Hitmarker />}
       <SpeechBubbleTail
-        classInfo={`speech-bubble-tail ${
+        classInfo={`opp-speech-bubble-tail ${
           !oppAttackSuccess && "hide-on-opp-success"
         }`}
       />
-      <PlaceHolderAvatar classInfo={"opp-avatar"} />
+      <PlaceHolderAvatar
+        classInfo={`opp-avatar ${
+          userAttackSuccess && "opponent-defeat-animation"
+        }`}
+      />
       {/* <ThoughtBubbleTrail
         classInfo={`thought-bubble-tail ${
           oppAttackSuccess && "hide-on-opp-success"

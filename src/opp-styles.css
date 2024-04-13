@@ -1,42 +1,135 @@
-.opponent {
-  font-family: "Bonbon", cursive;
-  outline: 2px solid yellow;
-  /* background: rgba(102, 233, 102,0.5); */
-  /* background-image: url(../public/assets/parchmentBackgroundMirrored.svg); */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: rgb(14, 85, 172);
-  font-size: 1rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  /* margin-right: 1rem; */
-  padding: 2em;
-  /* transition: all 1s ease; */
-  background: #fdfdf8;
-  border-radius: 50px;
-  outline:20px solid red;
-  margin: 3em;
-}
+/* Styles for opponent 
+  Contents:
+  1. Main styles 
+  2. Animations
+  3. Media queries
+  1)
+*/
 
+/* <<<<< 1. Main styles >>>>>*/
+.opp-container {
+  position: relative;
+  /* outline:7px solid purple; */
+  width: 100%;
+  height: 30%;
+  /* height:calc(fit-content); */
+  /* margin: 0 0 5em; */
+  /* ^^temporary margin ^^*/
+  /* padding-top: 1.5em; */
+  z-index: 0;
+  /* outline:2px solid red; */
+  /* margin-bottom: 7em; */
+  /* padding: 15em 0; */
+  /* outline: 2px solid blue; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-bottom: 1em; */
+  outline: 20px solid blueviolet;
+}
+.opponent {
+  position: relative;
+  font-family: var(--font-2);
+  color: rgb(14, 85, 172);
+  font-size: 0.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  margin: 0 auto;
+  /* width: max-content; */
+  /* max-width: 50%;
+  max-width: 70ch; */
+  /* padding: 1em 8em; */
+
+  outline: 2px solid red;
+  width: 60%;
+  height: 30%;
+  max-width: 300px;
+  /* font-family: "Bonbon", cursive; */
+  /* background-image: url(../public/assets/parchmentBackgroundMirrored.svg); */
+  /* transition: all 1s ease; */
+}
+.opp-phrase-container {
+  position: relative;
+  min-width: 30ch;
+  min-height: 5em;
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  /* outline: 2px solid red;
+  padding: 1em; */
+  width: 100%;
+  height: 100%;
+}
+.opponent-phrase {
+  font-size: 0.8rem;
+  margin: 0;
+  text-align: center;
+  outline: 2px solid blue;
+  max-width: 80ch;
+  width: 100%;
+  height: 100%;
+  /* padding:.8em .2em; */
+  /* background: white; */
+}
+.thought-bubble {
+  position: absolute;
+  width: calc(100% + 5em);
+  height: calc(100% + 5em);
+  min-width: 20em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  outline:20px solid green;
+}
+.opp-speech-bubble-tail {
+  width: 4.5em;
+  margin-top: -2.5em;
+  margin-right: -1em;
+}
 .opponent p::first-letter {
   color: red;
   text-transform: capitalize;
 }
-/* .opponent-text{
-  justify-self: flex-start;
-} */
+.hide-on-opp-success {
+  visibility: hidden;
+  /* opacity: 0; */
+}
+
+/* <<<<< 2. Animations >>>>>*/
+.panic-mode {
+  animation: panic-animation 0.2s ease-in-out infinite;
+  animation-direction: alternate;
+  animation-play-state: running;
+}
+@keyframes panic-animation {
+  0% {
+    stroke: #fff;
+    fill: #fff;
+  }
+  100% {
+    stroke: rgb(231, 145, 145);
+    fill: rgb(231, 145, 145);
+  }
+}
 .opp-text-animation {
-  /* border-right: 0.15em solid white; */
-  white-space: nowrap;
-  overflow: hidden;
-  animation-name: type;
+  opacity: 0%;
+  animation-name: fade-in;
   /* animation-timing-function: steps(40, end); */
-  animation-timing-function: ease-in-out;
+  animation-timing-function: linear;
   animation-fill-mode: forwards;
   animation-play-state: running;
-  max-width: min-content;
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
 }
 .easy {
   animation-duration: 18s;
@@ -47,81 +140,81 @@
 .hard {
   animation-duration: 10s;
 }
-.extreme {
+.shakespearean {
   animation-duration: 10s;
 }
-@keyframes type {
-  0% {
-    width: 0%;
-  }
-  80% {
-    background: none;
-  }
-  100% {
-    width: 100%;
-    background: rgb(246, 75, 75);
-    border: none;
-  }
-}
-.feather-svg {
-  transform: scaleX(-1);
-  position: absolute;
-  left: -3px;
-}
-.feather {
-  width: 2.5em;
-  height: 2.5em;
-  animation-name: writing;
-  animation-duration: 1s;
-  animation-timing-function: linear;
+.opponent-defeat-animation {
+  filter: drop-shadow(16px 16px 20px red) invert(30%);
+  animation: shake 2s linear infinite;
   animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
+  /* background: red; */
+  /* outline: 20px solid yellow; */
 }
-@keyframes writing {
+@keyframes shake {
   0% {
-    transform: translateY(0);
+    transform: rotate(0deg);
   }
-  25% {
-    transform: translateY(0.5em);
-  }
+
   50% {
-    transform: translateY(0);
-  }
-  75% {
-    transform: translateY(-0.5em);
+    transform: rotate(20deg);
   }
   100% {
-    transform: translateY(0);
+    transform: rotate(0deg);
   }
-}
-.play {
-  animation-play-state: running;
+  /* 100% {
+  } */
 }
 
-.og {
-  outline: 2px solid rgb(3, 255, 3);
-  background: rgba(102, 233, 102, 0.5);
-  color: white;
-  font-family: monospace;
-}
-.animate {
-  animation: shake 0.2s linear infinite;
-  /* background: red; */
-}
-.op-avatar {
-  width: 2em;
-  margin-right: 0.5em;
-  outline:2px solid red;
-}
-.op-avatar img {
-  outline: 4px groove brown;
-  outline-offset: 2px;
-  outline:2px solid red;
-}
-.opp-user-container {
+.opp-avatar-container {
+  position: absolute;
+  top: calc(100% + 2.5em);
+  top: 70%;
+  /* right: -0.6em; */
+  right: -4em;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-right: 0.5em;
-  outline:2px solid red;
+  /* outline:2px solid red; */
+
+  /* margin-right: 0.5em; */
+  /* width: 40%; */
+  /* outline: 2px solid red; */
 }
+.opp-avatar {
+  width: 6em;
+}
+
+/* .op-avatar img { */
+/* outline: 4px groove brown; */
+/* outline-offset: 2px;
+  border-radius: 50px;
+  
+} */
+/* ?opp styles was here */
+
+.opp-successful-attack {
+  transform: scale(100%);
+  /* padding:2em 0; */
+  /* overflow: hidden; */
+  border-radius: 20px;
+  background-color: #fff;
+  padding: 0.8em 0.2em;
+  /* max-width: 90ch; */
+}
+.opp-successful-attack-animation {
+  animation: enlarge 0.5s ease-in-out infinite;
+  animation-direction: alternate;
+  animation-play-state: running;
+}
+@keyframes enlarge {
+  0% {
+    transform: scale(100%);
+  }
+  100% {
+    transform: scale(120%);
+  }
+}
+
+.paused {
+  animation-play-state: paused;
+}
+
+/* <<<<< 3. Media queries >>>>> */

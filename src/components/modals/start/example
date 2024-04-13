@@ -1,0 +1,45 @@
+
+   const ref = useRef()
+  const [width,setWidth] = useState(0)
+  const [phrase,setPhrase] = useState("hello my friends")
+  
+  const getWidth = () =>{setWidth(ref.current.offsetWidth)}
+  const hello = () =>{console.log("hello",new Date)}
+  //this sets the font size to be based on width of its container and also includes a event listener that listens for resize of page and refreshed the container width state value
+useEffect(
+  ()=>{
+  getWidth()
+    // if (ref && ref.current){ref.current.addEventlistener("click", hello)
+    // return(ref.current.removeEventListener("resize", getwidth))}
+   window.addEventListener("resize", hello)
+    return (
+       window.removeEventListener("resize", hello)
+    )
+  },[])
+ 
+  return (
+     <div className="box">
+        <div ref={ref} className="example" style={{ fontSize: width/phrase.length }} onClick={getWidth}>{phrase}</div>
+      </div>
+  )
+  
+
+
+
+
+.box {
+ width: 7em;
+  height: 7em;
+  background: red;
+  overflow: hidden;
+  resize:both;
+  border-radius:0;
+}
+
+.example{
+  // font-size:2em;
+  outline: 2px solid blue;
+  text-align:center;
+}
+
+

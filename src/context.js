@@ -512,7 +512,7 @@ const AppContextProvider = ({ children }) => {
     // setLives(3)
     console.log(gameState)
     // timerInterval = setInterval(decrementGameTimer, 1000)
-    !showMobileKeyboard && focusInput.current.focus()
+    showMobileKeyboard && focusInput.current.focus()
   }
 
   //Function to set end game conditions
@@ -632,7 +632,7 @@ const AppContextProvider = ({ children }) => {
   useEffect(() => {
     !showPauseScreen &&
       (gameState === "start" || "resume") &&
-      !showMobileKeyboard &&
+      showMobileKeyboard &&
       focusInput.current.focus()
   }, [showPauseScreen, gameState])
   // useEffect(() => {
@@ -787,7 +787,12 @@ const AppContextProvider = ({ children }) => {
       e.key === "Escape" && setEsc((prev) => !prev)
     })
     setEsc(false)
-
+    if (window.innerWidth >= 600) {
+      console.log("hi there mssg",window.innerWidth)
+      setShowMobileKeyboard(true)
+      // document.documentElement.requestFullscreen()
+    } 
+   
     //  document.addEventListener("keyup", (e) => {
     //       e.getModifierState("CapsLock")
     //         ? setIsCapsLockOn(true)

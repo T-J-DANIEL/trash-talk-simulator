@@ -53,7 +53,7 @@ const UserInput = () => {
     <div className="user-container">
       {/* <div
         className={`user-avatar-container ${
-          oppAttackSuccess ? "animate" : ""
+          oppAttackSuccess ? "opponent-defeat-animation" : ""
         } ${userAttackSuccess ? "successfulAttack" : ""} ${
           !gameRunning && "paused"
         }`}
@@ -63,7 +63,8 @@ const UserInput = () => {
       <div className="user">
         <div
           className={`user-text-container ${
-            userAttackSuccess && "show-speech"
+            // userAttackSuccess && "show-speech"
+            userAttackSuccess && "opp-successful-attack"
           }`}
         >
           {/* classname above ^^^  */}
@@ -73,6 +74,7 @@ const UserInput = () => {
             classInfo={`user-thought-bubble ${
               userAttackSuccess && "hide-on-opp-success"
             }`}
+            percentageMatch={percentageMatch}
           />
           <div className="caps-lock-indicator">
             {isCapsLockOn && "CAPS LOCK"}
@@ -89,11 +91,19 @@ const UserInput = () => {
             id="inputBox"
             type={"text"}
             // placeholder={currentPhrase}
+            onPaste={(e) => {
+              e.preventDefault()
+              return false
+            }}
+            onCopy={(e) => {
+              e.preventDefault()
+              return false
+            }}
             value={userText}
             ref={focusInput}
             maxLength={currentPhrase.length}
             onBlur={() => {
-              !showMobileKeyboard && focusInput.current.focus()
+              showMobileKeyboard && focusInput.current.focus()
             }}
             className="user-text-input"
             // onkey up was deprecated replaced with onkeydown
@@ -126,6 +136,7 @@ const UserInput = () => {
             />
           </div>
         </div>
+        
       </div>
       {/* <div className="feather-position-user">
           <Feather />
@@ -148,9 +159,9 @@ const UserInput = () => {
 
 export default UserInput
 //   <div
-      //   className={`user-scroll-container ${
-      //     oppAttackSuccess ? "animate" : ""
-      //   } ${userAttackSuccess ? "successfulAttack" : ""} ${
-      //     !gameRunning && "paused"
-      //   }`}
-      // >
+//   className={`user-scroll-container ${
+//     oppAttackSuccess ? "opponent-defeat-animation" : ""
+//   } ${userAttackSuccess ? "successfulAttack" : ""} ${
+//     !gameRunning && "paused"
+//   }`}
+// >

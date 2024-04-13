@@ -13,8 +13,20 @@ const MobileKey = ({keyValue,extraClass}) => {
   return (
     <button
       disabled={isInputDisabled}
-      className={`mobile-key ${keyValue === " " && "spaceBar"} ${extraClass}` }
-      onTouchStart ={() => {
+      className={`mobile-key ${
+        keyValue === " " && "spaceBar"
+      } ${extraClass} ${isInputDisabled && "key-disabled"}`}
+      // onTouchStart={() => {
+      //   focusInput.current.value = focusInput.current.value + key
+      //   setUserText(
+      //     focusInput.current.value.replace(" ", "_").replace("-", "‑")
+      //   )
+      //   compareValues(
+      //     focusInput.current.value.replace(" ", "_").replace("-", "‑")
+      //   )
+      //   setIsMobileShift(false)
+      // }}
+      onMouseDown={() => {
         focusInput.current.value = focusInput.current.value + key
         setUserText(
           focusInput.current.value.replace(" ", "_").replace("-", "‑")

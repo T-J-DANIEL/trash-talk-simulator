@@ -5,15 +5,16 @@ import MobileFunctionKey from "./MobileFunctionKey"
 const MobileKeyboard = () => {
   const {showMobileKeyboard,setShowMobileKeyboard } = useGlobalContext()
   return (
-    <div className={`mobile-keyboard ${showMobileKeyboard && "hide" }`}>
-      <button
+    <div className={`mobile-keyboard ${showMobileKeyboard && "hide"}`}>
+      {/* <div className={`mobile-keyboard ${showMobileKeyboard && "hide" }`}> */}
+      {/* <button
         onClick={() => {
           setShowMobileKeyboard(true)
         }}
         className="hide-keyboard-key"
       >
         X
-      </button>
+      </button> */}
       <div className="mobile-keyboard-row">
         <MobileKey keyValue={"q"} />
         <MobileKey keyValue={"w"} />
@@ -37,7 +38,7 @@ const MobileKeyboard = () => {
         <MobileKey keyValue={"k"} />
         <MobileKey keyValue={"l"} />
       </div>
-      <div className="mobile-keyboard-row">
+      <div className="mobile-keyboard-row mobile-keyboard-row-align-3rd-row">
         <MobileFunctionKey keyValue="shift" />
         <MobileKey keyValue={"z"} />
         <MobileKey keyValue={"x"} />
@@ -49,7 +50,7 @@ const MobileKeyboard = () => {
         <MobileFunctionKey keyValue="backSpace" />
       </div>
       <div className="mobile-keyboard-row">
-        <div className="mobile-keyboard-row-align">
+        <div className="mobile-keyboard-row-align-center">
           <MobileKey extraClass="extra-width" keyValue={"-"} />
           <MobileKey keyValue={" "} />
           <MobileFunctionKey keyValue="enter" />

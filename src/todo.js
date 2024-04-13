@@ -7,12 +7,17 @@
 //add exclamation point feather
 //scoring instant points and also order of feedback (message blanks before end of phase) and streak
 //keyboard optional button
+//if onscreeen keyboard is deployred and you pause when you unpause your physical kjeyboard will not focus
+//when you swithc from onscreen keyboard to user keyboad you lose focuis
 //test
     // what happens when you pause just before running out of time?
     //end game during countdown seems to mess it up
     //modal background not full screen oin mobile
     //text is selcetable draggable in menus
+     // IDEA maybe opp pause while userattacks as well?
     //SIZE DOWN CLOUDS BASED ION KEYBOARD IS OPEN
+    //pausing copountdown and stratin gnew game crashes countdown
+    //IDEA STREAK MEDAL IS MDELA AROUND SW NECK charchetr glow when on streak
 //svg's
 //animations
 //google cloud voices api
@@ -28,7 +33,7 @@
 //game does not reset properly after losing three lives maybe even never at all??
 //Need to use setShowHowTo and finish off start meu need to use sub componeents
     //sub components for menu conditional rendering (cleaner)
-
+// on load check if page size is less than and set keyboard auto
 //finalise text input and feather
 //ADD BACKGORUND
 //diff font for fool
@@ -38,6 +43,7 @@
 //CORRECT LETTER NOISE
 //add percentage completion to user (color of text box)
 //thought cloud differnt sepereate trail cloud then becomes speech bubble
+//full screen on mobile api
 //can replace all conts wih one const for declarations
 //finalise poortraits and pagelayout
         //PICTURE FRAME ANIMATIONS?
@@ -45,6 +51,7 @@
 //portraits  of each at start/ends screen 
 //display "sound off" on mainpage?
 //fix timer
+//make text not selectable
 //startgame page
 //timer ending urgent sound
 //animations on score number when you score put ib heading bar light up animation on streak

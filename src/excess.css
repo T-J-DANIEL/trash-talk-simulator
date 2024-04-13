@@ -1,0 +1,69 @@
+@media only screen and (min-width: 380px) {
+  .opponent-phrase {
+    /* font-size: 0.9rem;
+  margin: 0;
+  text-align: center; */
+  }
+  .opp-phrase-container {
+  }
+  .opponent {
+    /* outline: 10px solid green; */
+    /* width:50em; */
+  }
+  .opp-avatar {
+    /* outline: 10px solid yellow; */
+    width: 7em;
+  }
+  .opp-avatar-container {
+    /* outline: 10px solid yellow; */
+  }
+  /* tail and cloud */
+}
+@media only screen and (min-width: 425px) {
+}
+
+@media only screen and (min-width: 600px) {
+  /* .opponent-phrase{
+    
+  } */
+
+  .thought-bubble {
+    /* width: calc(100% + 5em);
+  height: calc(100% + 5em); */
+    width: calc(100% + 5em);
+    height: calc(100% + 7em);
+    width: calc(100% + 5em);
+    height: calc(100% + 7em);
+    /* opacity: 1; */
+  }
+}
+@media only screen and (min-width: 800px) {
+  .opponent-phrase {
+    font-size: 1.2rem;
+  }
+  .opp-avatar {
+    /* outline: 10px solid yellow; */
+    width: 7.5em;
+  }
+  .thought-bubble {
+    /* width: calc(100% + 5em);
+  height: calc(100% + 5em); */
+    width: calc(100% + 6.5em);
+    height: calc(100% + 7.5em);
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  /* .opponent-phrase{
+    font-size: 1.5rem;
+  }
+  .opp-avatar{
+    
+    width: 9em;
+  }
+.thought-bubble{
+    
+width: calc(100% + 7em);
+height: calc(100% + 10em);
+  } */
+}
