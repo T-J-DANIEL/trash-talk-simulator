@@ -1,8 +1,8 @@
-import { useGlobalContext } from "../context"
-import Hitmarker from "./Hitmarker"
-import SpeechBubbleTail from "../SpeechBubbleTail"
-import PlaceHolderAvatar from "./PlaceHolderAvatar"
-import ThoughtBubbleTrail from "./ThoughtBubbleTrail"
+import { useGlobalContext } from "../../context"
+import Hitmarker from "../shared/Hitmarker"
+import SpeechBubbleTail from "../../SpeechBubbleTail"
+import PlaceHolderAvatar from "../PlaceHolderAvatar"
+import ThoughtBubbleTrail from "../ThoughtBubbleTrail"
 //component for the opponent text display
 
 const OppAvatar = ({userAttackSuccess}) => {

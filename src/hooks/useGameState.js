@@ -26,7 +26,7 @@ const useGameState = () => {
     remaining,
     start,
     isMusicOn,
-    playMusic,
+    playMusicSound,
     oppAttackSuccess,
     setOppAttackSuccess,
     setIsInputDisabled,
@@ -35,7 +35,7 @@ const useGameState = () => {
     setLives,
     lives,
     failSound,
-    button_push,
+    buttonUpSound,
     newPhrases,
     setUserText,
     setUserAttackSuccess,
@@ -51,6 +51,9 @@ const useGameState = () => {
     countDownMode,
     focusInput,
   } = useGlobalContext()
+
+  
+
 
   const speakFunction = (value, pitchDiff = 0, rateDiff = 0) => {
     EasySpeech.speak({
@@ -81,7 +84,7 @@ const useGameState = () => {
     }, 1000)
     setStart(Date.now())
     setRemaining(1000)
-    isSoundOn && button_push()
+    isSoundOn && buttonUpSound()
   }
   const countDownState2 = () => {
     timerId.current = setTimeout(() => {
@@ -90,7 +93,7 @@ const useGameState = () => {
     }, 1000)
     setStart(Date.now())
     setRemaining(1000)
-    isSoundOn && button_push()
+    isSoundOn && buttonUpSound()
   }
   const countDownState1 = () => {
     timerId.current = setTimeout(() => {
@@ -99,7 +102,7 @@ const useGameState = () => {
     }, 1000)
     setStart(Date.now())
     setRemaining(1000)
-    isSoundOn && button_push()
+    isSoundOn && buttonUpSound()
   }
   const countDownStateGo = () => {
     timerId.current = setTimeout(() => {
@@ -148,19 +151,19 @@ const useGameState = () => {
       timerId.current = setTimeout(() => {
         setCountDown("2")
         setGameState("countDown2")
-        isSoundOn && button_push()
+        isSoundOn && buttonUpSound()
       }, remaining)
     } else if (countDownMode && countDown === "2") {
       timerId.current = setTimeout(() => {
         setCountDown("1")
         setGameState("countDown1")
-        isSoundOn && button_push()
+        isSoundOn && buttonUpSound()
       }, remaining)
     } else if (countDownMode && countDown === "1") {
       timerId.current = setTimeout(() => {
         setCountDown("Go!")
         setGameState("countDownGo")
-        isSoundOn && button_push()
+        isSoundOn && buttonUpSound()
       }, remaining)
     } else if (countDownMode && countDown === "Go!") {
       timerId.current = setTimeout(() => {
@@ -172,7 +175,7 @@ const useGameState = () => {
         isSoundOn && endSound()
       }, remaining)
     } else if (oppAttackSuccess) {
-      isMusicOn && playMusic()
+      isMusicOn && playMusicSound()
       EasySpeech.resume()
       timerId.current = setTimeout(() => {
         console.log("resumed")
@@ -183,7 +186,7 @@ const useGameState = () => {
         //start new scroll animation
       }, remaining)
     } else if (userAttackSuccess) {
-      isMusicOn && playMusic()
+      isMusicOn && playMusicSound()
       //    TODO can make this into a function
       //timeout to end attack phase,set with remaining time
       timerId.current = setTimeout(() => {
@@ -195,7 +198,7 @@ const useGameState = () => {
         //start new scroll animation
       }, remaining)
     } else if (panicMode) {
-      isMusicOn && playMusic()
+      isMusicOn && playMusicSound()
       // isSoundOn && playOppWritingSound()
       timerId.current = setTimeout(() => {
         console.log("opp attack success")
@@ -205,7 +208,7 @@ const useGameState = () => {
       }, remaining)
     } else {
       //start phase
-      isMusicOn && playMusic()
+      isMusicOn && playMusicSound()
       // isSoundOn && playOppWritingSound()
       timerId.current = setTimeout(() => {
         console.log("started opp attack?")
@@ -356,7 +359,7 @@ export default useGameState
 //       musicFunctions.pause()
 //       break
 //     case "resume":
-//       isMusicOn && playMusic()
+//       isMusicOn && playMusicSound()
 //       if (oppAttackSuccess) {
 //         timerId.current = setTimeout(() => {
 //           console.log("resumed")

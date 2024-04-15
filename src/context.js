@@ -11,23 +11,43 @@ import React, {
 
 //import the phrases both random and preset
 import { shakesPhrases, randoShake } from "./data"
-import useSound from "use-sound"
+// import {
+//   successSound,
+//   failSound,
+//   incorrect,
+//   streakSound,
+//   countDownSound,
+//   buttonDownSound,
+//   buttonUpSound,
+//   endSound,
+//   highScoreEndSound,
+//   playMusicSound,
+//   correctSound,
+//   playTypingSound,
+//   useSoundEffect,
+//   musicFunctions,
+// } from "./hooks/useSoundEffect"
 
-import user_success from "./sounds/user_success.mp3"
-import opp_attack_success from "./sounds/opp_attack_success.mp3"
-import streak_sound from "./sounds/streak_sound.mp3"
-//remove countdown below
-import threeSec_countdown from "./sounds/3s_countdown.mp3"
-import button_pop_up from "./sounds/button_pop_up.mp3"
-import button_push_down from "./sounds/button_push_down.mp3"
-import user_type_sound from "./sounds/user_type_sound_ver2.mp3"
-import incorrect_sound from "./sounds/incorrect_sound.mp3"
-import end_game_sound from "./sounds/end_game_sound.mp3"
-import high_score_end_sound from "./sounds/high_score_end_sound.mp3"
-import opp_writing_sound from "./sounds/opp_writing_sound.mp3"
-import music from "./sounds/music.mp3"
-import correct_sound from "./sounds/correct_sound.mp3"
-import { clear } from "@testing-library/user-event/dist/clear"
+import useSoundEffect from "./hooks/useSoundEffect"
+
+// import useSound from "use-sound"
+// import user_success from "./sounds/user_success.mp3"
+// import opp_attack_success from "./sounds/opp_attack_success.mp3"
+// import streak_sound from "./sounds/streak_sound.mp3"
+// //remove countdown below
+// import threeSec_countdown from "./sounds/3s_countdown.mp3"
+// import buttonDownSound_up from "./sounds/buttonDownSound_up.mp3"
+// import buttonUpSound_down from "./sounds/buttonUpSound_down.mp3"
+// import user_type_sound from "./sounds/user_type_sound_ver2.mp3"
+// import incorrect_sound from "./sounds/incorrect_sound.mp3"
+// import end_game_sound from "./sounds/end_game_sound.mp3"
+// import high_score_end_sound from "./sounds/high_score_end_sound.mp3"
+// import opp_writing_sound from "./sounds/opp_writing_sound.mp3"
+// import music from "./sounds/music.mp3"
+// import correct_sound from "./sounds/correct_sound.mp3"
+
+// import { clear } from "@testing-library/user-event/dist/clear"
+//IS THIS IMPORTANT FOR CLEARING FORM^?
 const AppContext = React.createContext()
 
 //global context custom hook
@@ -36,32 +56,48 @@ const useGlobalContext = () => {
 }
 //context provider
 const AppContextProvider = ({ children }) => {
-  //<><><><><><><> //SOUNDS FUNCTIONS/STATE VALUES\\ <><><><><><><>
+  const {
+    successSound,
+    failSound,
+    incorrectSound,
+    streakSound,
+    countDownSound,
+    buttonDownSound,
+    buttonUpSound,
+    endSound,
+    highScoreEndSound,
+    playMusicSound,
+    correctSound,
+    playTypingSound,
+    musicFunctions,
+  } = useSoundEffect()
+  // <><><><><><><> //SOUNDS FUNCTIONS/STATE VALUES\\ <><><><><><><>
   const [isSoundOn, setIsSoundOn] = useState(true)
   const [isMusicOn, setIsMusicOn] = useState(false)
-  const [successSound] = useSound(user_success)
-  const [failSound] = useSound(opp_attack_success, { volume: 0.4 })
-  const [incorrect] = useSound(incorrect_sound, { volume: 0.4 })
-  const [streakSound] = useSound(streak_sound, { volume: 0.3 })
-  const [countDownSound] = useSound(threeSec_countdown)
-  const [button_pop] = useSound(button_pop_up, { volume: 0.2 })
-  const [button_push] = useSound(button_push_down, { volume: 0.2 })
-  const [endSound] = useSound(end_game_sound, { volume: 0.3 })
-  const [highScoreEndSound] = useSound(high_score_end_sound)
-  // const [playOppWritingSound, exposedData] = useSound(opp_writing_sound, {
-  //   volume: 0,
+  // const [successSound] = useSound(user_success)
+  // const [failSound] = useSound(opp_attack_success, { volume: 0.4 })
+  // const [incorrect] = useSound(incorrect_sound, { volume: 0.4 })
+  // const [streakSound] = useSound(streak_sound, { volume: 0.3 })
+  // const [countDownSound] = useSound(threeSec_countdown)
+  // const [buttonDownSound] = useSound(buttonDownSound_up, { volume: 0.2 })
+  // const [buttonUpSound] = useSound(buttonUpSound_down, { volume: 0.2 })
+  // const [endSound] = useSound(end_game_sound, { volume: 0.3 })
+  // const [highScoreEndSound] = useSound(high_score_end_sound)
+
+  // // const [playOppWritingSound, exposedData] = useSound(opp_writing_sound, {
+  // //   volume: 0,
+  // // })
+  // //use exposedData.pause and exposedData.stop
+  // const [playMusicSound, musicFunctions] = useSound(music)
+  // const [correctSound] = useSound(correct_sound, {
+  //   // Th
+  //   volume: 0.3,
   // })
-  //use exposedData.pause and exposedData.stop
-  const [playMusic, musicFunctions] = useSound(music)
-  const [correctSound] = useSound(correct_sound, {
-    // Th
-    volume: 0.3,
-  })
-  //use musicFunctions.pause and musicFunctions.stop
-  const [playTypingSound] = useSound(user_type_sound, {
-    interrupt: true,
-    volume: 0.2,
-  })
+  // //use musicFunctions.pause and musicFunctions.stop
+  // const [playTypingSound] = useSound(user_type_sound, {
+  //   interrupt: true,
+  //   volume: 0.2,
+  // })
 
   //<><><><><><><> //RESPONSE TIME STATE VALUES\\ <><><><><><><>
   //difficulty level
@@ -357,7 +393,7 @@ const AppContextProvider = ({ children }) => {
     isSoundOn &&
       (userArray[userArray.length - 1] === testArray[userArray.length - 1]
         ? correctSound()
-        : incorrect())
+        : incorrectSound())
 
     console.log(
       userArray[userArray.length - 1],
@@ -481,7 +517,7 @@ const AppContextProvider = ({ children }) => {
     setNewHigh(false)
     //Start Attack timer
     setGameState("countDown3")
-    // isMusicOn && playMusic()
+    // isMusicOn && playMusicSound()
     setLives(3)
     console.log(gameState)
     // timerInterval = setInterval(decrementGameTimer, 1000)
@@ -508,7 +544,7 @@ const AppContextProvider = ({ children }) => {
     // setNewHigh(false)
     //Start Attack timer
     // setGameState("start")
-    isMusicOn && playMusic()
+    isMusicOn && playMusicSound()
     // setLives(3)
     console.log(gameState)
     // timerInterval = setInterval(decrementGameTimer, 1000)
@@ -660,7 +696,7 @@ const AppContextProvider = ({ children }) => {
   //       musicFunctions.pause()
   //       break
   //     case "resume":
-  //       isMusicOn && playMusic()
+  //       isMusicOn && playMusicSound()
   //       if (oppAttackSuccess) {
   //         timerId.current = setTimeout(() => {
   //           console.log("resumed")
@@ -765,8 +801,8 @@ const AppContextProvider = ({ children }) => {
   useEffect(() => {
     if ((countDownMode || gameRunning) && !gameEnded) {
       if (isSoundOn) {
-        button_pop()
-        // button_push()
+        buttonDownSound()
+        // buttonUpSound()
       }
       displaySettings()
       pauseGame()
@@ -838,8 +874,8 @@ const AppContextProvider = ({ children }) => {
   }, [score])
   const clickSound = (e) => {
     if (isSoundOn) {
-      e.mouseDown && button_pop()
-      e.mouseUp && button_push()
+      e.mouseDown && buttonDownSound()
+      e.mouseUp && buttonUpSound()
     }
   }
   // document.querySelector("inputBox").addEventListener("focus", function (e) {
@@ -994,11 +1030,8 @@ const AppContextProvider = ({ children }) => {
         shared,
         setShared,
         newHigh,
-        button_push,
-        button_pop,
         isSoundOn,
         setIsSoundOn,
-        playTypingSound,
         isMusicOn,
         setIsMusicOn,
         lives,
@@ -1017,10 +1050,7 @@ const AppContextProvider = ({ children }) => {
         setRemaining,
         setGameState,
         setLives,
-        playMusic,
-        musicFunctions,
         setOppAttackSuccess,
-        failSound,
         panicMode,
         setPanicMode,
         isMobileShift,
@@ -1035,7 +1065,13 @@ const AppContextProvider = ({ children }) => {
         countDownMode,
         setCountDownMode,
         startCountDown,
+        playMusicSound,
+        musicFunctions,
+        buttonUpSound,
+        buttonDownSound,
         endSound,
+        playTypingSound,
+        failSound,
       }}
     >
       {children}

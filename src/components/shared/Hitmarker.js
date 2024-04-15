@@ -2,7 +2,7 @@ import React from 'react'
 
 const Hitmarker = () => {
   return (
-    <div className="hitMarker">
+    <div className="hit-marker">
       <div className="clock-hand clock">
         <div></div>
         <div></div>

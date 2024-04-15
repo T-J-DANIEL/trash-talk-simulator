@@ -1,5 +1,5 @@
 import { useGlobalContext } from "../context"
-import Feather from "./Feather"
+// import Feather from "./Feather"
 import Portrait from "./Portrait"
 import ThoughtCloud from "../ThoughtCloud"
 import SpeechBubbleTail from "../SpeechBubbleTail"

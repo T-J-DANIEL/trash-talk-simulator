@@ -133,7 +133,7 @@ h1,h2,h3,h4,p,label,span,div{
   color: white;
   font-family: monospace;
 } */
-.hitMarker {
+.hit-marker {
   position: absolute;
   top: 10px;
   left: -10px;
@@ -399,7 +399,7 @@ button {
   margin: 0 1em 0;
 }
 .lives-left {
-  background-image: url(../public/assets/skull-hand.png);
+  background-image: url(./assets/skull-hand.png);
   /* background-color:red; */
   /* background-image: url(../public/assets/parchmentBackground.svg); */
   background-position: center;
@@ -669,13 +669,13 @@ li {
     padding: 10px;
 }
 .mobile-function-shift {
-  background-image: url(../public/assets/SVG/SVG/shift.svg);
+  background-image: url(./assets/SVG/shift.svg);
   background-color: rgb(83, 112, 218);
   width: 13%;
   width: 10%;
 }
 .mobile-function-backSpace {
-  background-image: url(../public/assets/SVG/SVG/backSpace.svg);
+  background-image: url(./assets/SVG/backSpace.svg);
   background-color: rgb(83, 112, 218);
   width: 13%;
   width: 13%;
@@ -690,7 +690,7 @@ li {
   rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 .mobile-function-enter {
-  background-image: url(../public/assets/SVG/SVG/enter.svg);
+  background-image: url(./assets/SVG/enter.svg);
   background-color: rgb(63, 160, 63);
   width: 25%;
 }

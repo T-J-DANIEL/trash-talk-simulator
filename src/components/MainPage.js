@@ -1,5 +1,5 @@
 import UserInput from "./UserInput"
-import Opponent from "./Opponent"
+import Opponent from "./opponent/Opponent" 
 import Header from "./header/Header"
 // import Modal from "./modals/Modal"
 import ScoreStreak from "./ScoreStreak"

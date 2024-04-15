@@ -1,3 +1,27 @@
+
+// "icons": [
+//   {
+//     "src": "favicon.ico",
+//     "sizes": "64x64 32x32 24x24 16x16",
+//     "type": "image/x-icon"
+//   },
+//   {
+//     "src": "logo192.png",
+//     "type": "image/png",
+//     "sizes": "192x192"
+//   },
+//   {
+//     "src": "logo512.png",
+//     "type": "image/png",
+//     "sizes": "512x512"
+//   }
+// ],
+
+// {"name":"","short_name":"",,"theme_color":"#ffffff","background_color":"#ffffff","display":"standalone"}
+
+
+
+
 // const splitLists = (list) => {
 //   let count = 0
 //   return list.split(" ").reduce(
@@ -385,7 +409,7 @@
     //    // lastUserLetter = currentPhraseLetter
 
     //    isSoundOn &&
-    //      (currentPhraseLetter === lastLetter ? button_pop() : incorrect())
+    //      (currentPhraseLetter === lastLetter ? buttonDownSound() : incorrect())
     //    console.log(
     //      lastLetter,
     //      currentPhraseLetter
@@ -453,8 +477,8 @@
     //     // displaySettings,
     //     endGame,
     //     setShowPauseScreen,
-    //     button_pop,
-    //     button_push,
+    //     buttonDownSound,
+    //     buttonUpSound,
     //     isSoundOn,
     //     setIsSoundOn,
     //     isMusicOn,
@@ -508,8 +532,8 @@
     //                       : setIsCapsLockOn(false)
     //                     closeSettings()
     //                   }}
-    //                   onMouseDown={isSoundOn && button_pop}
-    //                   onMouseUp={isSoundOn && button_push}
+    //                   onMouseDown={isSoundOn && buttonDownSound}
+    //                   onMouseUp={isSoundOn && buttonUpSound}
     //                 >
     //                   Resume
     //                 </button>
@@ -518,8 +542,8 @@
     //                   onClick={() => {
     //                     setConfirmEndGame(true)
     //                   }}
-    //                   onMouseDown={isSoundOn && button_pop}
-    //                   onMouseUp={isSoundOn && button_push}
+    //                   onMouseDown={isSoundOn && buttonDownSound}
+    //                   onMouseUp={isSoundOn && buttonUpSound}
     //                 >
     //                   End Game
     //                 </button>
@@ -536,8 +560,8 @@
     //                   <input
     //                     type="checkBox"
     //                     id="soundOnOff"
-    //                     onMouseDown={!isSoundOn && button_pop}
-    //                     onMouseUp={!isSoundOn && button_push}
+    //                     onMouseDown={!isSoundOn && buttonDownSound}
+    //                     onMouseUp={!isSoundOn && buttonUpSound}
     //                     checked={isSoundOn}
     //                     onChange={() => {
     //                       setIsSoundOn(!isSoundOn)
@@ -552,8 +576,8 @@
     //                   <input
     //                     type="checkBox"
     //                     id="musicOnOff"
-    //                     onMouseDown={!isMusicOn && button_pop}
-    //                     onMouseUp={!isMusicOn && button_push}
+    //                     onMouseDown={!isMusicOn && buttonDownSound}
+    //                     onMouseUp={!isMusicOn && buttonUpSound}
     //                     checked={isMusicOn}
     //                     onChange={() => {
     //                       setIsMusicOn(!isMusicOn)

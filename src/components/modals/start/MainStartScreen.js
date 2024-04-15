@@ -9,8 +9,8 @@ const MainStartScreen = () => {
     level,
     changeDifficulty,
     isSoundOn,
-    button_pop,
-    button_push,
+    buttonDownSound,
+    buttonUpSound,
     showHowTo,
     setShowHowTo,
     isMusicOn,
@@ -55,8 +55,8 @@ const MainStartScreen = () => {
                     <input
                       type="checkBox"
                       id="soundOnOff"
-                      onMouseDown={!isSoundOn && button_pop}
-                      onMouseUp={!isSoundOn && button_push}
+                      onMouseDown={!isSoundOn && buttonDownSound}
+                      onMouseUp={!isSoundOn && buttonUpSound}
                       checked={isSoundOn}
                       onChange={() => {
                         setIsSoundOn(!isSoundOn)
@@ -71,8 +71,8 @@ const MainStartScreen = () => {
                     <input
                       type="checkBox"
                       id="musicOnOff"
-                      onMouseDown={!isMusicOn && button_pop}
-                      onMouseUp={!isMusicOn && button_push}
+                      onMouseDown={!isMusicOn && buttonDownSound}
+                      onMouseUp={!isMusicOn && buttonUpSound}
                       checked={isMusicOn}
                       onChange={() => {
                         setIsMusicOn(!isMusicOn)
@@ -93,8 +93,8 @@ const MainStartScreen = () => {
                     ? "selected-button selected-easy"
                     : "unselected-button"
                 }`}
-                onMouseDown={isSoundOn && button_pop}
-                onMouseUp={isSoundOn && button_push}
+                onMouseDown={isSoundOn && buttonDownSound}
+                onMouseUp={isSoundOn && buttonUpSound}
                 onClick={(e) => {
                   changeDifficulty("easy")
                 }}
@@ -107,8 +107,8 @@ const MainStartScreen = () => {
                     ? "selected-button selected-normal"
                     : "unselected-button"
                 }`}
-                onMouseDown={isSoundOn && button_pop}
-                onMouseUp={isSoundOn && button_push}
+                onMouseDown={isSoundOn && buttonDownSound}
+                onMouseUp={isSoundOn && buttonUpSound}
                 onClick={(e) => {
                   changeDifficulty("normal")
                 }}
@@ -121,8 +121,8 @@ const MainStartScreen = () => {
                     ? "selected-button selected-hard"
                     : "unselected-button"
                 }`}
-                onMouseDown={isSoundOn && button_pop}
-                onMouseUp={isSoundOn && button_push}
+                onMouseDown={isSoundOn && buttonDownSound}
+                onMouseUp={isSoundOn && buttonUpSound}
                 onClick={(e) => {
                   changeDifficulty("hard")
                 }}
@@ -132,8 +132,8 @@ const MainStartScreen = () => {
             </div>
             <div className="button-container difficulty-set-height  mobile-hidden">
               <button
-                onMouseDown={isSoundOn && button_pop}
-                onMouseUp={isSoundOn && button_push}
+                onMouseDown={isSoundOn && buttonDownSound}
+                onMouseUp={isSoundOn && buttonUpSound}
                 //TODO hide when mobile
                 className={`button shakespearean-button ${
                   level === "shakespearean"
@@ -152,8 +152,8 @@ const MainStartScreen = () => {
           <div className="modal-section">
             <button
               className="button start-button"
-              onMouseDown={isSoundOn && button_pop}
-              onMouseUp={isSoundOn && button_push}
+              onMouseDown={isSoundOn && buttonDownSound}
+              onMouseUp={isSoundOn && buttonUpSound}
               onClick={(e) => {
                 // setIsNewGame(false)
                 // e.getModifierState("CapsLock")

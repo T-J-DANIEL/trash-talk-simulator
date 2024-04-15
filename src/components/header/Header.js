@@ -1,4 +1,4 @@
-import { GameTimer } from "../GameTimer"
+// import { GameTimer } from "../GameTimer"
 import TestGameTimer from "./TestGameTimer"
 import { useGlobalContext } from "../../context"
 const Header = () => {
@@ -6,8 +6,8 @@ const Header = () => {
     score,
     displaySettings,
     isSoundOn,
-    button_pop,
-    button_push,
+    buttonDownSound,
+    buttonUpSound,
     lives,
     setIsCapsLockOn,
     oppAttackSuccess,
@@ -24,8 +24,8 @@ const Header = () => {
                 : setIsCapsLockOn(false)
               displaySettings()
             }}
-            onMouseDown={isSoundOn ? button_pop : undefined}
-            onMouseUp={isSoundOn ? button_push : undefined}
+            onMouseDown={isSoundOn ? buttonDownSound : undefined}
+            onMouseUp={isSoundOn ? buttonUpSound : undefined}
           >
             <div className="settings-button">
               <div className="settings-button-bar"></div>

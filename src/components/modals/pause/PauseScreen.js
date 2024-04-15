@@ -3,8 +3,8 @@ import { useGlobalContext } from "../../../context"
 
 const PauseScreen = () => {
   const {
-    button_pop,
-    button_push,
+    buttonDownSound,
+    buttonUpSound,
     isSoundOn,
     setIsSoundOn,
     isMusicOn,
@@ -27,8 +27,8 @@ const PauseScreen = () => {
                 : setIsCapsLockOn(false)
               closeSettings()
             }}
-            onMouseDown={isSoundOn && button_pop}
-            onMouseUp={isSoundOn && button_push}
+            onMouseDown={isSoundOn && buttonDownSound}
+            onMouseUp={isSoundOn && buttonUpSound}
           >
             Resume
           </button>
@@ -37,8 +37,8 @@ const PauseScreen = () => {
             onClick={() => {
               setConfirmEndGame(true)
             }}
-            onMouseDown={isSoundOn && button_pop}
-            onMouseUp={isSoundOn && button_push}
+            onMouseDown={isSoundOn && buttonDownSound}
+            onMouseUp={isSoundOn && buttonUpSound}
           >
             End Game
           </button>
@@ -53,8 +53,11 @@ const PauseScreen = () => {
             <input
               type="checkBox"
               id="soundOnOff"
-              onMouseDown={!isSoundOn && button_pop}
-              onMouseUp={!isSoundOn && button_push}
+              onMouseDown={buttonDownSound}
+              // onMouseDown={()=>{!isSoundOn && buttonDownSound()}}
+              // onMouseDown={!isSoundOn && buttonDownSound}
+              onMouseUp={buttonUpSound}
+              // onMouseUp={!isSoundOn && buttonUpSound}
               checked={isSoundOn}
               onChange={() => {
                 setIsSoundOn(!isSoundOn)
@@ -66,8 +69,8 @@ const PauseScreen = () => {
             <input
               type="checkBox"
               id="musicOnOff"
-              onMouseDown={!isMusicOn && button_pop}
-              onMouseUp={!isMusicOn && button_push}
+              onMouseDown={!isMusicOn && buttonDownSound}
+              onMouseUp={!isMusicOn && buttonUpSound}
               checked={isMusicOn}
               onChange={() => {
                 setIsMusicOn(!isMusicOn)
