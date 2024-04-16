@@ -1,14 +1,14 @@
-import { useGlobalContext } from "../context"
+import { useGlobalContext } from "../../context"
 // import Feather from "./Feather"
-import Portrait from "./Portrait"
-import ThoughtCloud from "../ThoughtCloud"
-import SpeechBubbleTail from "../SpeechBubbleTail"
-import ThoughtBubbleTrail from "./ThoughtBubbleTrail"
+
+import ThoughtCloud from "../shared/ThoughtCloud"
+import SpeechBubbleTail from "../shared/SpeechBubbleTail"
+import ThoughtBubbleTrail from "../shared/ThoughtBubbleTrail"
 import StreakCoin from "./StreakCoin"
 //component for user's input
 //TODO too much imported all over the place take a look a this stuff everywhere
 // import useGameState from "../hooks/useGameState"
-import PlaceholderAvatar from "./PlaceHolderAvatar"
+import PlaceholderAvatar from "../shared/PlaceHolderAvatar"
 const UserInput = () => {
   const {
     userText,
@@ -58,8 +58,8 @@ const UserInput = () => {
           !gameRunning && "paused"
         }`}
       >
-        <Portrait />
-      </div> */}
+    </div> */}
+    {/* <Portrait /> */}
       <div className="user">
         <div
           className={`user-text-container ${

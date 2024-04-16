@@ -1,7 +1,7 @@
-import { useGlobalContext } from "../../../context"
-import Attributions from "../Attributions"
+import { useGlobalContext } from "../../context"
+import Attributions from "./Attributions"
 // component that displays when the game ends
-import ModalContainer from "../ModalContainer"
+import ModalContainer from "./ModalContainer"
 
 const GameOverModal = () => {
   const {

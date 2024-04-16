@@ -1,5 +1,5 @@
 import React from "react"
-import { useGlobalContext } from "./context"
+import { useGlobalContext } from "../context"
 const useMobileCheck = () => {
   const { setShowMobileKeyboard } = useGlobalContext()
   let isMobileDevice = window.matchMedia(

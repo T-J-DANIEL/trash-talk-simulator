@@ -1,7 +1,7 @@
 import { useGlobalContext } from "../../context"
-import "../../opp-styles.css"
+import "../../styles/opp-styles.css"
 // import Feather from "./Feather"
-import ThoughtCloud from "../../ThoughtCloud"
+import ThoughtCloud from "../shared/ThoughtCloud"
 import OppAvatar from "./OppAvatar"
 //component for the opponent text display
 const Opponent = () => {

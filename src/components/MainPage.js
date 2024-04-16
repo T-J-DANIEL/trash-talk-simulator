@@ -1,11 +1,11 @@
-import UserInput from "./UserInput"
+import UserInput from "./user/UserInput"
 import Opponent from "./opponent/Opponent" 
 import Header from "./header/Header"
 // import Modal from "./modals/Modal"
-import ScoreStreak from "./ScoreStreak"
+import ScoreStreak from "./user/ScoreStreak"
 import StartGameModal from "./modals/start/StartGameModal"
-import GameOverModal from "./modals/gameOver/GameOverModal"
-import PortraitOnly from "./PortraitOnly"
+import GameOverModal from "./modals/GameOverModal"
+import PortraitOnly from "./modals/PortraitOnly"
 import MobileKeyboard from "./mobileKeyboard/MobileKeyboard"
 //components imported
 // import ReactPlayer from "react-player"
@@ -44,6 +44,7 @@ const MainPage = () => {
           >
             X
           </button>
+          {/* <ScoreStreak/> */}
         </div>
         {/* {showMobileKeyboard ? (
           <button

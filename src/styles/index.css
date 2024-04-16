@@ -399,9 +399,9 @@ button {
   margin: 0 1em 0;
 }
 .lives-left {
-  background-image: url(./assets/skull-hand.png);
+  background-image: url(../assets/images/skull-hand.png);
   /* background-color:red; */
-  /* background-image: url(../public/assets/parchmentBackground.svg); */
+  /* background-image: url(../assets/parchmentBackground.svg); */
   background-position: center;
   background-size: contain;
   background-color: rgb(240, 168, 250);
@@ -669,13 +669,13 @@ li {
     padding: 10px;
 }
 .mobile-function-shift {
-  background-image: url(./assets/SVG/shift.svg);
+  background-image: url(../assets/images/shift.svg);
   background-color: rgb(83, 112, 218);
   width: 13%;
   width: 10%;
 }
 .mobile-function-backSpace {
-  background-image: url(./assets/SVG/backSpace.svg);
+  background-image: url(../assets/images/backSpace.svg);
   background-color: rgb(83, 112, 218);
   width: 13%;
   width: 13%;
@@ -690,7 +690,7 @@ li {
   rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 .mobile-function-enter {
-  background-image: url(./assets/SVG/enter.svg);
+  background-image: url(../assets/images/enter.svg);
   background-color: rgb(63, 160, 63);
   width: 25%;
 }
