@@ -2,6 +2,8 @@
 // finalise sounds and volumes
 // attributions
 // merge voice or no?
+//error when attacking after pause  if enemey has attcjked already then attack will be sussesfull and glithc out system
+//exit fullscreen button
 
 // import React from "react"
 import useSound from "use-sound"
