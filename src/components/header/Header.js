@@ -1,5 +1,6 @@
 // import { GameTimer } from "../GameTimer"
 import TestGameTimer from "./TestGameTimer"
+import StreakCoin from "../user/StreakCoin"
 import { useGlobalContext } from "../../context"
 const Header = () => {
   const {
@@ -12,6 +13,8 @@ const Header = () => {
     setIsCapsLockOn,
     oppAttackSuccess,
     gameRunning,
+    streak,
+streakArray
   } = useGlobalContext()
   return (
     <div className="header-container">
@@ -37,7 +40,18 @@ const Header = () => {
 
           <div className="header-component">
             <div className="header-headings score-title">
-              Score:<span className="score">{score}</span>
+              {streak > 1 && (
+                <StreakCoin
+                  streak={streak}
+                  streakArray={streakArray}
+                  gameRunning={gameRunning}
+                />
+              )}
+           
+              {/* {<StreakCoin streak={streak} streakArray={streakArray} />} */}
+              <p className="score-title-text">
+                Score:<span className="score">{score}</span>
+              </p>
             </div>
           </div>
           <div className="header-component">
@@ -54,10 +68,24 @@ const Header = () => {
                   className={`lives-left ${oppAttackSuccess && "flash"} ${
                     !gameRunning && `paused`
                   }`}
-                ></div>
+                >
+                  <svg class={`heart ${!gameRunning && `paused`} `}viewBox="0 0 32 29.6">
+                    <path
+                      d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+	c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"
+                    />
+                  </svg>
+                </div>
               ))}
               {Array.from({ length: [3 - lives] }).map((_) => (
-                <div className="lives-left lives-lost"></div>
+                <div className="lives-left lives-lost">
+                  <svg class="heart" viewBox="0 0 32 29.6">
+                    <path
+                      d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+	c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"
+                    />
+                  </svg>
+                </div>
               ))}
             </div>
           </div>

@@ -1,7 +1,8 @@
-
+import shakeimage from "./emojishake.png"
 const PlaceHolderAvatar = ({ classInfo }) => (
   <div className="op-avatar">
-    <svg
+    <img src={shakeimage} alt="dsfds" />
+    {/* <svg
       xmlns="http://www.w3.org/2000/svg"
       className={classInfo}
       version="1.1"
@@ -47,7 +48,7 @@ const PlaceHolderAvatar = ({ classInfo }) => (
           </g>
         </g>
       </g>
-    </svg>
+    </svg> */}
   </div>
 )
 export default PlaceHolderAvatar

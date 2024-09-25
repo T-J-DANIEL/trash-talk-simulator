@@ -5,6 +5,7 @@ import ThoughtCloud from "../shared/ThoughtCloud"
 import SpeechBubbleTail from "../shared/SpeechBubbleTail"
 import ThoughtBubbleTrail from "../shared/ThoughtBubbleTrail"
 import StreakCoin from "./StreakCoin"
+import UserAvatar from "./UserAvatar"
 //component for user's input
 //TODO too much imported all over the place take a look a this stuff everywhere
 // import useGameState from "../hooks/useGameState"
@@ -59,7 +60,7 @@ const UserInput = () => {
         }`}
       >
     </div> */}
-    {/* <Portrait /> */}
+      {/* <Portrait /> */}
       <div className="user">
         <div
           className={`user-text-container ${
@@ -120,23 +121,21 @@ const UserInput = () => {
             }}
             disabled={isInputDisabled}
           ></input>
-          <StreakCoin streak={streak} streakArray={streakArray} />
-          <div className="user-avatar-container">
             {/* <ThoughtBubbleTrail
               classInfo={`user-thought-bubble-tail ${
                 userAttackSuccess && "hide-on-opp-success"
               }`}
             /> */}
-            <PlaceholderAvatar classInfo={"user-avatar"} />
             <SpeechBubbleTail
-              // classInfo={`user-speech-bubble-tail`}
               classInfo={`user-speech-bubble-tail ${
                 !userAttackSuccess && "hide-on-opp-success"
               }`}
             />
+          <div className="user-avatar-container">
+              <UserAvatar />
+              {/* <StreakCoin streak={streak} streakArray={streakArray} />  */}
           </div>
         </div>
-        
       </div>
       {/* <div className="feather-position-user">
           <Feather />
