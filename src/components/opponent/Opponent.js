@@ -61,7 +61,7 @@ const Opponent = () => {
           </p>
           </div>
 
-          {/* <OppAvatar userAttackSuccess={userAttackSuccess} /> */}
+          <OppAvatar userAttackSuccess={userAttackSuccess} />
         </div>
         {/* <Feather /> */}
       </div>

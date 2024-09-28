@@ -28,7 +28,7 @@ const MainStartScreen = () => {
         <>
           <div className="modal-section">
             <div className="title-container">
-              <h1 className="modal-heading title">Shakespearean Wit </h1>
+              <h1 className="modal-heading sw-title">Shakespearean Wit</h1>
               <h3 className="tagline">A typing game</h3>
             </div>
 

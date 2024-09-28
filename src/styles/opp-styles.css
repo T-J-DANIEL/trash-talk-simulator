@@ -179,7 +179,10 @@
   /* outline: 2px solid red; */
 }
 .opp-avatar {
-  width: 6em;
+  width: 25em;
+  filter: drop-shadow(6px 6px 20px gray);
+  /* outline:2px solid red; */
+  filter: sepia(100%) hue-rotate(290deg)saturate(400%);
 
 }
 

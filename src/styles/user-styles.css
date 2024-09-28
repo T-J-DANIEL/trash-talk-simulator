@@ -37,6 +37,7 @@
   display: flex;
   width: 30em;
   height: 30em;
+  /* filter: sepia(30%) hue-rotate(300deg)saturate(400%); */
 }
 .user-avatar {
   /* width: 8em; */
@@ -44,6 +45,7 @@
   /* transform: scaleX(-1); */
   /* outline: 2px solid red; */
 }
+
 
 .user-speech-bubble-tail {
   transform: scaleX(-1);

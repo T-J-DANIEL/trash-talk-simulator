@@ -1,8 +1,11 @@
 /* @import url("https://fonts.googleapis.com/css2?family=Quintessential&family=Tangerine:wght@400;700&display=swap"); */
 /* @import url("https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Signika+Negative:wght@400;700&display=swap"); */
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap'); */
+
+@import url('https://fonts.googleapis.com/css2?family=Jacquard+24&family=Pixelify+Sans:wght@400..700&family=VT323&display=swap');
+
 :root {
   --overlay-gray: rgba(0, 0, 0, 0.696);
   /* --font-1: "Signika Negative", sans-serif; */
@@ -11,6 +14,7 @@
   /* --font-2: "Comic Neue", cursive; */
   /* --font-2: "VT323", cursive; */
   --font-2: "VT323", system-ui;
+  --font-3:"Jacquard 24", system-ui;
   --font-shadow: 2px 2px 2px #afaeaeb4;
 }
 
@@ -376,9 +380,11 @@ button {
   font-size: 63%;
   margin: 0.5em 0;
 }
-.title {
+.sw-title {
   word-spacing: -2px;
   text-underline-offset: 3px;
+  font-family: var(--font-3);
+  font-size:2.6rem;
 }
 .tagline {
   margin: 0 0.7em 0;
@@ -611,9 +617,28 @@ li {
     color: rgb(255, 0, 127);
   }
 }
-.keyb{
-  width: 1em;
-  background-color: transparent;
+.show-keyboard-key {
+  position: absolute;
+  bottom: 3%;
+  right: 3%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width:  8em;
+  height:  4em;
+  opacity: .3;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+  rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+  rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  background-image:url(../assets/images/keyboard.png); 
+}
+.hide-keyboard-key {
+    bottom: 35%;
+    right: 2%;
+  background-image:url(../assets/images/closekeyboard.png);
+}
+.show-keyboard-key:active {
+  opacity: .7;
 }
 .mobile-keyboard {
   width: 100%;
@@ -736,43 +761,11 @@ li {
   background: #9394a3;
   opacity: 0.5;
 }
-.hide-keyboard-key {
-  position: absolute;
-  /* bottom: 101%;
-  right: 1%; */
-  bottom: 50%;
-  right: 5%;
-  
-  padding: 0.6em 1em;
-  
-  border-radius: 10px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-  rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-  rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-  background-image: linear-gradient(-180deg, #ff7e31, #e62c03);
-  text-align: center;
-  /* outline:20px solid red; */
-}
+
 .extra-width {
   width: 12%;
 }
-.hide-keyboard-key:active {
-  background: rgb(122, 23, 23);
-}
 
-.show-keyboard-key {
-  position: fixed;
-  bottom: 50%;
-  right: 50%;
-  padding: 0.6em 1em;
-
-  border-radius: 10px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-  background-image: linear-gradient(-180deg, #ff7e31, #e62c03);
-  text-align: center;
-}
 /* hide on big screens */
 @media only screen and (min-width: 800px) {
   /* .mobile-keyboard {

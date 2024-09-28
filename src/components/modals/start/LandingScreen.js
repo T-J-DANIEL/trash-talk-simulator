@@ -10,11 +10,11 @@ const LandingScreen = () => {
       {!showAttributions && (
         <>
           <div className="title-container">
-            <h1 className="modal-heading title">Shakespearean Wit </h1>
+            <h1 className="modal-heading sw-title">Shakespearean Wit </h1>
             <h3 className="tagline">A typing game</h3>
           </div>
 
-          <h3>Created by Tim Daniel</h3>
+          <h3 className="tagline">Created by Tim Daniel</h3>
           <div className="modal-section">
             <div className="button-container">
               <button
@@ -47,16 +47,15 @@ const LandingScreen = () => {
                 Play!
               </button>
             </div>
-              <button
-                className="button "
-                onClick={(e) => {
-                  
-                    document.documentElement.requestFullscreen()
-                  
-                }}
-              >
-                Full <br/>Screen
-              </button>
+            <button
+              className="button "
+              onClick={(e) => {
+                document.documentElement.requestFullscreen()
+              }}
+            >
+              Full <br />
+              Screen
+            </button>
           </div>
         </>
       )}

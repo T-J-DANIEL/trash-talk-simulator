@@ -1,4 +1,4 @@
-import shakeimage from "../shared/emojishake.png"
+import shakeimage from "../shared/swpixel7.png"
 
 import { useGlobalContext } from "../../context"
 
